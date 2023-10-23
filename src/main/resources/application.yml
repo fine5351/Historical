@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: hackathon
+  sql:
+    init:
+      schema-locations: classpath:h2/schema.sql
+      data-locations: classpath:h2/data.sql
+      mode: always
+  jpa:
+    show-sql: true
+  datasource:
+    url: jdbc:h2:mem:hackathon
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    jpa:
+      database-platform: org.hibernate.dialect.H2Dialect
+      hibernate:
+        ddl-auto: create-drop
+        naming:
+          physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        dialect: org.hibernate.dialect.H2Dialect
+        format-sql: true
+        use-new-id-generator-mappings: false
+  hikari:
+    minimum-idle: 5
+    maximum-pool-size: 5
+    idle-timeout: 30000
+    max-lifetime: 2000000
+    connection-timeout: 30000
+    connection-test-query: SELECT 1
+    validation-timeout: 5000
+    schema: classpath:h2/schema.sql
