@@ -2,9 +2,10 @@ package com.jkos.hackathon.constant;
 
 public enum SkillLevel {
 
-    ADVANCED,
     BEGINNER,
     INTERMEDIATE,
+    ADVANCED,
+    GOOD_TO_HAVE
     ;
 
 
