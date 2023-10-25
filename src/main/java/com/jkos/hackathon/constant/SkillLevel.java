@@ -1,17 +1,21 @@
 package com.jkos.hackathon.constant;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
-@Getter
 public enum SkillLevel {
 
-    BEGINNER(1),
-    INTERMEDIATE(2),
-    ADVANCED(3);
+    ADVANCED,
+    BEGINNER,
+    INTERMEDIATE,
+    ;
 
-    private final int level;
 
+    public static SkillLevel getFromOrdinal(int ordinal) {
+        for (SkillLevel skillLevel : SkillLevel.values()) {
+            if (skillLevel.ordinal() == ordinal) {
+                return skillLevel;
+            }
+        }
+
+        throw new IllegalArgumentException("SkillLevel for %s not found".formatted(ordinal));
+    }
 
 }

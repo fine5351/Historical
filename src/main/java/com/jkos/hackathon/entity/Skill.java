@@ -1,9 +1,10 @@
 package com.jkos.hackathon.entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
 public class Skill extends BaseEntity {

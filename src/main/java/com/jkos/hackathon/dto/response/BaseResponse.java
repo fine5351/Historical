@@ -1,5 +1,6 @@
-package com.jkos.hackathon.dto;
+package com.jkos.hackathon.dto.response;
 
+import com.jkos.hackathon.constant.ResponseStatusCode;
 import lombok.Data;
 
 @Data
@@ -12,14 +13,14 @@ public class BaseResponse<T> {
     public static <T> BaseResponse<T> success(T data) {
         BaseResponse<T> response = new BaseResponse<>();
         response.setData(data);
-        response.setCode("0000");
+        response.setCode(ResponseStatusCode.SUCCESS.getCode());
         response.setMessage("success");
         return response;
     }
 
     public static <T> BaseResponse<T> success() {
         BaseResponse<T> response = new BaseResponse<>();
-        response.setCode("0000");
+        response.setCode(ResponseStatusCode.SUCCESS.getCode());
         response.setMessage("success");
         return response;
     }

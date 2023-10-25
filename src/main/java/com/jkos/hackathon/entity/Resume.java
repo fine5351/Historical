@@ -1,6 +1,6 @@
 package com.jkos.hackathon.entity;
 
-import com.jkos.hackathon.constant.SkillLevel;
+import com.jkos.hackathon.constant.ResumeStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,12 +10,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-public class AllowedSkillMapping extends BaseEntity {
+public class Resume extends BaseEntity {
 
-    private long teamId;
-    private long vacancyId;
-    private long skillId;
+    private String fileName;
     @Enumerated(EnumType.ORDINAL)
-    private SkillLevel skillLevel;
+    private ResumeStatus status;
 
 }
