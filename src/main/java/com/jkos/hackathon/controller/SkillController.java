@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+import static java.util.Comparator.comparing;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -26,6 +28,7 @@ public class SkillController {
     public BaseResponse<GetSkillPayload> getSkill() {
         List<SkillDTO> list = skillService.getAllSkills().stream()
                 .map(skill -> new SkillDTO(skill.getId(), skill.getName()))
+                .sorted(comparing(SkillDTO::getName))
                 .toList();
         return BaseResponse.success(new GetSkillPayload(list));
     }
