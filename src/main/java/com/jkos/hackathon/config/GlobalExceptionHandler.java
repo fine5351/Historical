@@ -6,10 +6,6 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.Map;
-import java.util.Queue;
-import java.util.Stack;
-
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -17,7 +13,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public void handleException(Exception e) {
         log.error("e = " + e);
-
     }
 
     @ExceptionHandler(JsonParseException.class)

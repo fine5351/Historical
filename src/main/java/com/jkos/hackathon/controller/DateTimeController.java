@@ -4,7 +4,6 @@ import com.jkos.hackathon.dto.request.LocalDateTimeRequest;
 import com.jkos.hackathon.dto.response.BaseResponse;
 import com.jkos.hackathon.dto.response.TimeResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.auditing.DateTimeProvider;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +22,7 @@ public class DateTimeController {
     private static final ZoneId DEFAULT_ZONE_ID = ZoneId.of("Asia/Taipei");
 
     @PostMapping("/print")
-    public BaseResponse<TimeResponse> print() {
+    public BaseResponse<TimeResponse> print(@RequestBody LocalDateTimeRequest request) {
         return BaseResponse.success(new TimeResponse(new Date(),
                 LocalDate.now(),
                 LocalDateTime.now(),
