@@ -35,7 +35,6 @@ public class EmployeeController {
     @PostMapping
     @Operation(summary = "Create employee", description = "Creates a new employee")
     public Employee createEmployee(@RequestBody Employee employee) {
-        // Fields will be automatically filled by the global listener
         employeeMapper.insert(employee);
         return employee;
     }
@@ -44,7 +43,6 @@ public class EmployeeController {
     @Operation(summary = "Update employee", description = "Updates an existing employee")
     public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
         employee.setId(id);
-        // Fields will be automatically filled by the global listener
         employeeMapper.update(employee);
         return employee;
     }
