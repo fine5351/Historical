@@ -1,4 +1,4 @@
-package com.pkuo.hackathon;
+package com.pkuo.springdatajpa;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
@@ -8,11 +8,11 @@ import java.util.TimeZone;
 
 @SpringBootApplication
 @OpenAPIDefinition(info = @io.swagger.v3.oas.annotations.info.Info(title = "Hackathon", version = "1.0", description = "Hackathon"))
-public class HackathonApplication {
+public class SpringDataJpaApplication {
 
     public static void main(String[] args) {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Taipei"));
-        SpringApplication.run(HackathonApplication.class, args);
+        SpringApplication.run(SpringDataJpaApplication.class, args);
     }
 
 }
