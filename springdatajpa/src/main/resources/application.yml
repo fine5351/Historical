@@ -10,7 +10,7 @@ spring:
       settings:
         web-allow-others: true
   datasource:
-    url: jdbc:h2:file:../data/hackathon;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    url: jdbc:h2:file:../data/hackathon;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
     username: root
     password: 123456
     driver-class-name: org.h2.Driver
