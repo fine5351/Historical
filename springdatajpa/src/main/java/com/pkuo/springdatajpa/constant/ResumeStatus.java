@@ -1,4 +1,4 @@
-package com.jkos.hackathon.constant;
+package com.pkuo.springdatajpa.constant;
 
 public enum ResumeStatus {
 

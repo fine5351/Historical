@@ -1,6 +1,6 @@
-package com.jkos.hackathon.entity;
+package com.pkuo.springdatajpa.entity;
 
-import com.jkos.hackathon.constant.SkillLevel;
+import com.pkuo.springdatajpa.constant.SkillLevel;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-public class AllowedSkillMapping extends com.jkos.hackathon.entity.BaseEntity {
+public class AllowedSkillMapping extends com.pkuo.springdatajpa.entity.BaseEntity {
 
     private long teamId;
     private long vacancyId;

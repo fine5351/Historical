@@ -1,6 +1,6 @@
-package com.jkos.hackathon.config;
+package com.pkuo.springdatajpa.config;
 
-import com.jkos.hackathon.interceptor.RequestResponseLoggingInterceptor;
+import com.pkuo.springdatajpa.interceptor.RequestResponseLoggingInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

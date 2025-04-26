@@ -1,4 +1,4 @@
-package com.jkos.hackathon.advice;
+package com.pkuo.springdatajpa.advice;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;

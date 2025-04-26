@@ -1,7 +1,7 @@
-package com.jkos.hackathon.service;
+package com.pkuo.springdatajpa.service;
 
-import com.jkos.hackathon.client.PkuoApiClient;
-import com.jkos.hackathon.dto.PkuoEntityDTO;
+import com.pkuo.springdatajpa.client.PkuoApiClient;
+import com.pkuo.springdatajpa.dto.PkuoEntityDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

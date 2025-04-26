@@ -1,13 +1,13 @@
-package com.jkos.hackathon.service;
+package com.pkuo.springdatajpa.service;
 
-import com.jkos.hackathon.constant.SkillLevel;
-import com.jkos.hackathon.dto.AllowedSkillLevelMappingDTO;
-import com.jkos.hackathon.entity.AllowedSkillMapping;
-import com.jkos.hackathon.entity.Skill;
-import com.jkos.hackathon.repository.AllowedSkillMappingRepository;
-import com.jkos.hackathon.repository.SkillRepository;
-import com.jkos.hackathon.repository.TeamRepository;
-import com.jkos.hackathon.repository.VacancyRepository;
+import com.pkuo.springdatajpa.constant.SkillLevel;
+import com.pkuo.springdatajpa.dto.AllowedSkillLevelMappingDTO;
+import com.pkuo.springdatajpa.entity.AllowedSkillMapping;
+import com.pkuo.springdatajpa.entity.Skill;
+import com.pkuo.springdatajpa.repository.AllowedSkillMappingRepository;
+import com.pkuo.springdatajpa.repository.SkillRepository;
+import com.pkuo.springdatajpa.repository.TeamRepository;
+import com.pkuo.springdatajpa.repository.VacancyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

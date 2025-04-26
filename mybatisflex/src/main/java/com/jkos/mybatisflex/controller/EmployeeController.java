@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.mybatisflex.core.query.QueryMethods.select;
@@ -36,10 +35,7 @@ public class EmployeeController {
     @PostMapping
     @Operation(summary = "Create employee", description = "Creates a new employee")
     public Employee createEmployee(@RequestBody Employee employee) {
-        // Set createdAt and updatedAt fields
-        LocalDateTime now = LocalDateTime.now();
-        employee.setCreatedAt(now);
-        employee.setUpdatedAt(now);
+        // Fields will be automatically filled by the global listener
         employeeMapper.insert(employee);
         return employee;
     }
@@ -48,8 +44,7 @@ public class EmployeeController {
     @Operation(summary = "Update employee", description = "Updates an existing employee")
     public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
         employee.setId(id);
-        // Set updatedAt field
-        employee.setUpdatedAt(LocalDateTime.now());
+        // Fields will be automatically filled by the global listener
         employeeMapper.update(employee);
         return employee;
     }

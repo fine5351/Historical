@@ -1,12 +1,11 @@
-package com.jkos.hackathon.constant;
+package com.pkuo.springdatajpa.constant;
 
 public enum SkillLevel {
 
     BEGINNER,
     INTERMEDIATE,
     ADVANCED,
-    GOOD_TO_HAVE
-    ;
+    GOOD_TO_HAVE;
 
 
     public static SkillLevel getFromOrdinal(int ordinal) {

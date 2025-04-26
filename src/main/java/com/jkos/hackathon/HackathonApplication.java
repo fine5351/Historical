@@ -1,4 +1,4 @@
-package com.jkos.hackathon;
+package com.pkuo.springdatajpa;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
@@ -14,4 +14,5 @@ public class HackathonApplication {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Taipei"));
         SpringApplication.run(HackathonApplication.class, args);
     }
+
 }

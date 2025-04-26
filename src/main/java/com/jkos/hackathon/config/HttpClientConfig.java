@@ -1,6 +1,6 @@
-package com.jkos.hackathon.config;
+package com.pkuo.springdatajpa.config;
 
-import com.jkos.hackathon.client.PkuoApiClient;
+import com.pkuo.springdatajpa.client.PkuoApiClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;

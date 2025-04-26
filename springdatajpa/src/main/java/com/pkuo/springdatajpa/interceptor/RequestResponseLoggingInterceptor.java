@@ -1,4 +1,4 @@
-package com.jkos.hackathon.interceptor;
+package com.pkuo.springdatajpa.interceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

@@ -1,4 +1,4 @@
-package com.jkos.hackathon.dto;
+package com.pkuo.springdatajpa.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,8 +1,8 @@
-package com.jkos.hackathon.controller;
+package com.pkuo.springdatajpa.controller;
 
-import com.jkos.hackathon.dto.request.LocalDateTimeRequest;
-import com.jkos.hackathon.dto.response.BaseResponse;
-import com.jkos.hackathon.dto.response.TimeResponse;
+import com.pkuo.springdatajpa.dto.request.LocalDateTimeRequest;
+import com.pkuo.springdatajpa.dto.response.BaseResponse;
+import com.pkuo.springdatajpa.dto.response.TimeResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

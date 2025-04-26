@@ -1,4 +1,4 @@
-package com.jkos.hackathon.config;
+package com.pkuo.springdatajpa.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

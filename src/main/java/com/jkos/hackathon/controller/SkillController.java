@@ -1,12 +1,12 @@
-package com.jkos.hackathon.controller;
+package com.pkuo.springdatajpa.controller;
 
-import com.jkos.hackathon.constant.ResponseStatusCode;
-import com.jkos.hackathon.dto.AllowedSkillLevelMappingDTO;
-import com.jkos.hackathon.dto.SkillDTO;
-import com.jkos.hackathon.dto.response.BaseResponse;
-import com.jkos.hackathon.dto.response.GetAllowedSkillLevelPayload;
-import com.jkos.hackathon.dto.response.GetSkillPayload;
-import com.jkos.hackathon.service.SkillService;
+import com.pkuo.springdatajpa.constant.ResponseStatusCode;
+import com.pkuo.springdatajpa.dto.AllowedSkillLevelMappingDTO;
+import com.pkuo.springdatajpa.dto.SkillDTO;
+import com.pkuo.springdatajpa.dto.response.BaseResponse;
+import com.pkuo.springdatajpa.dto.response.GetAllowedSkillLevelPayload;
+import com.pkuo.springdatajpa.dto.response.GetSkillPayload;
+import com.pkuo.springdatajpa.service.SkillService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

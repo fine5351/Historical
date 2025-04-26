@@ -1,6 +1,6 @@
-package com.jkos.hackathon.repository;
+package com.pkuo.springdatajpa.repository;
 
-import com.jkos.hackathon.entity.Skill;
+import com.pkuo.springdatajpa.entity.Skill;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

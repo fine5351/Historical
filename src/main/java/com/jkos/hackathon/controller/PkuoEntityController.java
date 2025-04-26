@@ -1,8 +1,8 @@
-package com.jkos.hackathon.controller;
+package com.pkuo.springdatajpa.controller;
 
-import com.jkos.hackathon.dto.PkuoEntityDTO;
-import com.jkos.hackathon.dto.response.BaseResponse;
-import com.jkos.hackathon.service.PkuoEntityService;
+import com.pkuo.springdatajpa.dto.PkuoEntityDTO;
+import com.pkuo.springdatajpa.dto.response.BaseResponse;
+import com.pkuo.springdatajpa.service.PkuoEntityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,6 +1,6 @@
-package com.jkos.hackathon.client;
+package com.pkuo.springdatajpa.client;
 
-import com.jkos.hackathon.dto.PkuoEntityDTO;
+import com.pkuo.springdatajpa.dto.PkuoEntityDTO;
 import org.springframework.web.service.annotation.GetExchange;
 import org.springframework.web.service.annotation.HttpExchange;
 

@@ -1,6 +1,6 @@
-package com.jkos.hackathon.dto.response;
+package com.pkuo.springdatajpa.dto.response;
 
-import com.jkos.hackathon.constant.ResponseStatusCode;
+import com.pkuo.springdatajpa.constant.ResponseStatusCode;
 import lombok.Data;
 
 @Data

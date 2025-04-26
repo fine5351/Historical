@@ -1,6 +1,6 @@
-package com.jkos.hackathon.repository;
+package com.pkuo.springdatajpa.repository;
 
-import com.jkos.hackathon.entity.AllowedSkillMapping;
+import com.pkuo.springdatajpa.entity.AllowedSkillMapping;
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

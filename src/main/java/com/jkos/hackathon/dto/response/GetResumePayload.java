@@ -1,6 +1,6 @@
-package com.jkos.hackathon.dto.response;
+package com.pkuo.springdatajpa.dto.response;
 
-import com.jkos.hackathon.dto.ResumeDTO;
+import com.pkuo.springdatajpa.dto.ResumeDTO;
 
 import java.util.List;
 

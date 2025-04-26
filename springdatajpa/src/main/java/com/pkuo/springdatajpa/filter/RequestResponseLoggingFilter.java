@@ -1,4 +1,4 @@
-package com.jkos.hackathon.filter;
+package com.pkuo.springdatajpa.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

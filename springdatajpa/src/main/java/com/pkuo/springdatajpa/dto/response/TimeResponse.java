@@ -1,4 +1,4 @@
-package com.jkos.hackathon.dto.response;
+package com.pkuo.springdatajpa.dto.response;
 
 import java.time.*;
 import java.util.Date;

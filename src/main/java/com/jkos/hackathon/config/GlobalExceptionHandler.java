@@ -1,4 +1,4 @@
-package com.jkos.hackathon.config;
+package com.pkuo.springdatajpa.config;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import lombok.extern.slf4j.Slf4j;

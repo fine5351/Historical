@@ -1,4 +1,4 @@
-package com.jkos.hackathon.entity;
+package com.pkuo.springdatajpa.entity;
 
 import jakarta.persistence.Entity;
 import lombok.Data;

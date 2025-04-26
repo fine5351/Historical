@@ -1,6 +1,6 @@
-package com.jkos.hackathon.entity;
+package com.pkuo.springdatajpa.entity;
 
-import com.jkos.hackathon.constant.ResumeStatus;
+import com.pkuo.springdatajpa.constant.ResumeStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-public class Resume extends com.jkos.hackathon.entity.BaseEntity {
+public class Resume extends com.pkuo.springdatajpa.entity.BaseEntity {
 
     private String fileName;
     @Enumerated(EnumType.ORDINAL)

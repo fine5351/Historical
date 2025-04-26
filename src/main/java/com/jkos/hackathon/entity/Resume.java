@@ -1,6 +1,6 @@
-package com.jkos.hackathon.entity;
+package com.pkuo.springdatajpa.entity;
 
-import com.jkos.hackathon.constant.ResumeStatus;
+import com.pkuo.springdatajpa.constant.ResumeStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

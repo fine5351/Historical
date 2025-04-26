@@ -1,11 +1,11 @@
-package com.jkos.hackathon.controller;
+package com.pkuo.springdatajpa.controller;
 
-import com.jkos.hackathon.constant.ResumeStatus;
-import com.jkos.hackathon.dto.ResumeDTO;
-import com.jkos.hackathon.dto.response.BaseResponse;
-import com.jkos.hackathon.dto.response.GetResumePayload;
-import com.jkos.hackathon.entity.Resume;
-import com.jkos.hackathon.repository.ResumeRepository;
+import com.pkuo.springdatajpa.constant.ResumeStatus;
+import com.pkuo.springdatajpa.dto.ResumeDTO;
+import com.pkuo.springdatajpa.dto.response.BaseResponse;
+import com.pkuo.springdatajpa.dto.response.GetResumePayload;
+import com.pkuo.springdatajpa.entity.Resume;
+import com.pkuo.springdatajpa.repository.ResumeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
