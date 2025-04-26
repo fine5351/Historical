@@ -2,7 +2,7 @@ spring:
   main:
     banner-mode: off
   application:
-    name: hackathon
+    name: springdatajpa
   h2:
     console:
       enabled: true

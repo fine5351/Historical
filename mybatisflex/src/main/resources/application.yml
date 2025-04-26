@@ -1,0 +1,36 @@
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: mybatisflex
+  datasource:
+    url: jdbc:mysql://localhost:3306/hackathon?useSSL=false&serverTimezone=Asia/Taipei&characterEncoding=utf8
+    username: pkuo
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      max-pool-size: 15
+      min-idle: 15
+
+mybatis-flex:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    print-banner: false
+
+logging:
+  level:
+    com.jkos.mybatisflex: DEBUG
+    com.mybatis-flex: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+server:
+  port: 8081
