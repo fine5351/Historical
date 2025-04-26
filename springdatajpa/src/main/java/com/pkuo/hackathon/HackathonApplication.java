@@ -1,4 +1,4 @@
-package com.jkos.hackathon;
+package com.pkuo.hackathon;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;

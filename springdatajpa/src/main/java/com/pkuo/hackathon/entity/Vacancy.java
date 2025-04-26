@@ -7,8 +7,8 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-public class Team extends BaseEntity {
+public class Vacancy extends com.jkos.hackathon.entity.BaseEntity {
 
-    private String name;
+    private String title;
 
 }

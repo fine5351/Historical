@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-public class AllowedSkillMapping extends BaseEntity {
+public class AllowedSkillMapping extends com.jkos.hackathon.entity.BaseEntity {
 
     private long teamId;
     private long vacancyId;

@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-public class Resume extends BaseEntity {
+public class Resume extends com.jkos.hackathon.entity.BaseEntity {
 
     private String fileName;
     @Enumerated(EnumType.ORDINAL)

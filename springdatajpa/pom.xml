@@ -83,7 +83,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.jkos.hackathon.HackathonApplication</mainClass>
+                    <mainClass>com.pkuo.hackathon.HackathonApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
