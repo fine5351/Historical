@@ -1,3 +1,9 @@
+-- Create users
+CREATE USER IF NOT EXISTS root PASSWORD '123456';
+CREATE USER IF NOT EXISTS pkuo PASSWORD '123456';
+GRANT ALL ON SCHEMA PUBLIC TO root;
+GRANT ALL ON SCHEMA PUBLIC TO pkuo;
+
 drop table if exists skill;
 create table skill (
     id bigint primary key auto_increment,

@@ -6,16 +6,20 @@ spring:
   h2:
     console:
       enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
   datasource:
-    url: jdbc:h2:mem:hackathon:public
-    username: sa
-    password:
+    url: jdbc:h2:file:./data/hackathon;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: root
+    password: 123456
     driver-class-name: org.h2.Driver
   hikari:
     max-pool-size: 15
     min-idle: 15
   sql:
     init:
+      mode: always
       schema-locations: classpath:h2/schema.sql
       data-locations: classpath:h2/data.sql
   jpa:
@@ -23,6 +27,16 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        highlight_sql: true
+        use_sql_comments: true
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE
 
 management:
   endpoints:
