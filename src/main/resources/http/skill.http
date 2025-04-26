@@ -1,0 +1,4 @@
+###
+GET http://localhost:8080/skill/
+
+<> 2025-04-26T231845.200.json
