@@ -22,10 +22,10 @@ public class MybatisFlexConfig {
             FlexGlobalConfig globalConfig = FlexGlobalConfig.getDefaultConfig();
 
             // Register insert listener
-            globalConfig.registerInsertListener(entity -> autoFillHandler.onInsert(entity));
+            globalConfig.registerInsertListener(autoFillHandler::onInsert);
 
             // Register update listener
-            globalConfig.registerUpdateListener(entity -> autoFillHandler.onUpdate(entity));
+            globalConfig.registerUpdateListener(autoFillHandler::onUpdate);
         };
     }
 

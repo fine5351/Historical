@@ -3,29 +3,16 @@ spring:
     banner-mode: off
   application:
     name: springdatajpa
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
-      settings:
-        web-allow-others: true
   datasource:
-    url: jdbc:h2:file:../data/hackathon;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
+    url: jdbc:mariadb://localhost:3306/hackathon?useSSL=false&serverTimezone=Asia/Taipei&characterEncoding=utf8
     username: root
     password: 123456
-    driver-class-name: org.h2.Driver
+    driver-class-name: org.mariadb.jdbc.Driver
   hikari:
     max-pool-size: 15
     min-idle: 15
-  sql:
-    init:
-      mode: always
-      schema-locations: classpath:h2/schema.sql
-      data-locations: classpath:h2/data.sql
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: update
     show-sql: true
     properties:
       hibernate:

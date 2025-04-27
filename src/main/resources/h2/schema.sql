@@ -9,7 +9,9 @@ create table skill (
     id bigint primary key auto_increment,
     name       nvarchar(255) not null,
     created_at datetime      not null default current_timestamp,
-    updated_at datetime      not null default current_timestamp
+    updated_at datetime not null default current_timestamp,
+    created_by nvarchar(50) not null,
+    updated_by nvarchar(50) not null
 );
 
 drop table if exists team;
@@ -17,7 +19,9 @@ create table team (
     id bigint primary key auto_increment,
     name       varchar(255) not null,
     created_at datetime     not null default current_timestamp,
-    updated_at datetime     not null default current_timestamp
+    updated_at datetime not null default current_timestamp,
+    created_by nvarchar(50) not null,
+    updated_by nvarchar(50) not null
 );
 
 drop table if exists allowed_skill_mapping;
@@ -29,6 +33,8 @@ create table allowed_skill_mapping (
     skill_level int not null,
     created_at datetime not null default current_timestamp,
     updated_at datetime not null default current_timestamp,
+    created_by nvarchar(50) not null,
+    updated_by nvarchar(50) not null
     unique (team_id, skill_id, skill_level)
 );
 
@@ -39,7 +45,9 @@ create table resume
   file_name  varchar(255) not null,
   status     int          not null default 0,
   created_at datetime     not null default current_timestamp,
-  updated_at datetime     not null default current_timestamp
+  updated_at datetime not null default current_timestamp,
+  created_by nvarchar(50) not null,
+  updated_by nvarchar(50) not null
 );
 
 drop table if exists vacancy;
@@ -48,5 +56,7 @@ create table vacancy
   id         bigint primary key auto_increment,
   title      varchar(255) not null,
   created_at datetime     not null default current_timestamp,
-  updated_at datetime     not null default current_timestamp
+  updated_at datetime not null default current_timestamp,
+  created_by nvarchar(50) not null,
+  updated_by nvarchar(50) not null
 );

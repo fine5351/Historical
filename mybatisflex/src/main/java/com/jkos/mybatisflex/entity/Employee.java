@@ -34,4 +34,5 @@ public class Employee {
     // Schema: nvarchar(50) not null
     @Column("updated_by")
     private String updatedBy;
+
 }
