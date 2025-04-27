@@ -1,0 +1,33 @@
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: shardingsphereproxy
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3307?useSSL=false&serverTimezone=Asia/Taipei&characterEncoding=utf8
+    username: root
+    password: 123456
+
+mybatis-flex:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    print-banner: false
+
+logging:
+  level:
+    com.pkuo.shardingsphereproxy: DEBUG
+    com.mybatis-flex: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+server:
+  port: 8082

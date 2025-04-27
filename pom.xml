@@ -17,6 +17,7 @@
     <modules>
         <module>springdatajpa</module>
         <module>mybatisflex</module>
+        <module>shardingsphereproxy</module>
     </modules>
 
     <properties>

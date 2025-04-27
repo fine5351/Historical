@@ -1,8 +1,8 @@
 package com.jkos.mybatisflex.config;
 
 
+import org.apache.shardingsphere.encrypt.api.context.EncryptContext;
 import org.apache.shardingsphere.encrypt.spi.EncryptAlgorithm;
-import org.apache.shardingsphere.encrypt.spi.context.EncryptContext;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -109,11 +109,6 @@ public final class CustomAesEncryptor implements EncryptAlgorithm {
     @Override
     public String getType() {
         return "AES_CUSTOM";
-    }
-
-    @Override
-    public Properties getProps() {
-        return props;
     }
 
 }
