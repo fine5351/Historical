@@ -1,6 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 echo "Starting MariaDB Docker Compose..."
-cd "$(dirname "$0")"
+# Get the directory of the script and change to it
+SCRIPT_DIR=$(dirname "$0")
+cd "$SCRIPT_DIR"
+# Run docker-compose
 docker-compose up -d
 echo "MariaDB Docker Compose started successfully."
 echo "You can access MariaDB at localhost:3306"
