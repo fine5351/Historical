@@ -13,31 +13,16 @@
 
     <dependencies>
 
-        <!-- MyBatis-Flex dependencies -->
         <dependency>
             <groupId>com.mybatis-flex</groupId>
             <artifactId>mybatis-flex-spring-boot3-starter</artifactId>
             <version>1.10.9</version>
         </dependency>
 
-        <!--        shardingsphere jdbc core-->
         <dependency>
             <groupId>org.apache.shardingsphere</groupId>
             <artifactId>shardingsphere-jdbc-core</artifactId>
             <version>5.4.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.apache.shardingsphere.elasticjob</groupId>
-                    <artifactId>elasticjob-lite</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <!-- shardingsphere namespace -->
-        <dependency>
-            <groupId>org.apache.shardingsphere</groupId>
-            <artifactId>shardingsphere-jdbc-core-spring-namespace</artifactId>
-            <version>5.2.0</version>
         </dependency>
 
     </dependencies>

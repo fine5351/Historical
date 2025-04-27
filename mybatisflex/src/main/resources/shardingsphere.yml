@@ -1,0 +1,31 @@
+# mode:
+#   type: Standalone
+#   repository:
+#     type: JDBC
+#
+# databaseName: hackathon
+
+dataSources:
+  ds:
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: org.mariadb.jdbc.Driver
+    jdbcUrl: jdbc:mariadb://localhost:3306/hackathon?useSSL=false&serverTimezone=Asia/Taipei&characterEncoding=utf8
+    username: pkuo
+    password: 123456
+
+rules:
+- !ENCRYPT
+  encryptors:
+    aes:
+      type: AES_CUSTOM
+      props:
+        aes-key-value: 123456abc
+  tables:
+    employee:
+      columns:
+        roc_id:
+          cipherColumn: roc_id
+          encryptorName: aes
+
+props:
+  sql-show: true

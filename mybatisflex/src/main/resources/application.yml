@@ -5,7 +5,7 @@ spring:
     name: mybatisflex
   datasource:
     driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
-    url: jdbc:shardingsphere:classpath:shardingsphere.yaml
+    url: jdbc:shardingsphere:classpath:shardingsphere.yml
 
 mybatis-flex:
   configuration:

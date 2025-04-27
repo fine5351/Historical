@@ -1,7 +1,8 @@
 package com.jkos.mybatisflex.config;
 
-import org.apache.shardingsphere.encrypt.api.context.EncryptContext;
+
 import org.apache.shardingsphere.encrypt.spi.EncryptAlgorithm;
+import org.apache.shardingsphere.encrypt.spi.context.EncryptContext;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -54,11 +55,12 @@ public final class CustomAesEncryptor implements EncryptAlgorithm {
         }
     }
 
-    public String decrypt(String ciphertext, EncryptContext encryptContext) {
-        if (null == ciphertext) {
+    public String decrypt(Object cipherObject, EncryptContext encryptContext) {
+        if (null == cipherObject) {
             return null;
         }
 
+        String ciphertext = cipherObject.toString();
         try {
 
             // The first 24 characters (16 bytes in Base64) are the IV
@@ -107,6 +109,11 @@ public final class CustomAesEncryptor implements EncryptAlgorithm {
     @Override
     public String getType() {
         return "AES_CUSTOM";
+    }
+
+    @Override
+    public Properties getProps() {
+        return props;
     }
 
 }
