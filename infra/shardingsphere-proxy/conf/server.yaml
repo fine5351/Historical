@@ -1,0 +1,19 @@
+mode:
+  type: Standalone
+  repository:
+    type: JDBC
+
+authority:
+  users:
+    - user: root
+      password: 123456
+    - user: pkuo
+      password: 123456
+  privilege:
+    type: ALL_PERMITTED
+
+props:
+  max-connections-size-per-query: 1
+  kernel-thread-count: 16
+  proxy-frontend-flush-threshold: 128
+  sql-show: true

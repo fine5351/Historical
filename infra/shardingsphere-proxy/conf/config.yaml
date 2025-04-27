@@ -1,0 +1,26 @@
+databaseName: hackathon
+
+dataSources:
+  ds:
+    url: jdbc:mariadb://localhost:3306/hackathon?useSSL=false&serverTimezone=Asia/Taipei&characterEncoding=utf8
+    username: root
+    password: 123456
+    connectionTimeoutMilliseconds: 30000
+    idleTimeoutMilliseconds: 60000
+    maxLifetimeMilliseconds: 1800000
+    maxPoolSize: 50
+    minPoolSize: 1
+
+rules:
+- !ENCRYPT
+  encryptors:
+    aes:
+      type: AES
+      props:
+        aes-key-value: 123456abc
+  tables:
+    employee:
+      columns:
+        roc_id:
+          cipherColumn: roc_id
+          encryptorName: aes

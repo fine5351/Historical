@@ -34,3 +34,4 @@ build/
 ### Mac OS ###
 .DS_Store
 /data/hackathon.mv.db
+/infra/mariadb/mariadb_data/*
