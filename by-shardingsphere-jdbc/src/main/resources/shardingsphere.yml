@@ -1,9 +1,7 @@
-# mode:
-#   type: Standalone
-#   repository:
-#     type: JDBC
-#
-# databaseName: hackathon
+mode:
+ type: Standalone
+ repository:
+   type: JDBC
 
 dataSources:
   ds:
@@ -17,15 +15,16 @@ rules:
 - !ENCRYPT
   encryptors:
     aes:
-      type: AES_CUSTOM
+      type: CUSTOM_AES
       props:
-        aes-key-value: 123456abc
+        aes-key-value: 1234567890123456
   tables:
     employee:
       columns:
         roc_id:
-          cipherColumn: roc_id
-          encryptorName: aes
+          cipher:
+           name: roc_id
+           encryptorName: aes
 
 props:
   sql-show: true

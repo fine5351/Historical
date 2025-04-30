@@ -2,7 +2,7 @@ spring:
   main:
     banner-mode: off
   application:
-    name: mybatisflex
+    name: by-shardingsphere-jdbc
   datasource:
     driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
     url: jdbc:shardingsphere:classpath:shardingsphere.yml
@@ -15,7 +15,6 @@ mybatis-flex:
 
 logging:
   level:
-    com.jkos.mybatisflex: DEBUG
     com.mybatis-flex: DEBUG
 
 management:

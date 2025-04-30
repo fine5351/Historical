@@ -1,6 +1,5 @@
-package com.fine_kuo.by_shardingsphere_proxy.controller;
+package com.finekuo.byshardingspherejdbc.controller;
 
-import com.finekuo.mybatisflexcore.dto.request.CreateEmployeeRequest;
 import com.finekuo.mybatisflexcore.entity.Employee;
 import com.finekuo.mybatisflexcore.mapper.EmployeeMapper;
 import com.mybatisflex.core.paginate.Page;
@@ -35,8 +34,7 @@ public class EmployeeController {
 
     @PostMapping
     @Operation(summary = "Create employee", description = "Creates a new employee")
-    public Employee createEmployee(@RequestBody CreateEmployeeRequest request) {
-        Employee employee = request.toEmployee();
+    public Employee createEmployee(@RequestBody Employee employee) {
         employeeMapper.insert(employee);
         return employee;
     }

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.pkuo</groupId>
+        <groupId>com.finekuo</groupId>
         <artifactId>hackathon</artifactId>
         <version>1.0.0</version>
     </parent>
@@ -14,15 +14,21 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.mybatis-flex</groupId>
-            <artifactId>mybatis-flex-spring-boot3-starter</artifactId>
-            <version>1.10.9</version>
+            <groupId>com.finekuo</groupId>
+            <artifactId>mybatis-flex-core</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.shardingsphere</groupId>
-            <artifactId>shardingsphere-jdbc-core</artifactId>
-            <version>5.4.1</version>
+            <artifactId>shardingsphere-jdbc</artifactId>
+            <version>5.5.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.finekuo</groupId>
+            <artifactId>shardingsphere-encryptor</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
     </dependencies>
@@ -34,7 +40,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.fine_kuo.by_shardingsphere_jdbc.ByShardingSphereJDBCApplication</mainClass>
+                    <mainClass>com.finekuo.byshardingspherejdbc.ByShardingSphereJDBCApplication</mainClass>
                 </configuration>
             </plugin>
             <plugin>
