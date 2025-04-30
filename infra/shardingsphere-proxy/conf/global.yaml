@@ -1,0 +1,19 @@
+mode:
+  type: Standalone
+  repository:
+    type: JDBC
+
+authority:
+  users:
+    - user: root
+      password: root
+      admin: true
+    - user: proxy
+      password: 123456 # 确保密码与数据库配置一致
+  privilege:
+    type: ALL_PERMITTED
+
+props:
+  system-log-level: debug
+  proxy-default-port: 3307
+

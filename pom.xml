@@ -15,9 +15,10 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>springdatajpa</module>
-        <module>mybatisflex</module>
-        <module>shardingsphereproxy</module>
+        <module>spring-data-jpa</module>
+        <module>by-shardingsphere-jdbc</module>
+        <module>by-shardingsphere-proxy</module>
+        <module>shardingsphere-encryptor</module>
     </modules>
 
     <properties>
@@ -86,42 +87,12 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>3.4.5</version>
-                    <executions>
-                        <execution>
-                            <id>pre-integration-test</id>
-                            <phase>pre-integration-test</phase>
-                            <goals>
-                                <goal>start</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>post-integration-test</id>
-                            <phase>post-integration-test</phase>
-                            <goals>
-                                <goal>stop</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>4.0.0-beta-2</version>
+                    <version>3.14.0</version>
                 </plugin>
-                <!--                <plugin>-->
-                <!--                    <groupId>org.springdoc</groupId>-->
-                <!--                    <artifactId>springdoc-openapi-maven-plugin</artifactId>-->
-                <!--                    <version>1.4</version>-->
-                <!--                    <executions>-->
-                <!--                        <execution>-->
-                <!--                            <id>integration-test</id>-->
-                <!--                            <phase>integration-test</phase>-->
-                <!--                            <goals>-->
-                <!--                                <goal>generate</goal>-->
-                <!--                            </goals>-->
-                <!--                        </execution>-->
-                <!--                    </executions>-->
-                <!--                </plugin>-->
             </plugins>
         </pluginManagement>
     </build>

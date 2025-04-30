@@ -1,18 +1,16 @@
 services:
   shardingsphere-proxy:
-    image: apache/shardingsphere-proxy:5.3.2
+    image: apache/shardingsphere-proxy:latest
     container_name: shardingsphere-proxy
-    volumes:
-      - ./conf:/opt/shardingsphere-proxy/conf
-      - ./ext-lib:/opt/shardingsphere-proxy/ext-lib
+    restart: always
     ports:
       - "3307:3307"
-    environment:
-      - JVM_OPTS="-Djava.awt.headless=true"
+    volumes:
+      - ./ext-lib:/opt/shardingsphere-proxy/ext-lib
+      - ./conf:/opt/shardingsphere-proxy/conf
     networks:
-      - shardingsphere-proxy-network
+      - shared_network
 
 networks:
-  shardingsphere-proxy-network:
-    name: shardingsphere-proxy-network
-    driver: bridge
+  shared_network:
+    external: true

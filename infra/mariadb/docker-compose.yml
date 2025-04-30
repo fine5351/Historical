@@ -4,9 +4,10 @@ services:
     container_name: mariadb
     environment:
       MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: hackathon
       MYSQL_USER: pkuo
       MYSQL_PASSWORD: 123456
+      max_allowed_packet: 16777216
+      MYSQL_DATABASE: hackathon # 添加默认数据库
     ports:
       - "3306:3306"
     volumes:
@@ -15,13 +16,12 @@ services:
     restart: always
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     networks:
-      - mariadb-network
+      - shared_network
 
 volumes:
   mariadb_data:
     driver: local
 
 networks:
-  mariadb-network:
-    name: mariadb-network
-    driver: bridge
+  shared_network:
+    external: true

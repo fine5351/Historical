@@ -1,4 +1,4 @@
-package com.pkuo.springdatajpa.entity;
+package com.pkuo.spring_data_jpa.entity;
 
 import jakarta.persistence.Entity;
 import lombok.Data;

@@ -1,6 +1,6 @@
-package com.pkuo.springdatajpa.entity;
+package com.pkuo.spring_data_jpa.entity;
 
-import com.pkuo.springdatajpa.constant.ResumeStatus;
+import com.pkuo.spring_data_jpa.constant.ResumeStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

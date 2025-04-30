@@ -1,4 +1,4 @@
-package com.pkuo.springdatajpa;
+package com.pkuo.spring_data_jpa;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.boot.SpringApplication;
