@@ -13,20 +13,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.mybatis-flex</groupId>
-            <artifactId>mybatis-flex-spring-boot3-starter</artifactId>
-            <version>1.10.9</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <groupId>com.finekuo</groupId>
+            <artifactId>mybatis-flex-core</artifactId>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
@@ -37,7 +26,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.pkuo.by_shardingsphere_proxy.ByShardingSphereProxyApplication</mainClass>
+                    <mainClass>com.fine_kuo.by_shardingsphere_proxy.ByShardingSphereProxyApplication</mainClass>
                 </configuration>
             </plugin>
             <plugin>

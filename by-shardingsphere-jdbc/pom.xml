@@ -34,7 +34,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.jkos.by_shardingsphere_jdbc.ByShardingSphereJDBCApplication</mainClass>
+                    <mainClass>com.fine_kuo.by_shardingsphere_jdbc.ByShardingSphereJDBCApplication</mainClass>
                 </configuration>
             </plugin>
             <plugin>

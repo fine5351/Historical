@@ -19,6 +19,7 @@
         <module>by-shardingsphere-jdbc</module>
         <module>by-shardingsphere-proxy</module>
         <module>shardingsphere-encryptor</module>
+        <module>mybatis-flex-core</module>
     </modules>
 
     <properties>

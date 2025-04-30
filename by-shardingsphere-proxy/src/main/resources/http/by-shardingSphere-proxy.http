@@ -1,0 +1,19 @@
+GET http://localhost:8082/api/employees
+
+###
+GET localhost:8082/api/employees/4
+
+###
+POST http://localhost:8082/api/employees
+Content-Type: application/json
+
+{
+  "name": "{{$random.name.name}}",
+  "address": "{{$random.address.streetAddress}}",
+  "gender":"M",
+  "rocId":"A123456789"
+}
+
+
+
+

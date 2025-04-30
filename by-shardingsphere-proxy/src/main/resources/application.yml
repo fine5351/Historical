@@ -2,11 +2,11 @@ spring:
   main:
     banner-mode: off
   application:
-    name: shardingsphereproxy
+    name: by-shardingsphere-proxy
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3307?useSSL=false&serverTimezone=Asia/Taipei&characterEncoding=utf8
-    username: root
+    url: jdbc:mariadb://localhost:3307/hackathon-proxy?useSSL=false&serverTimezone=Asia/Taipei&characterEncoding=utf8
+    username: proxy
     password: 123456
 
 mybatis-flex:
@@ -17,7 +17,6 @@ mybatis-flex:
 
 logging:
   level:
-    com.pkuo.shardingsphereproxy: DEBUG
     com.mybatis-flex: DEBUG
 
 management:

@@ -32,7 +32,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.pkuo.spring_data_jpa.SpringDataJPAApplication</mainClass>
+                    <mainClass>com.fine_kuo.spring_data_jpa.SpringDataJPAApplication</mainClass>
                 </configuration>
             </plugin>
             <plugin>
