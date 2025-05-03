@@ -1,8 +1,8 @@
 package com.finekuo.springdatajpa.controller;
 
-import com.finekuo.springdatajpa.constant.ResumeStatus;
+import com.finekuo.normalcore.constant.ResumeStatus;
 import com.finekuo.springdatajpa.dto.ResumeDTO;
-import com.finekuo.springdatajpa.dto.response.BaseResponse;
+import com.finekuo.normalcore.dto.response.BaseResponse;
 import com.finekuo.springdatajpa.dto.response.GetResumePayload;
 import com.finekuo.springdatajpa.entity.Resume;
 import com.finekuo.springdatajpa.repository.ResumeRepository;

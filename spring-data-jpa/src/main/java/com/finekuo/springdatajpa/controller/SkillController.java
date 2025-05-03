@@ -1,9 +1,9 @@
 package com.finekuo.springdatajpa.controller;
 
-import com.finekuo.springdatajpa.constant.ResponseStatusCode;
+import com.finekuo.normalcore.constant.ResponseStatusCode;
 import com.finekuo.springdatajpa.dto.AllowedSkillLevelMappingDTO;
 import com.finekuo.springdatajpa.dto.SkillDTO;
-import com.finekuo.springdatajpa.dto.response.BaseResponse;
+import com.finekuo.normalcore.dto.response.BaseResponse;
 import com.finekuo.springdatajpa.dto.response.GetAllowedSkillLevelPayload;
 import com.finekuo.springdatajpa.dto.response.GetSkillPayload;
 import com.finekuo.springdatajpa.service.SkillService;

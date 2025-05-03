@@ -1,6 +1,8 @@
 package com.finekuo.normalcore.config;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.finekuo.normalcore.constant.ResponseStatusCode;
+import com.finekuo.normalcore.dto.response.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,18 +13,21 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public void handleException(Exception e) {
-        log.error("e = " + e);
+    public BaseResponse<Void> handleException(Exception e) {
+        log.error(null, e);
+        return BaseResponse.fail(ResponseStatusCode.FAILURE.getCode(), e.getMessage());
     }
 
     @ExceptionHandler(JsonParseException.class)
-    public void handleJsonParseException(JsonParseException e) {
-        log.error("e.getMessage() = " + e.getMessage());
+    public BaseResponse<Void> handleJsonParseException(JsonParseException e) {
+        log.warn(null, e);
+        return BaseResponse.fail(ResponseStatusCode.FAILURE.getCode(), e.getMessage());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public void handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
-        log.error("e.getMessage() = " + e.getMessage());
+    public BaseResponse<Void> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
+        log.warn(null, e);
+        return BaseResponse.fail(ResponseStatusCode.FAILURE.getCode(), e.getMessage());
     }
 
 }

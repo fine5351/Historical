@@ -10,8 +10,8 @@ Content-Type: application/json
 {
   "name": "{{$random.name.name}}",
   "address": "{{$random.address.streetAddress}}",
-  "gender":"M",
-  "rocId":"A123456789"
+  "gender":"{{$random.alphabetic(1)}}",
+  "rocId":"{{$random.alphanumeric(10)}}"
 }
 
 

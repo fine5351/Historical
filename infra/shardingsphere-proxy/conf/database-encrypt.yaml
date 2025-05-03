@@ -3,7 +3,7 @@ databaseName: hackathon-proxy
 dataSources:
   mariadb-hackathon:
     url: jdbc:mariadb://mariadb:3306/hackathon?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Taipei&allowMultiQueries=true
-    username: proxy
+    username: shardingsphere_proxy
     password: 123456
     connectionTimeoutMilliseconds: 30000
     idleTimeoutMilliseconds: 60000

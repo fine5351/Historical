@@ -1,6 +1,6 @@
 package com.finekuo.springdatajpa.service;
 
-import com.finekuo.springdatajpa.constant.SkillLevel;
+import com.finekuo.normalcore.constant.SkillLevel;
 import com.finekuo.springdatajpa.dto.AllowedSkillLevelMappingDTO;
 import com.finekuo.springdatajpa.entity.AllowedSkillMapping;
 import com.finekuo.springdatajpa.entity.Skill;

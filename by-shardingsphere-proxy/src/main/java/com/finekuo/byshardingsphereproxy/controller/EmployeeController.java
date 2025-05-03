@@ -1,12 +1,13 @@
 package com.finekuo.byshardingsphereproxy.controller;
 
-import com.finekuo.mybatisflexcore.dto.request.CreateEmployeeRequest;
+import com.finekuo.normalcore.dto.request.CreateEmployeeRequest;
 import com.finekuo.mybatisflexcore.entity.Employee;
 import com.finekuo.mybatisflexcore.mapper.EmployeeMapper;
 import com.mybatisflex.core.paginate.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,8 +36,17 @@ public class EmployeeController {
     @PostMapping
     @Operation(summary = "Create employee", description = "Creates a new employee")
     public Employee createEmployee(@RequestBody CreateEmployeeRequest request) {
-        Employee employee = request.toEmployee();
+        Employee employee = toEntity(request);
         employeeMapper.insert(employee);
+        return employee;
+    }
+
+    private Employee toEntity(CreateEmployeeRequest request) {
+        Employee employee = new Employee();
+        employee.setName(request.getName());
+        employee.setAddress(request.getAddress());
+        employee.setGender(request.getGender());
+        employee.setRocId(request.getRocId());
         return employee;
     }
 

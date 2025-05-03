@@ -1,6 +1,6 @@
 package com.finekuo.springdatajpa.entity;
 
-import com.finekuo.springdatajpa.constant.ResumeStatus;
+import com.finekuo.normalcore.constant.ResumeStatus;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

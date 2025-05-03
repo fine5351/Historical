@@ -1,0 +1,19 @@
+###
+GET http://localhost:8080/employee
+userName: test-user
+
+### Get employee by ID
+GET http://localhost:8080/employee/1
+userName: test-user
+
+### Create a new employee
+POST http://localhost:8080/employee
+Content-Type: application/json
+userName: test-user
+
+{
+  "name": "{{$random.name.name}}",
+  "address": "{{$random.address.streetAddress}}",
+  "gender": "{{$random.alphabetic(1)}}",
+  "rocId": "{{$random.alphanumeric(10)}}"
+}

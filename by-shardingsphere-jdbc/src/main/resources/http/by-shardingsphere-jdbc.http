@@ -12,8 +12,8 @@ userName: test-user
 {
   "name": "{{$random.name.name}}",
   "address": "{{$random.address.streetAddress}}",
-  "gender": "Male",
-  "rocId": "A876543210"
+  "gender": "{{$random.alphabetic(1)}}",
+  "rocId": "{{$random.alphanumeric(10)}}"
 }
 
 ### Update an employee

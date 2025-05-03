@@ -1,6 +1,6 @@
 package com.finekuo.springdatajpa.entity;
 
-import com.finekuo.springdatajpa.constant.SkillLevel;
+import com.finekuo.normalcore.constant.SkillLevel;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

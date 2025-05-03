@@ -36,3 +36,8 @@ management:
 
 server:
   port: 8080
+
+encrypt:
+  employee:
+    roc_id:
+      aes-key-value: 1234567890123456
