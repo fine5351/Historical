@@ -1,12 +1,10 @@
 package com.finekuo.springdatajpa.controller;
 
 import com.finekuo.normalcore.dto.request.CreateEmployeeRequest;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.finekuo.springdatajpa.entity.Employee;
 import com.finekuo.springdatajpa.service.EmployeeService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

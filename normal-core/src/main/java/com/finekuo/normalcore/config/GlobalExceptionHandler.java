@@ -15,19 +15,19 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public BaseResponse<Void> handleException(Exception e) {
         log.error(null, e);
-        return BaseResponse.fail(ResponseStatusCode.FAILURE.getCode(), e.getMessage());
+        return BaseResponse.fail(ResponseStatusCode.FAILURE, e.getMessage());
     }
 
     @ExceptionHandler(JsonParseException.class)
     public BaseResponse<Void> handleJsonParseException(JsonParseException e) {
         log.warn(null, e);
-        return BaseResponse.fail(ResponseStatusCode.FAILURE.getCode(), e.getMessage());
+        return BaseResponse.fail(ResponseStatusCode.FAILURE, e.getMessage());
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public BaseResponse<Void> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
         log.warn(null, e);
-        return BaseResponse.fail(ResponseStatusCode.FAILURE.getCode(), e.getMessage());
+        return BaseResponse.fail(ResponseStatusCode.FAILURE, e.getMessage());
     }
 
 }

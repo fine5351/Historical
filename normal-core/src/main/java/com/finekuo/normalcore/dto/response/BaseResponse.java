@@ -25,9 +25,9 @@ public class BaseResponse<T> {
         return response;
     }
 
-    public static <T> BaseResponse<T> fail(String code, String message) {
+    public static <T> BaseResponse<T> fail(ResponseStatusCode code, String message) {
         BaseResponse<T> response = new BaseResponse<>();
-        response.setCode(code);
+        response.setCode(code.getCode());
         response.setMessage(message);
         return response;
     }
