@@ -22,16 +22,19 @@ public class RequestLoggingAdvice implements RequestBodyAdvice {
         this.request = request;
     }
 
+    @SuppressWarnings("null")
     @Override
     public boolean supports(MethodParameter methodParameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
         return true;
     }
 
+    @SuppressWarnings("null")
     @Override
     public HttpInputMessage beforeBodyRead(HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) throws IOException {
         return inputMessage;
     }
 
+    @SuppressWarnings("null")
     @Override
     public Object afterBodyRead(Object body, HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
         StringBuilder logMessage = new StringBuilder();
@@ -57,6 +60,7 @@ public class RequestLoggingAdvice implements RequestBodyAdvice {
         return body;
     }
 
+    @SuppressWarnings("null")
     @Override
     public Object handleEmptyBody(Object body, HttpInputMessage inputMessage, MethodParameter parameter, Type targetType, Class<? extends HttpMessageConverter<?>> converterType) {
         return body;

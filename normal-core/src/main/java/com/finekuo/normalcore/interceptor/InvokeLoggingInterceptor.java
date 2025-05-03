@@ -17,6 +17,7 @@ import java.util.Collections;
 @Component
 public class InvokeLoggingInterceptor implements HandlerInterceptor {
 
+    @SuppressWarnings("null")
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         // Wrap request to allow multiple reads
@@ -28,11 +29,13 @@ public class InvokeLoggingInterceptor implements HandlerInterceptor {
         return true;
     }
 
+    @SuppressWarnings("null")
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
         // This method is called after the handler is executed but before the view is rendered
     }
 
+    @SuppressWarnings("null")
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
         // Wrap response to allow multiple reads

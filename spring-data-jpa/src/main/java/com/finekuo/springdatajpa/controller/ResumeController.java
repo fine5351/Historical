@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class ResumeController {
 
     @GetMapping("/")
     public BaseResponse<GetResumePayload> getResume() {
-        List<ResumeDTO> list = resumeRepository.findAll().stream()
+        List<ResumeDTO> list = StreamSupport.stream(resumeRepository.findAll().spliterator(), false)
                 .map(resume -> new ResumeDTO(resume.getFileName(), resume.getStatus().ordinal()))
                 .toList();
 

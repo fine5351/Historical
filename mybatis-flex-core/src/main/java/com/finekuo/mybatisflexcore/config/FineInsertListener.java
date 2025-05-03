@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Slf4j
 public class FineInsertListener implements InsertListener {
 
+    @SuppressWarnings("null")
     private String getCurrentUserName() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         String system = "system";

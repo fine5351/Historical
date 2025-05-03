@@ -49,7 +49,7 @@ public class SkillController {
             skillService.registerAllowedSkillMapping(file);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return BaseResponse.fail(ResponseStatusCode.FAILURE.getCode(), e.getMessage());
+            return BaseResponse.fail(ResponseStatusCode.FAILURE, e.getMessage());
         }
         return BaseResponse.success();
     }

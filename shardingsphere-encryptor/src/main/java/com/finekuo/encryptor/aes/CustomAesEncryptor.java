@@ -6,7 +6,6 @@ import org.apache.shardingsphere.encrypt.spi.EncryptAlgorithmMetaData;
 import org.apache.shardingsphere.infra.algorithm.core.config.AlgorithmConfiguration;
 import org.apache.shardingsphere.infra.algorithm.core.context.AlgorithmSQLContext;
 
-import java.security.SecureRandom;
 import java.util.Properties;
 
 public class CustomAesEncryptor implements EncryptAlgorithm {
@@ -30,31 +29,12 @@ public class CustomAesEncryptor implements EncryptAlgorithm {
         return "CUSTOM_AES";
     }
 
-    private byte[] generateIV() {
-        byte[] iv = new byte[16]; // AES block size is 16 bytes
-        new SecureRandom().nextBytes(iv);
-        return iv;
-    }
-
     @Override
     public Object encrypt(Object o, AlgorithmSQLContext algorithmSQLContext) {
         if (o == null) {
             return null;
         }
         return DynamicIVAesEncryptUtil.encrypt(o.toString(), secretKey);
-        //try {
-        //    Cipher cipher = Cipher.getInstance(AES_CBC_PKCS5);
-        //    byte[] iv = generateIV();
-        //    IvParameterSpec ivSpec = new IvParameterSpec(iv);
-        //    cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivSpec);
-        //    byte[] encryptedBytes = cipher.doFinal(o.toString().getBytes(StandardCharsets.UTF_8));
-        //    byte[] combined = new byte[iv.length + encryptedBytes.length];
-        //    System.arraycopy(iv, 0, combined, 0, iv.length);
-        //    System.arraycopy(encryptedBytes, 0, combined, iv.length, encryptedBytes.length);
-        //    return Base64.getEncoder().encodeToString(combined);
-        //} catch (Exception e) {
-        //    throw new RuntimeException("Encryption failed", e);
-        //}
     }
 
     @Override
@@ -64,17 +44,6 @@ public class CustomAesEncryptor implements EncryptAlgorithm {
         }
         try {
             return DynamicIVAesEncryptUtil.decrypt(o.toString(), secretKey);
-            //byte[] combined = Base64.getDecoder().decode(o.toString());
-            //byte[] iv = new byte[16]; // IV is always 16 bytes for AES
-            //byte[] encryptedBytes = new byte[combined.length - 16];
-            //System.arraycopy(combined, 0, iv, 0, 16);
-            //System.arraycopy(combined, 16, encryptedBytes, 0, encryptedBytes.length);
-            //
-            //Cipher cipher = Cipher.getInstance(AES_CBC_PKCS5);
-            //IvParameterSpec ivSpec = new IvParameterSpec(iv);
-            //cipher.init(Cipher.DECRYPT_MODE, secretKey, ivSpec);
-            //byte[] decryptedBytes = cipher.doFinal(encryptedBytes);
-            //return new String(decryptedBytes, StandardCharsets.UTF_8);
         } catch (Exception e) {
             throw new RuntimeException("Decryption failed", e);
         }

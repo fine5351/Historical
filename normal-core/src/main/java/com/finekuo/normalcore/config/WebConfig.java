@@ -13,7 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
     private final InvokeLoggingInterceptor invokeLoggingInterceptor;
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(@SuppressWarnings("null") InterceptorRegistry registry) {
         registry.addInterceptor(invokeLoggingInterceptor)
                 .addPathPatterns("/**"); // 拦截所有请求
     }

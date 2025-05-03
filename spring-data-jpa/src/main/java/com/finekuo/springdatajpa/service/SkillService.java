@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -29,15 +30,16 @@ public class SkillService {
     private final VacancyRepository vacancyRepository;
 
     public List<Skill> getAllSkills() {
-        return skillRepository.findAll();
+        return StreamSupport.stream(skillRepository.findAll().spliterator(), false).toList();
     }
 
     public List<AllowedSkillMapping> getAllowedSkillMapping() {
-        return allowedSkillMappingRepository.findAll();
+        return StreamSupport.stream(allowedSkillMappingRepository.findAll().spliterator(), false).toList();
     }
 
     public String getSkillNameById(long id) {
-        return skillRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("id %s not found in skill".formatted(id))).getName();
+        return skillRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("id %s not found in skill".formatted(id))).getName();
     }
 
     @Transactional
@@ -86,11 +88,13 @@ public class SkillService {
     }
 
     public String getTeamNameById(long id) {
-        return teamRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("id %s not found in team".formatted(id))).getName();
+        return teamRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("id %s not found in team".formatted(id))).getName();
     }
 
     public String getVacancyTitleById(long id) {
-        return vacancyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("id %s not found in vacancy".formatted(id))).getTitle();
+        return vacancyRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("id %s not found in vacancy".formatted(id))).getTitle();
     }
 
 }

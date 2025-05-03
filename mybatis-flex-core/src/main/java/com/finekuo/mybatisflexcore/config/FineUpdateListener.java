@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 
 public class FineUpdateListener implements UpdateListener {
 
+    @SuppressWarnings("null")
     private String getCurrentUserName() {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         if (requestAttributes != null) {

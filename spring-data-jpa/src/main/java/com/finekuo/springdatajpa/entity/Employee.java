@@ -2,7 +2,6 @@ package com.finekuo.springdatajpa.entity;
 
 import com.finekuo.springdatajpa.convert.RocIdConvert;
 import jakarta.persistence.Convert;
-import jakarta.persistence.Converter;
 import jakarta.persistence.Entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
