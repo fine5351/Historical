@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"
+      - "8222:8222" # HTTP management port
+    environment:
+      - NATS_USER=demo-user
+      - NATS_PASSWORD=demo-password
+    command: >
+      -js
+      --auth demo-user
+      --user demo-user
+      --pass demo-password
+    volumes:
+      - ./nats-config:/etc/nats

@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  sftp:
+    image: atmoz/sftp:latest
+    ports:
+      - "2222:22"
+    volumes:
+      - ./data:/home/demo-user/upload
+    environment:
+      SFTP_USERS: demo-user:demo-password:1001
