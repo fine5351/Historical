@@ -9,6 +9,7 @@
     </parent>
     <artifactId>mybatis-flex-core</artifactId>
     <version>1.0.0</version>
+    <packaging>jar</packaging>
     <name>mybatis-flex-core</name>
     <description>mybatis-flex-core</description>
     <url/>
@@ -29,6 +30,11 @@
     </properties>
     <dependencies>
         <dependency>
+            <groupId>com.finekuo</groupId>
+            <artifactId>normal-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.mybatis-flex</groupId>
             <artifactId>mybatis-flex-spring-boot3-starter</artifactId>
             <version>1.10.9</version>
@@ -42,8 +48,8 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

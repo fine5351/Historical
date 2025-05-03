@@ -1,3 +1,0 @@
-### Get entity by ID
-GET http://localhost:8080/api/pkuo/entity?id=1
-Accept: application/json

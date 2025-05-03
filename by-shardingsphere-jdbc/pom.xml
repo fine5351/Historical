@@ -12,25 +12,26 @@
     <artifactId>by-shardingsphere-jdbc</artifactId>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.finekuo</groupId>
+            <artifactId>normal-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
         <dependency>
             <groupId>com.finekuo</groupId>
             <artifactId>mybatis-flex-core</artifactId>
             <version>1.0.0</version>
         </dependency>
-
         <dependency>
             <groupId>org.apache.shardingsphere</groupId>
             <artifactId>shardingsphere-jdbc</artifactId>
             <version>5.5.2</version>
         </dependency>
-
         <dependency>
             <groupId>com.finekuo</groupId>
             <artifactId>shardingsphere-encryptor</artifactId>
             <version>1.0.0</version>
         </dependency>
-
     </dependencies>
 
     <build>

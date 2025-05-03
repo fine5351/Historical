@@ -19,6 +19,12 @@
             <version>1.0.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.finekuo</groupId>
+            <artifactId>normal-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -28,7 +34,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.fine_kuo.by_shardingsphere_proxy.ByShardingSphereProxyApplication</mainClass>
+                    <mainClass>com.finekuo.byshardingsphereproxy.ByShardingSphereProxyApplication</mainClass>
                 </configuration>
             </plugin>
             <plugin>

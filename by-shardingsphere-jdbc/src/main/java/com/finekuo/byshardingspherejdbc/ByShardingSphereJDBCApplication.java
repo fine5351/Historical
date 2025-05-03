@@ -8,8 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.TimeZone;
 
 @SpringBootApplication(scanBasePackages = {
-        "com.finekuo.byshardingspherejdbc",
-        "com.finekuo.mybatisflexcore"
+        "com.finekuo"
 })
 @OpenAPIDefinition(info = @Info(title = "Hackathon MyBatis-Flex", version = "1.0", description = "Hackathon MyBatis-Flex Demo"))
 public class ByShardingSphereJDBCApplication {
