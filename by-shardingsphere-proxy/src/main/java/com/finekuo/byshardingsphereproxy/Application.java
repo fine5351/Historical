@@ -11,11 +11,11 @@ import java.util.TimeZone;
         "com.finekuo"
 })
 @OpenAPIDefinition(info = @Info(title = "Hackathon ShardingSphere Proxy", version = "1.0", description = "Hackathon ShardingSphere Proxy Demo"))
-public class ByShardingSphereProxyApplication {
+public class Application {
 
     public static void main(String[] args) {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Taipei"));
-        SpringApplication.run(ByShardingSphereProxyApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 }

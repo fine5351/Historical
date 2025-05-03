@@ -9,7 +9,7 @@ authority:
       password: root
       admin: true
     - user: proxy
-      password: 123456
+      password: proxy
   privilege:
     type: ALL_PERMITTED
 

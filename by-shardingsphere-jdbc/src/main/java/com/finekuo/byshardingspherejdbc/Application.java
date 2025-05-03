@@ -1,6 +1,7 @@
-package com.finekuo.springdatajpa;
+package com.finekuo.byshardingspherejdbc;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,12 +10,12 @@ import java.util.TimeZone;
 @SpringBootApplication(scanBasePackages = {
         "com.finekuo"
 })
-@OpenAPIDefinition(info = @io.swagger.v3.oas.annotations.info.Info(title = "Hackathon", version = "1.0", description = "Hackathon"))
-public class SpringDataJPAApplication {
+@OpenAPIDefinition(info = @Info(title = "Hackathon MyBatis-Flex", version = "1.0", description = "Hackathon MyBatis-Flex Demo"))
+public class Application {
 
     public static void main(String[] args) {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Taipei"));
-        SpringApplication.run(SpringDataJPAApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 }

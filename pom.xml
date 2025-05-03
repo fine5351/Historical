@@ -9,6 +9,7 @@
         <version>3.4.5</version>
         <relativePath/>
     </parent>
+
     <groupId>com.finekuo</groupId>
     <artifactId>Historical</artifactId>
     <version>1.0.0</version>

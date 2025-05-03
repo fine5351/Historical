@@ -7,7 +7,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3307/hackathon-proxy?useSSL=false&serverTimezone=Asia/Taipei&characterEncoding=utf8
     username: proxy
-    password: 123456
+    password: proxy
 
 mybatis-flex:
   configuration:

@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>spring-data-jpa</artifactId>
+    <version>1.0.0</version>
 
     <dependencies>
         <dependency>
@@ -21,16 +22,22 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.3.232</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
-        <finalName>app</finalName>
+        <finalName>spring-data-jpa</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.finekuo.springdatajpa.SpringDataJPAApplication</mainClass>
+                    <mainClass>com.finekuo.springdatajpa.Application</mainClass>
                 </configuration>
             </plugin>
             <plugin>

@@ -1,30 +1,1 @@
-spring:
-  main:
-    banner-mode: off
-  application:
-    name: by-shardingsphere-jdbc
-  datasource:
-    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
-    url: jdbc:shardingsphere:classpath:shardingsphere.yml
-
-mybatis-flex:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-  global-config:
-    print-banner: false
-
-logging:
-  level:
-    com.mybatis-flex: DEBUG
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: "*"
-  endpoint:
-    health:
-      show-details: always
-
-server:
-  port: 8081
+spring:  main:    banner-mode: off  application:    name: by-shardingsphere-jdbc  datasource:    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver    url: jdbc:shardingsphere:classpath:shardingsphere.ymlmybatis-flex:  configuration:    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  global-config:    print-banner: falselogging:  level:    com.mybatis-flex: DEBUGmanagement:  endpoints:    web:      exposure:        include: "*"  endpoint:    health:      show-details: alwaysserver:  port: 8081

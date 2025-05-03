@@ -10,13 +10,9 @@
     </parent>
 
     <artifactId>by-shardingsphere-jdbc</artifactId>
+    <version>1.0.0</version>
 
     <dependencies>
-        <dependency>
-            <groupId>com.finekuo</groupId>
-            <artifactId>normal-core</artifactId>
-            <version>1.0.0</version>
-        </dependency>
         <dependency>
             <groupId>com.finekuo</groupId>
             <artifactId>mybatis-flex-core</artifactId>
@@ -32,16 +28,22 @@
             <artifactId>shardingsphere-encryptor</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>2.3.232</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
-        <finalName>mybatisflex-app</finalName>
+        <finalName>by-shardingsphere-jdbc</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.finekuo.byshardingspherejdbc.ByShardingSphereJDBCApplication</mainClass>
+                    <mainClass>com.finekuo.byshardingspherejdbc.Application</mainClass>
                 </configuration>
             </plugin>
             <plugin>
