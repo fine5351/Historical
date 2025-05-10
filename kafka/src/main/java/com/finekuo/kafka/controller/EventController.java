@@ -18,7 +18,7 @@ public class EventController {
 
     @PostMapping("/")
     public void publishEvent(@RequestBody @Valid PublishEventRequest request) {
-        eventPublisher.publish(request.getMessage());
+        eventPublisher.publish(request);
     }
 
 }

@@ -16,8 +16,16 @@ public class EventListener {
     @KafkaListener(topics = "demo-topic")
     public void listen(ConsumerRecord<String, String> consumerRecord) {
         String message = consumerRecord.value();
-        PublishEventRequest publishEventRequest = Jsons.fromJson(message, PublishEventRequest.class);
-        log.info(Jsons.toJson(publishEventRequest));
+        if (message != null && message.trim().startsWith("{")) {
+            try {
+                PublishEventRequest publishEventRequest = Jsons.fromJson(message, PublishEventRequest.class);
+                log.info(Jsons.toJson(publishEventRequest));
+            } catch (Exception e) {
+                log.warn("Failed to parse JSON to PublishEventRequest: {}", message, e);
+            }
+        } else {
+            log.info("Received non-JSON message: {}", message);
+        }
     }
 
 }

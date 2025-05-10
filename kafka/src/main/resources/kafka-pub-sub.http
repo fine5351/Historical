@@ -1,0 +1,8 @@
+POST http://localhost:8084/api/events/
+Content-Type: application/json
+X-Request-ID: {{$uuid}}
+
+{
+  "message": "message_08e27591fe57",
+  "now": "2004-05-03T17:30:00.000Z"
+}

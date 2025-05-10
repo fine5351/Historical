@@ -4,16 +4,28 @@ spring:
       kafka
   kafka:
     bootstrap-servers:
-      - broker1:9092
-      - broker2:9093
-      - broker3:9094
+      - localhost:9092
+      - localhost:9093
+      - localhost:9094
     consumer:
       group-id: demo-group
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        interceptor.classes: com.finekuo.kafka.interceptor.LoggingConsumerInterceptor
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        interceptor.classes: com.finekuo.kafka.interceptor.LoggingProducerInterceptor
     properties:
       security.protocol: PLAINTEXT
+
+server:
+  port: 8084
+
+logging:
+  level:
+    "org.springframework.kafka": warn
+    "org.apache.kafka": warn
