@@ -1,9 +1,7 @@
 package com.finekuo.springdatajpa.repository;
 
 import com.finekuo.springdatajpa.entity.AllowedSkillMapping;
-
 import io.swagger.v3.oas.annotations.Hidden;
-
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
