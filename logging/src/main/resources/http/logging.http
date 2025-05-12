@@ -1,0 +1,11 @@
+###
+GET localhost:8080/logging/log?integer=1&string="1234556789"
+
+###
+POST localhost:8080/logging/log
+Content-Type: application/json
+
+{
+  "integer": 1,
+  "string": "1234556789"
+}

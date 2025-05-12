@@ -3,123 +3,74 @@ package com.finekuo.normalcore.interceptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.Collections;
+import java.nio.charset.StandardCharsets;
+import java.util.Enumeration;
 
 @Slf4j
 @Component
+@Order(2)
 public class InvokeLoggingInterceptor implements HandlerInterceptor {
 
-    @SuppressWarnings("null")
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        // Wrap request to allow multiple reads
-        ContentCachingRequestWrapper requestWrapper = new ContentCachingRequestWrapper(request);
-
-        // Log request information
-        logRequest(requestWrapper);
-
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n=== [InvokeLoggingInterceptor] Request Info ===\n");
+        sb.append("Method: ").append(request.getMethod()).append("\n");
+        sb.append("URL: ").append(request.getRequestURL()).append("\n");
+        sb.append("Query: ").append(request.getQueryString()).append("\n");
+        sb.append("Headers:\n");
+        Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String h = headerNames.nextElement();
+            sb.append("  ").append(h).append(": ").append(request.getHeader(h)).append("\n");
+        }
+        // 不在這裡印 request body，因為此時還沒被讀取
+        log.info(sb.toString());
         return true;
     }
 
-    @SuppressWarnings("null")
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
-        // This method is called after the handler is executed but before the view is rendered
-    }
-
-    @SuppressWarnings("null")
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-        // Wrap response to allow multiple reads
-        ContentCachingResponseWrapper responseWrapper = new ContentCachingResponseWrapper(response);
-
-        // Log response information
-        logResponse(responseWrapper);
-
-        // Ensure response is written back to the client
-        try {
-            responseWrapper.copyBodyToResponse();
-        } catch (IOException e) {
-            log.error("Error copying response body", e);
-        }
-    }
-
-    private void logRequest(ContentCachingRequestWrapper request) {
-        StringBuilder logMessage = new StringBuilder();
-        logMessage.append("\n=== Request Information ===\n");
-        logMessage.append("Method: ").append(request.getMethod()).append("\n");
-        logMessage.append("URI: ").append(request.getRequestURI()).append("\n");
-        logMessage.append("Query Parameters: ").append(request.getQueryString()).append("\n");
-
-        // Log headers
-        logMessage.append("Headers:\n");
-        Collections.list(request.getHeaderNames())
-                .forEach(headerName -> logMessage.append(headerName)
-                        .append(": ")
-                        .append(request.getHeader(headerName))
-                        .append("\n"));
-
-        // Log request body
-        String requestBody = getRequestBody(request);
-        if (!requestBody.isEmpty()) {
-            logMessage.append("Request Body: ").append(requestBody).append("\n");
-        }
-
-        log.info(logMessage.toString());
-    }
-
-    private void logResponse(ContentCachingResponseWrapper response) {
-        StringBuilder logMessage = new StringBuilder();
-        logMessage.append("\n=== Response Information ===\n");
-        logMessage.append("Status: ").append(response.getStatus()).append("\n");
-
-        // Log headers
-        logMessage.append("Headers:\n");
-        response.getHeaderNames()
-                .forEach(headerName -> logMessage.append(headerName)
-                        .append(": ")
-                        .append(response.getHeader(headerName))
-                        .append("\n"));
-
-        // Log response body
-        String responseBody = getResponseBody(response);
-        if (!responseBody.isEmpty()) {
-            logMessage.append("Response Body: ").append(responseBody).append("\n");
-        }
-
-        log.info(logMessage.toString());
-    }
-
-    private String getRequestBody(ContentCachingRequestWrapper request) {
-        try {
-            byte[] content = request.getContentAsByteArray();
-            if (content.length > 0) {
-                return new String(content, request.getCharacterEncoding());
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n=== [InvokeLoggingInterceptor] Request/Response Body ===\n");
+        // request body
+        String requestBody = "";
+        if (request instanceof ContentCachingRequestWrapper) {
+            ContentCachingRequestWrapper wrapper = (ContentCachingRequestWrapper) request;
+            byte[] buf = wrapper.getContentAsByteArray();
+            if (buf.length > 0) {
+                requestBody = new String(buf, StandardCharsets.UTF_8);
             }
-        } catch (UnsupportedEncodingException e) {
-            log.error("Error reading request body", e);
+        } else {
+            requestBody = "[not a ContentCachingRequestWrapper, body unavailable]";
         }
-        return "";
-    }
+        sb.append("Request Body: ").append(requestBody).append("\n");
 
-    private String getResponseBody(ContentCachingResponseWrapper response) {
-        try {
-            byte[] content = response.getContentAsByteArray();
-            if (content.length > 0) {
-                return new String(content, response.getCharacterEncoding());
+        // response body
+        String responseBody = "";
+        if (response instanceof ContentCachingResponseWrapper) {
+            ContentCachingResponseWrapper wrapper = (ContentCachingResponseWrapper) response;
+            byte[] buf = wrapper.getContentAsByteArray();
+            if (buf.length > 0) {
+                responseBody = new String(buf, StandardCharsets.UTF_8);
             }
-        } catch (UnsupportedEncodingException e) {
-            log.error("Error reading response body", e);
+            try {
+                wrapper.copyBodyToResponse();
+            } catch (IOException e) {
+                // ignore
+            }
+        } else {
+            responseBody = "[unavailable]";
         }
-        return "";
+        sb.append("Response Body: ").append(responseBody).append("\n");
+        log.info(sb.toString());
     }
 
 }
