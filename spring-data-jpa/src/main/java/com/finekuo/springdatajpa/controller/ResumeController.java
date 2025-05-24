@@ -25,7 +25,7 @@ public class ResumeController {
     @GetMapping("/")
     public BaseResponse<GetResumePayload> getResume() {
         List<ResumeDTO> list = StreamSupport.stream(resumeRepository.findAll().spliterator(), false)
-                .map(resume -> new ResumeDTO(resume.getFileName(), resume.getStatus().ordinal()))
+                .map(ResumeDTO::fromEntity) // Use the static factory method
                 .toList();
 
         return BaseResponse.success(new GetResumePayload(list));

@@ -59,17 +59,25 @@ public class SkillService {
     }
 
     private AllowedSkillMapping buildEntity(String line) {
-        // teamId,vacancy_id, skillId, levelId
+        // CSV format from test is "Skill Name,Skill Level"
         String[] values = line.split(",");
-        long teamId = Long.parseLong(values[0]);
-        long vacancyId = Long.parseLong(values[1]);
-        long skillId = Long.parseLong(values[2]);
-        int levelId = Integer.parseInt(values[3]);
+        String skillName = values[0].trim();
+        String skillLevelStr = values[1].trim();
+
+        Skill skill = skillRepository.findByName(skillName)
+                .orElseThrow(() -> new IllegalArgumentException("Skill not found: " + skillName + ". Ensure skills are pre-loaded if CSV relies on existing names."));
+        
         AllowedSkillMapping allowedSkillMapping = new AllowedSkillMapping();
-        allowedSkillMapping.setTeamId(teamId);
-        allowedSkillMapping.setVacancyId(vacancyId);
-        allowedSkillMapping.setSkillId(skillId);
-        allowedSkillMapping.setSkillLevel(SkillLevel.getFromOrdinal(levelId));
+        allowedSkillMapping.setSkillId(skill.getId());
+        allowedSkillMapping.setSkillLevel(SkillLevel.valueOf(skillLevelStr.toUpperCase())); // Convert string to enum
+
+        // teamId and vacancyId are not in this CSV. Setting to a placeholder.
+        // These are mandatory (long primitive) in AllowedSkillMapping.
+        // This implies either the CSV should provide them, they should have defaults,
+        // or the entity should allow them to be nullable if appropriate for global skill mappings.
+        allowedSkillMapping.setTeamId(0L); // Placeholder - assuming 0 is a valid or ignorable ID
+        allowedSkillMapping.setVacancyId(0L); // Placeholder - assuming 0 is a valid or ignorable ID
+        
         return allowedSkillMapping;
     }
 

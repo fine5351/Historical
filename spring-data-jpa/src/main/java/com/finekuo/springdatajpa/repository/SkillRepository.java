@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Hidden
 @Repository
 public interface SkillRepository extends CrudRepository<Skill, Long> {
-
+    Optional<Skill> findByName(String name); // Added findByName
 }
