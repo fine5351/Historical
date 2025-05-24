@@ -1,0 +1,6 @@
+spring:
+  kafka:
+    test:
+      embedded:
+        enabled: true
+    bootstrap-servers: ${spring.embedded.kafka.brokers}

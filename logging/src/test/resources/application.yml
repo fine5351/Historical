@@ -1,0 +1,20 @@
+# Configure Spring Boot to use a specific port for Redis during tests.
+# The embedded Redis server (it.ozimov:embedded-redis) should be
+# auto-configured by Spring Boot to run on this port.
+spring:
+  redis:
+    port: 6370
+    # Optional: If you want to ensure no external Redis is accidentally connected to,
+    # you can set the host as well, though for embedded this is usually localhost.
+    host: localhost
+  # Disable external connections for other services if not needed for logging tests
+  # For example, if Kafka is not needed for logging tests:
+  # kafka:
+  #   bootstrap-servers:
+  # autoconfigure:
+  #   exclude: org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration
+
+# Ensure logs are written to console for easy debugging during tests
+logging:
+  level:
+    com.finekuo: DEBUG
