@@ -5,8 +5,10 @@
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%level][%X{correlationId}][%thread][%logger{20}][%L]: %msg%n%ex{full}"/>
 
     <appender name="consoleText" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${logPattern}</pattern>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="com.example.logging.SensitiveDataMaskingLayout">
+                <pattern>${logPattern}</pattern>
+            </layout>
         </encoder>
     </appender>
 
