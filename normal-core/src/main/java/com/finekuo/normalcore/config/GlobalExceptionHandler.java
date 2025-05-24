@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -55,15 +54,7 @@ public class GlobalExceptionHandler {
         }
         return new ResponseEntity<>(response, status);
     }
-    
-    @ExceptionHandler(JpaSystemException.class)
-    @ResponseBody
-    public ResponseEntity<BaseResponse<Void>> handleJpaSystemException(JpaSystemException e) {
-        log.error("JPA System Exception: ", e);
-        BaseResponse<Void> response = BaseResponse.fail(ResponseStatusCode.FAILURE, "A database error occurred: " + e.getRootCause().getMessage());
-        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-    
+
     // It might be useful to add handlers for MethodArgumentNotValidException for @Valid failures too
     // @ExceptionHandler(MethodArgumentNotValidException.class)
     // @ResponseBody

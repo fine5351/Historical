@@ -1,35 +1,36 @@
 package com.finekuo.springdatajpa.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.finekuo.springdatajpa.dto.response.TimeResponse; // Corrected import from previous subtask
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.finekuo.normalcore.dto.response.BaseResponse;
+import com.finekuo.normalcore.util.Jsons;
+import com.finekuo.springdatajpa.dto.request.LocalDateTimeRequest;
+import com.finekuo.springdatajpa.dto.response.TimeResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles; // Import for ActiveProfiles
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test") // Added for E2E configuration
+@Slf4j
 public class DateTimeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    // No @MockBean annotations were present, so none to remove.
 
     @Test
     public void testPrintDateTime() throws Exception {
@@ -38,37 +39,37 @@ public class DateTimeControllerTest {
 
         MvcResult result = mockMvc.perform(post("/datetime/print")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(requestBody))) // Add the request body
+                        .content(Jsons.toJson(requestBody))) // Add the request body
                 .andExpect(status().isOk())
                 .andReturn();
 
         String contentAsString = result.getResponse().getContentAsString();
-        TimeResponse timeResponse = objectMapper.readValue(contentAsString, TimeResponse.class);
+        BaseResponse<TimeResponse> apiResponse = Jsons.fromJson(contentAsString, new TypeReference<BaseResponse<TimeResponse>>() {
 
-        // Assertions for the TimeResponse object
-        // Due to LocalDateTime.now(), exact matches are difficult.
-        // Instead, we'll check for non-null values and basic patterns.
+        });
+        TimeResponse timeResponse = apiResponse.getData();
+
         assertThat(timeResponse).isNotNull();
-        assertThat(timeResponse.localDate()).isNotNull(); // Changed to record accessor
-        assertThat(timeResponse.localDateTime()).isNotNull(); // Changed to record accessor
-        assertThat(timeResponse.offsetDateTime().getYear()).isGreaterThanOrEqualTo(LocalDate.now().getYear()); // Example: Using offsetDateTime for detailed checks
-        assertThat(timeResponse.offsetDateTime().getMonthValue()).isBetween(1, 12);
-        assertThat(timeResponse.offsetDateTime().getDayOfMonth()).isBetween(1, 31);
-        assertThat(timeResponse.offsetDateTime().getHour()).isBetween(0, 23);
-        assertThat(timeResponse.offsetDateTime().getMinute()).isBetween(0, 59);
-        assertThat(timeResponse.offsetDateTime().getSecond()).isBetween(0, 59);
+        assertThat(timeResponse.getLocalDate()).isNotNull();
+        assertThat(timeResponse.getLocalDateTime()).isNotNull();
+        assertThat(timeResponse.getOffsetDateTime().getYear()).isGreaterThanOrEqualTo(LocalDate.now().getYear());
+        assertThat(timeResponse.getOffsetDateTime().getMonthValue()).isBetween(1, 12);
+        assertThat(timeResponse.getOffsetDateTime().getDayOfMonth()).isBetween(1, 31);
+        assertThat(timeResponse.getOffsetDateTime().getHour()).isBetween(0, 23);
+        assertThat(timeResponse.getOffsetDateTime().getMinute()).isBetween(0, 59);
+        assertThat(timeResponse.getOffsetDateTime().getSecond()).isBetween(0, 59);
         // Nanos can be 0, so just check for not null if it's an Integer, or non-negative if primitive
-        assertThat(timeResponse.offsetDateTime().getNano()).isGreaterThanOrEqualTo(0);
+        assertThat(timeResponse.getOffsetDateTime().getNano()).isGreaterThanOrEqualTo(0);
 
-        assertThat(timeResponse.offsetDateTime().getDayOfWeek()).isNotNull();
-        assertThat(timeResponse.offsetDateTime().getDayOfYear()).isGreaterThanOrEqualTo(1).isLessThanOrEqualTo(366); // Handles leap years
-        assertThat(timeResponse.offsetDateTime().getMonthValue()).isBetween(1,12);
+        assertThat(timeResponse.getOffsetDateTime().getDayOfWeek()).isNotNull();
+        assertThat(timeResponse.getOffsetDateTime().getDayOfYear()).isGreaterThanOrEqualTo(1).isLessThanOrEqualTo(366); // Handles leap years
+        assertThat(timeResponse.getOffsetDateTime().getMonthValue()).isBetween(1, 12);
 
         // Check if the date and time parts from the response can be parsed back to LocalDate and LocalTime
         // This provides a stronger guarantee that the values are reasonable.
-        assertThat(timeResponse.localDate()).isEqualTo(LocalDate.now()); // Directly compare LocalDate part
+        assertThat(timeResponse.getLocalDate()).isEqualTo(LocalDate.now()); // Directly compare LocalDate part
         // For time, it's harder due to rapid changes. We can check components.
-        LocalTime responseTime = timeResponse.localDateTime().toLocalTime(); // Use localDateTime for LocalTime part
+        LocalTime responseTime = timeResponse.getLocalDateTime().toLocalTime(); // Use localDateTime for LocalTime part
         LocalTime now = LocalTime.now();
         assertThat(responseTime.getHour()).isEqualTo(now.getHour());
         // Minute and second might change between the controller call and this assertion.

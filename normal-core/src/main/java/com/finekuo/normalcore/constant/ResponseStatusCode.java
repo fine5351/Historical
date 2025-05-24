@@ -7,8 +7,10 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum ResponseStatusCode {
 
-    SUCCESS("0"),
-    FAILURE("1"),
+    SUCCESS("0000"),
+    FAILURE("9999"),
+    NOT_FOUND("0001"),
+    BAD_REQUEST("0002"),
     ;
 
     private final String code;

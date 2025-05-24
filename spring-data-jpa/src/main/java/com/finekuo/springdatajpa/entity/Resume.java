@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 public class Resume extends BaseEntity {
 
     private String fileName;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private ResumeStatus status;
 
 }

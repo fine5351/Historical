@@ -32,7 +32,7 @@ public class InvokeLoggingInterceptor implements HandlerInterceptor {
             sb.append("  ").append(h).append(": ").append(request.getHeader(h)).append("\n");
         }
         // 不在這裡印 request body，因為此時還沒被讀取
-        log.info(sb.toString());
+        log.debug(sb.toString());
         return true;
     }
 
@@ -70,7 +70,7 @@ public class InvokeLoggingInterceptor implements HandlerInterceptor {
             responseBody = "[unavailable]";
         }
         sb.append("Response Body: ").append(responseBody).append("\n");
-        log.info(sb.toString());
+        log.debug(sb.toString());
     }
 
 }

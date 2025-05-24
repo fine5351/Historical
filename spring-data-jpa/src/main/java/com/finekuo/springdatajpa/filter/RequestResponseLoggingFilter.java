@@ -64,7 +64,7 @@ public class RequestResponseLoggingFilter extends OncePerRequestFilter {
             logMessage.append("Request Body: ").append(requestBody).append("\n");
         }
 
-        log.info(logMessage.toString());
+        log.debug(logMessage.toString());
     }
 
     private void logResponse(ContentCachingResponseWrapper response) throws IOException {
@@ -86,7 +86,7 @@ public class RequestResponseLoggingFilter extends OncePerRequestFilter {
             logMessage.append("Response Body: ").append(responseBody).append("\n");
         }
 
-        log.info(logMessage.toString());
+        log.debug(logMessage.toString());
     }
 
     private String getRequestBody(ContentCachingRequestWrapper request) {

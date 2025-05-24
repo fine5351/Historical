@@ -1,6 +1,6 @@
 package com.finekuo.normalcore.advice;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.finekuo.normalcore.util.Jsons;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -25,9 +25,7 @@ public class LoggingResponseBodyAdvice implements ResponseBodyAdvice<Object> {
                                   Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   ServerHttpRequest request, ServerHttpResponse response) {
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(body);
-            log.info("[LoggingResponseBodyAdvice] Response Body: {}", json);
+            log.debug("[LoggingResponseBodyAdvice] Response Body: {}", Jsons.toJson(body));
         } catch (Exception e) {
             log.warn("[LoggingResponseBodyAdvice] Failed to log response body", e);
         }

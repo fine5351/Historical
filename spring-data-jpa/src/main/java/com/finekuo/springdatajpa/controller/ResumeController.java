@@ -33,7 +33,6 @@ public class ResumeController {
 
     @PostMapping("/")
     public BaseResponse<Void> createResume(@RequestPart("file") MultipartFile file) {
-        log.info("resume");
         Resume entity = buildResume(file);
         resumeRepository.save(entity);
         return BaseResponse.success();

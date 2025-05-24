@@ -49,7 +49,7 @@ public class ResponseLoggingAdvice implements ResponseBodyAdvice<Object> {
             logMessage.append("Response Body: ").append(body).append("\n");
         }
 
-        log.info(logMessage.toString());
+        log.debug(logMessage.toString());
         return body;
     }
 

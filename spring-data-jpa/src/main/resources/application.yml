@@ -16,14 +16,13 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        format_sql: true
-        highlight_sql: true
-        use_sql_comments: true
+        format_sql: false
+        highlight_sql: false
+        use_sql_comments: false
 
 logging:
   level:
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql: TRACE
+    root: INFO
 
 management:
   endpoints:

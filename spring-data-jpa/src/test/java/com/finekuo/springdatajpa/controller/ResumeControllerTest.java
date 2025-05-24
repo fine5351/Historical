@@ -1,13 +1,14 @@
 package com.finekuo.springdatajpa.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.finekuo.normalcore.constant.ResumeStatus; // Corrected import
-import com.finekuo.normalcore.dto.response.BaseResponse; // Corrected import
+import com.finekuo.normalcore.constant.ResumeStatus;
+import com.finekuo.normalcore.dto.response.BaseResponse;
+import com.finekuo.normalcore.util.Jsons;
 import com.finekuo.springdatajpa.dto.ResumeDTO;
-import com.finekuo.springdatajpa.dto.response.GetResumePayload; // Corrected import
+import com.finekuo.springdatajpa.dto.response.GetResumePayload;
 import com.finekuo.springdatajpa.entity.Resume;
 import com.finekuo.springdatajpa.repository.ResumeRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +21,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Comparator; // Added import
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport; // Added import
+import java.util.stream.StreamSupport;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,18 +37,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @Transactional
+@Slf4j
 public class ResumeControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
     private ResumeRepository resumeRepository; // Injected for E2E
-
-    // Removed @MockBean for ResumeRepository
 
     @BeforeEach
     public void setUp() {
@@ -80,10 +76,12 @@ public class ResumeControllerTest {
                 .andReturn();
 
         String contentAsString = result.getResponse().getContentAsString();
-        BaseResponse<GetResumePayload> response = objectMapper.readValue(contentAsString, new TypeReference<BaseResponse<GetResumePayload>>() {});
+        BaseResponse<GetResumePayload> response = Jsons.fromJson(contentAsString, new TypeReference<BaseResponse<GetResumePayload>>() {
+
+        });
 
         assertThat(response.getCode()).isEqualTo(com.finekuo.normalcore.constant.ResponseStatusCode.SUCCESS.getCode());
-        assertThat(response.getMessage()).isEqualTo("Success");
+        assertThat(response.getMessage()).isEqualTo("success");
         assertThat(response.getData()).isNotNull();
         assertThat(response.getData().resumeList()).hasSize(2); // Changed to record accessor
 
@@ -91,7 +89,7 @@ public class ResumeControllerTest {
         List<ResumeDTO> expectedDtos = savedResumes.stream()
                 .map(ResumeDTO::fromEntity) // Assumes ResumeDTO.fromEntity handles this
                 .collect(Collectors.toList());
-        
+
         // Sort by filename for consistent comparison order if not guaranteed by retrieval
         List<ResumeDTO> actualDtos = response.getData().resumeList(); // Changed to record accessor
         actualDtos.sort(Comparator.comparing(ResumeDTO::getFileName));
@@ -127,17 +125,19 @@ public class ResumeControllerTest {
 
         // Assert response
         String contentAsString = result.getResponse().getContentAsString();
-        BaseResponse<Void> response = objectMapper.readValue(contentAsString, new TypeReference<BaseResponse<Void>>() {});
+        BaseResponse<Void> response = Jsons.fromJson(contentAsString, new TypeReference<BaseResponse<Void>>() {
+
+        });
 
         assertThat(response.getCode()).isEqualTo(com.finekuo.normalcore.constant.ResponseStatusCode.SUCCESS.getCode());
-        assertThat(response.getMessage()).isEqualTo("Success");
+        assertThat(response.getMessage()).isEqualTo("success");
         assertThat(response.getData()).isNull();
 
         // Verify persistence in H2
-        Optional<Resume> persistedResumeOpt = resumeRepository.findByFileName(mockFile.getOriginalFilename());
+        Optional<Resume> persistedResumeOpt = resumeRepository.findByFileName(mockFile.getName());
         assertThat(persistedResumeOpt).isPresent();
         Resume persistedResume = persistedResumeOpt.get();
-        assertThat(persistedResume.getFileName()).isEqualTo(mockFile.getOriginalFilename());
+        assertThat(persistedResume.getFileName()).isEqualTo(mockFile.getName());
         assertThat(persistedResume.getStatus()).isEqualTo(ResumeStatus.PENDING);
         // assertThat(persistedResume.getS3Url()).isNotNull(); // Resume entity does not have s3Url field. Controller logic for this needs review if it's expected.
         assertThat(persistedResume.getCreatedAt()).isNotNull(); // from BaseEntity

@@ -1,10 +1,10 @@
 package com.finekuo.springdatajpa.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finekuo.normalcore.constant.ResponseStatusCode;
 import com.finekuo.normalcore.constant.SkillLevel;
 import com.finekuo.normalcore.dto.response.BaseResponse;
+import com.finekuo.normalcore.util.Jsons;
 import com.finekuo.springdatajpa.dto.AllowedSkillLevelMappingDTO;
 import com.finekuo.springdatajpa.dto.SkillDTO;
 import com.finekuo.springdatajpa.dto.response.GetAllowedSkillLevelPayload;
@@ -35,7 +35,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
@@ -51,9 +50,6 @@ public class SkillControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
     private SkillRepository skillRepository;
 
     @Autowired
@@ -67,7 +63,7 @@ public class SkillControllerTest {
 
     @BeforeEach
     public void setUp() {
-        allowedSkillMappingRepository.deleteAll(); 
+        allowedSkillMappingRepository.deleteAll();
         skillRepository.deleteAll();
         teamRepository.deleteAll();
         vacancyRepository.deleteAll();
@@ -80,7 +76,7 @@ public class SkillControllerTest {
 
         Skill skill2 = new Skill();
         skill2.setName("Python");
-        
+
         Skill skill3 = new Skill();
         skill3.setName("C++");
 
@@ -94,13 +90,15 @@ public class SkillControllerTest {
                 .andReturn();
 
         String contentAsString = result.getResponse().getContentAsString();
-        BaseResponse<GetSkillPayload> response = objectMapper.readValue(contentAsString, new TypeReference<BaseResponse<GetSkillPayload>>() {});
+        BaseResponse<GetSkillPayload> response = Jsons.fromJson(contentAsString, new TypeReference<BaseResponse<GetSkillPayload>>() {
+
+        });
 
         assertThat(response.getCode()).isEqualTo(ResponseStatusCode.SUCCESS.getCode()); // Corrected assertion
-        assertThat(response.getMessage()).isEqualTo("Success");
+        assertThat(response.getMessage()).isEqualTo("success");
         assertThat(response.getData()).isNotNull();
-        
-        List<SkillDTO> actualDtos = response.getData().skills(); 
+
+        List<SkillDTO> actualDtos = response.getData().skills();
         assertThat(actualDtos).hasSize(3);
 
         List<SkillDTO> expectedDtos = savedSkills.stream()
@@ -112,7 +110,7 @@ public class SkillControllerTest {
                 })
                 .sorted(Comparator.comparing(SkillDTO::getName))
                 .collect(Collectors.toList());
-        
+
         for (int i = 0; i < expectedDtos.size(); i++) {
             SkillDTO expected = expectedDtos.get(i);
             SkillDTO actual = actualDtos.get(i);
@@ -138,18 +136,18 @@ public class SkillControllerTest {
         Skill pythonSkill = new Skill();
         pythonSkill.setName("Python");
         skillRepository.save(pythonSkill);
-        
+
         AllowedSkillMapping mapping1 = new AllowedSkillMapping();
         mapping1.setTeamId(team.getId()); // Set valid teamId
         mapping1.setVacancyId(vacancy.getId()); // Set valid vacancyId
-        mapping1.setSkillId(javaSkill.getId()); 
-        mapping1.setSkillLevel(SkillLevel.ADVANCED); 
+        mapping1.setSkillId(javaSkill.getId());
+        mapping1.setSkillLevel(SkillLevel.ADVANCED);
 
         AllowedSkillMapping mapping2 = new AllowedSkillMapping();
         mapping2.setTeamId(team.getId()); // Set valid teamId
         mapping2.setVacancyId(vacancy.getId()); // Set valid vacancyId
-        mapping2.setSkillId(pythonSkill.getId()); 
-        mapping2.setSkillLevel(SkillLevel.INTERMEDIATE); 
+        mapping2.setSkillId(pythonSkill.getId());
+        mapping2.setSkillLevel(SkillLevel.INTERMEDIATE);
 
         allowedSkillMappingRepository.saveAll(Arrays.asList(mapping1, mapping2));
 
@@ -159,29 +157,31 @@ public class SkillControllerTest {
                 .andReturn();
 
         String contentAsString = result.getResponse().getContentAsString();
-        BaseResponse<GetAllowedSkillLevelPayload> response = objectMapper.readValue(contentAsString, new TypeReference<BaseResponse<GetAllowedSkillLevelPayload>>() {});
+        BaseResponse<GetAllowedSkillLevelPayload> response = Jsons.fromJson(contentAsString, new TypeReference<BaseResponse<GetAllowedSkillLevelPayload>>() {
+
+        });
 
         assertThat(response.getCode()).isEqualTo(ResponseStatusCode.SUCCESS.getCode()); // Corrected assertion
-        assertThat(response.getMessage()).isEqualTo("Success");
+        assertThat(response.getMessage()).isEqualTo("success");
         assertThat(response.getData()).isNotNull();
-        
-        List<AllowedSkillLevelMappingDTO> actualDtos = response.getData().allowedSkillLevelMappings(); 
+
+        List<AllowedSkillLevelMappingDTO> actualDtos = response.getData().allowedSkillLevelMappings();
         assertThat(actualDtos).hasSize(2);
 
         actualDtos.sort(Comparator.comparing(AllowedSkillLevelMappingDTO::getSkillName));
 
         assertThat(actualDtos.get(0).getSkillName()).isEqualTo("Java");
-        assertThat(actualDtos.get(0).getSkillLevel()).isEqualTo(SkillLevel.ADVANCED.name()); 
+        assertThat(actualDtos.get(0).getSkillLevel()).isEqualTo(SkillLevel.ADVANCED.name().toLowerCase());
         assertThat(actualDtos.get(1).getSkillName()).isEqualTo("Python");
-        assertThat(actualDtos.get(1).getSkillLevel()).isEqualTo(SkillLevel.INTERMEDIATE.name()); 
+        assertThat(actualDtos.get(1).getSkillLevel()).isEqualTo(SkillLevel.INTERMEDIATE.name().toLowerCase());
     }
 
     @Test
     public void registerAllowedSkillLevel_shouldSucceedAndPersistData() throws Exception {
-        Skill java = new Skill(); 
-        java.setName("Java"); 
+        Skill java = new Skill();
+        java.setName("Java");
         skillRepository.save(java);
-        
+
         Skill python = new Skill();
         python.setName("Python");
         skillRepository.save(python);
@@ -204,28 +204,30 @@ public class SkillControllerTest {
                 .andReturn();
 
         String contentAsString = result.getResponse().getContentAsString();
-        BaseResponse<Void> response = objectMapper.readValue(contentAsString, new TypeReference<BaseResponse<Void>>() {});
+        BaseResponse<Void> response = Jsons.fromJson(contentAsString, new TypeReference<BaseResponse<Void>>() {
+
+        });
 
         assertThat(response.getCode()).isEqualTo(ResponseStatusCode.SUCCESS.getCode()); // Corrected assertion
-        assertThat(response.getMessage()).isEqualTo("Success");
+        assertThat(response.getMessage()).isEqualTo("success");
         assertThat(response.getData()).isNull();
 
         List<AllowedSkillMapping> persistedMappings = StreamSupport.stream(
                 allowedSkillMappingRepository.findAll().spliterator(), false).collect(Collectors.toList());
-        assertThat(persistedMappings).hasSize(3); 
+        assertThat(persistedMappings).hasSize(3);
 
         persistedMappings.sort(Comparator.comparing(m -> skillRepository.findById(m.getSkillId()).get().getName()));
 
         AllowedSkillMapping javaMapping = persistedMappings.get(0);
         assertThat(skillRepository.findById(javaMapping.getSkillId()).get().getName()).isEqualTo("Java");
-        assertThat(javaMapping.getSkillLevel()).isEqualTo(SkillLevel.ADVANCED); 
+        assertThat(javaMapping.getSkillLevel()).isEqualTo(SkillLevel.ADVANCED);
 
         AllowedSkillMapping pythonMapping = persistedMappings.get(1);
         assertThat(skillRepository.findById(pythonMapping.getSkillId()).get().getName()).isEqualTo("Python");
-        assertThat(pythonMapping.getSkillLevel()).isEqualTo(SkillLevel.INTERMEDIATE); 
-        
+        assertThat(pythonMapping.getSkillLevel()).isEqualTo(SkillLevel.INTERMEDIATE);
+
         AllowedSkillMapping springBootMapping = persistedMappings.get(2);
         assertThat(skillRepository.findById(springBootMapping.getSkillId()).get().getName()).isEqualTo("Spring Boot");
-        assertThat(springBootMapping.getSkillLevel()).isEqualTo(SkillLevel.ADVANCED); 
+        assertThat(springBootMapping.getSkillLevel()).isEqualTo(SkillLevel.ADVANCED);
     }
 }

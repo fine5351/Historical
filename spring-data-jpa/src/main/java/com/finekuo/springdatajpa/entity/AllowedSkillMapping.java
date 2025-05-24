@@ -15,7 +15,7 @@ public class AllowedSkillMapping extends BaseEntity {
     private long teamId;
     private long vacancyId;
     private long skillId;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private SkillLevel skillLevel;
 
 }

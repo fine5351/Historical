@@ -1,8 +1,7 @@
 package com.finekuo.kafka.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finekuo.kafka.dto.request.PublishEventRequest;
-// EventPublisher is no longer mocked
+import com.finekuo.normalcore.util.Jsons;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -42,12 +41,6 @@ public class EventControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    // EventPublisher is now autowired and used as a real bean
-    // @Autowired private EventPublisher eventPublisher; // Not directly needed for controller test, but KafkaTemplate is
-
     private KafkaConsumer<String, String> consumer;
 
     @BeforeEach
@@ -78,7 +71,7 @@ public class EventControllerTest {
 
         mockMvc.perform(post("/api/events/")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                        .content(Jsons.toJson(request)))
                 .andExpect(status().isOk());
 
         // Consume records from Kafka
@@ -88,7 +81,7 @@ public class EventControllerTest {
         boolean messageFound = false;
         for (ConsumerRecord<String, String> record : records) {
             if (record.topic().equals("demo-topic")) { // Changed to "demo-topic"
-                PublishEventRequest consumedRequest = objectMapper.readValue(record.value(), PublishEventRequest.class);
+                PublishEventRequest consumedRequest = Jsons.fromJson(record.value(), PublishEventRequest.class);
                 // Compare relevant fields, OffsetDateTime might have precision differences after serialization/deserialization
                 if (request.getMessage().equals(consumedRequest.getMessage()) &&
                     request.getNow().toEpochSecond() == consumedRequest.getNow().toEpochSecond()) {

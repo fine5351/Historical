@@ -1,6 +1,6 @@
 package com.finekuo.normalcore.advice;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.finekuo.normalcore.util.Jsons;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -24,9 +24,7 @@ public class LoggingRequestBodyAdvice extends RequestBodyAdviceAdapter {
                                 MethodParameter parameter, Type targetType,
                                 Class<? extends HttpMessageConverter<?>> converterType) {
         try {
-            ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(body);
-            log.info("[LoggingRequestBodyAdvice] Request Body: {}", json);
+            log.info("[LoggingRequestBodyAdvice] Request Body: {}", Jsons.toJson(body));
         } catch (Exception e) {
             log.warn("[LoggingRequestBodyAdvice] Failed to log request body", e);
         }
