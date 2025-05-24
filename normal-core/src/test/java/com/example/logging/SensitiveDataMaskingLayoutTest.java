@@ -5,20 +5,16 @@ import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.LoggingEvent;
-import com.example.config.SensitiveDataConfig; // For knowing default keys
+import com.example.config.SensitiveDataConfig;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 public class SensitiveDataMaskingLayoutTest {
@@ -57,7 +53,7 @@ public class SensitiveDataMaskingLayoutTest {
     private ILoggingEvent createEvent(String message, Level level) {
         return new LoggingEvent(Logger.FQCN, logger, level, message, null, null);
     }
-    
+
     @Test
     void testSensitiveKeyIsMasked() throws JsonProcessingException {
         String originalMessage = "{\"name\": \"testUser\", \"roc_id\": \"A123456789\"}";
@@ -66,7 +62,7 @@ public class SensitiveDataMaskingLayoutTest {
 
         Map<String, Object> resultJson = objectMapper.readValue(formattedMessage, Map.class);
         assertEquals("testUser", resultJson.get("name"));
-        assertEquals("***", resultJson.get("roc_id"));
+        assertEquals("*".repeat(6), resultJson.get("roc_id"));
     }
 
     @Test
@@ -76,9 +72,9 @@ public class SensitiveDataMaskingLayoutTest {
         String formattedMessage = layout.doLayout(event);
 
         Map<String, Object> resultJson = objectMapper.readValue(formattedMessage, Map.class);
-        assertEquals("***", resultJson.get("roc_id"));
-        assertEquals("***", resultJson.get("account_number"));
-        assertEquals("***", resultJson.get("credit_card_number"));
+        assertEquals("*".repeat(6), resultJson.get("roc_id"));
+        assertEquals("*".repeat(14), resultJson.get("account_number"));
+        assertEquals("*".repeat(18), resultJson.get("credit_card_number"));
         assertEquals("data", resultJson.get("other_info"));
     }
 
@@ -87,7 +83,7 @@ public class SensitiveDataMaskingLayoutTest {
         String originalMessage = "{\"name\": \"testUser\", \"user_id\": \"U987\"}";
         ILoggingEvent event = createEvent(originalMessage);
         String formattedMessage = layout.doLayout(event);
-        
+
         // With TEST_PATTERN = "%message", formattedMessage should be originalMessage
         assertEquals(originalMessage, formattedMessage);
     }
@@ -99,7 +95,7 @@ public class SensitiveDataMaskingLayoutTest {
         String formattedMessage = layout.doLayout(event);
         assertEquals(originalMessage, formattedMessage);
     }
-    
+
     @Test
     void testEmptyJsonMessage() throws JsonProcessingException {
         String originalMessage = "{}";
@@ -116,9 +112,9 @@ public class SensitiveDataMaskingLayoutTest {
 
         Map<String, Object> resultJson = objectMapper.readValue(formattedMessage, Map.class);
         assertEquals("testUser", resultJson.get("name"));
-        assertEquals("***", resultJson.get("roc_id"));
+        assertEquals("*".repeat(6), resultJson.get("roc_id"));
     }
-    
+
     @Test
     void testSensitiveKeyNotPresent() throws JsonProcessingException {
         String originalMessage = "{\"name\": \"testUser\", \"another_key\": \"value\"}";
@@ -143,7 +139,7 @@ public class SensitiveDataMaskingLayoutTest {
         ObjectNode resultJson = (ObjectNode) objectMapper.readTree(formattedMessage);
         // If masking is recursive (expected by this test):
         assertEquals("test", resultJson.get("user").get("name").asText());
-        assertEquals("***", resultJson.get("user").get("roc_id").asText()); // This will fail with current layout
+        assertEquals("*".repeat(6), resultJson.get("user").get("roc_id").asText()); // This will fail with current layout
         assertEquals("T1", resultJson.get("transaction_id").asText());
     }
 
@@ -158,11 +154,11 @@ public class SensitiveDataMaskingLayoutTest {
         ObjectNode resultJson = (ObjectNode) objectMapper.readTree(formattedMessage);
         // If masking is recursive (expected by this test):
         assertEquals("1", resultJson.get("transactions").get(0).get("id").asText());
-        assertEquals("***", resultJson.get("transactions").get(0).get("roc_id").asText()); // This will fail
+        assertEquals("*".repeat(6), resultJson.get("transactions").get(0).get("roc_id").asText()); // This will fail
         assertEquals("2", resultJson.get("transactions").get(1).get("id").asText());
-        assertEquals("***", resultJson.get("transactions").get(1).get("account_number").asText()); // This will fail
+        assertEquals("*".repeat(14), resultJson.get("transactions").get(1).get("account_number").asText()); // This will fail
     }
-    
+
     @Test
     void testSensitiveKeyInMixedNestedStructure_ShouldBeMasked() throws JsonProcessingException {
         String originalMessage = "{\"user\": {\"details\": {\"roc_id\": \"XYZ789\"}}, \"cards\": [{\"type\": \"visa\", \"credit_card_number\": \"1111-2222-xxxx-yyyy\"}, {\"type\": \"mc\"}]}";
@@ -170,9 +166,9 @@ public class SensitiveDataMaskingLayoutTest {
         String formattedMessage = layout.doLayout(event);
 
         ObjectNode resultJson = (ObjectNode) objectMapper.readTree(formattedMessage);
-        assertEquals("***", resultJson.get("user").get("details").get("roc_id").asText()); // This will fail
+        assertEquals("*".repeat(6), resultJson.get("user").get("details").get("roc_id").asText()); // This will fail
         assertEquals("visa", resultJson.get("cards").get(0).get("type").asText());
-        assertEquals("***", resultJson.get("cards").get(0).get("credit_card_number").asText()); // This will fail
+        assertEquals("*".repeat(18), resultJson.get("cards").get(0).get("credit_card_number").asText()); // This will fail
         assertEquals("mc", resultJson.get("cards").get(1).get("type").asText());
     }
 
@@ -187,7 +183,7 @@ public class SensitiveDataMaskingLayoutTest {
         String formattedMessage = layout.doLayout(event);
 
         Map<String, Object> resultJson = objectMapper.readValue(formattedMessage, Map.class);
-        assertEquals("***", resultJson.get("roc_id"));
+        assertEquals("*".repeat(6), resultJson.get("roc_id"));
         assertEquals("normal_value", resultJson.get("other_key"));
     }
 
@@ -203,10 +199,10 @@ public class SensitiveDataMaskingLayoutTest {
 
         // Expected: "WARN - {\"roc_id\":\"***\"}"
         assertTrue(formattedMessage.startsWith("WARN - "), "Formatted message should start with level");
-        
+
         String jsonPart = formattedMessage.substring("WARN - ".length());
         Map<String, Object> resultJson = objectMapper.readValue(jsonPart, Map.class);
-        assertEquals("***", resultJson.get("roc_id"));
+        assertEquals("*".repeat(6), resultJson.get("roc_id"));
     }
 
     @Test
@@ -214,7 +210,7 @@ public class SensitiveDataMaskingLayoutTest {
         String originalMessage = "{\"name\": \"testUser\", \"roc_id\": \"A123456789\""; // Malformed JSON (missing closing brace)
         ILoggingEvent event = createEvent(originalMessage);
         String formattedMessage = layout.doLayout(event);
-        
+
         // Expect original message because JSON parsing will fail
         assertEquals(originalMessage, formattedMessage);
     }
