@@ -11,23 +11,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
-
-import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional // Ensure each test runs in a transaction and rolls back
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class) // To order tests if needed, e.g. create before delete
+@ActiveProfiles("test")
 public class EmployeeControllerTest {
 
     @Autowired
@@ -52,7 +56,7 @@ public class EmployeeControllerTest {
         mockMvc.perform(get("/api/employees")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success", is(true)))
+                .andExpect(jsonPath("$.message", is("success")))
                 .andExpect(jsonPath("$.data", hasSize(INITIAL_EMPLOYEE_COUNT)))
                 .andExpect(jsonPath("$.data[0].name", is("Alice Smith"))); // Check first employee from data.sql
     }
@@ -63,7 +67,7 @@ public class EmployeeControllerTest {
         mockMvc.perform(get("/api/employees/" + EXISTING_EMPLOYEE_ID_1)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success", is(true)))
+                .andExpect(jsonPath("$.message", is("success")))
                 .andExpect(jsonPath("$.data.id", is(EXISTING_EMPLOYEE_ID_1.intValue())))
                 .andExpect(jsonPath("$.data.name", is("Alice Smith")))
                 .andExpect(jsonPath("$.data.address", is("123 Maple St")));
@@ -75,7 +79,7 @@ public class EmployeeControllerTest {
         mockMvc.perform(get("/api/employees/" + NON_EXISTING_EMPLOYEE_ID)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success", is(true)))
+                .andExpect(jsonPath("$.message", is("success")))
                 .andExpect(jsonPath("$.data", is(nullValue())));
     }
 
@@ -101,7 +105,7 @@ public class EmployeeControllerTest {
                         .content(objectMapper.writeValueAsString(newEmployee))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success", is(true)))
+                .andExpect(jsonPath("$.message", is("success")))
                 .andExpect(jsonPath("$.data.id", notNullValue()))
                 .andExpect(jsonPath("$.data.name", is("David Lee")))
                 .andDo(result -> { // Verify in DB
@@ -135,7 +139,7 @@ public class EmployeeControllerTest {
                         .content(objectMapper.writeValueAsString(updatedEmployee))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success", is(true)))
+                .andExpect(jsonPath("$.message", is("success")))
                 .andExpect(jsonPath("$.data.id", is(EXISTING_EMPLOYEE_ID_1.intValue())))
                 .andExpect(jsonPath("$.data.name", is("Alice Johnson (Updated)")))
                 .andExpect(jsonPath("$.data.address", is("123 Maple St Updated")));
@@ -153,7 +157,7 @@ public class EmployeeControllerTest {
         mockMvc.perform(delete("/api/employees/" + EXISTING_EMPLOYEE_ID_2)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success", is(true)));
+                .andExpect(jsonPath("$.message", is("success")));
 
         // Verify deleted from DB
         Employee dbEmployee = employeeMapper.selectOneById(EXISTING_EMPLOYEE_ID_2);
@@ -179,11 +183,11 @@ public class EmployeeControllerTest {
                         .param("pageSize", "2") // Request 2 items for page 1
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success", is(true)))
+                .andExpect(jsonPath("$.message", is("success")))
                 .andExpect(jsonPath("$.data.pageNumber", is(1)))
                 .andExpect(jsonPath("$.data.pageSize", is(2)))
                 .andExpect(jsonPath("$.data.totalRow", is(INITIAL_EMPLOYEE_COUNT))) // Total employees in DB
-                .andExpect(jsonPath("$.data.list", hasSize(2))); // Records on current page
+                .andExpect(jsonPath("$.data.records", hasSize(2))); // Records on current page
     }
 
     @Test
@@ -195,10 +199,10 @@ public class EmployeeControllerTest {
                         .param("pageSize", "2")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.success", is(true)))
+                .andExpect(jsonPath("$.message", is("success")))
                 .andExpect(jsonPath("$.data.pageNumber", is(2)))
                 .andExpect(jsonPath("$.data.pageSize", is(2)))
                 .andExpect(jsonPath("$.data.totalRow", is(INITIAL_EMPLOYEE_COUNT)))
-                .andExpect(jsonPath("$.data.list", hasSize(1))); // Remaining record on page 2
+                .andExpect(jsonPath("$.data.records", hasSize(1))); // Remaining record on page 2
     }
 }

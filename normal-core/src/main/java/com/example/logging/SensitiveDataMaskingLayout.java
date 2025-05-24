@@ -2,7 +2,6 @@ package com.example.logging;
 
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import org.slf4j.event.KeyValuePair; // Correct import based on compiler error
 import com.example.config.SensitiveDataConfig;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,7 +9,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 
-import java.util.Collections; // Added for Collections.emptyList()
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +37,24 @@ public class SensitiveDataMaskingLayout extends PatternLayout {
         List<String> sensitiveKeys = sensitiveDataConfig.getSensitiveKeys();
 
         try {
-            JsonNode rootNode = objectMapper.readTree(originalLogMessage);
+            // 先找出 json 部分
+            int jsonStart = originalLogMessage.indexOf('{');
+            int jsonEnd = originalLogMessage.lastIndexOf('}');
+            if (jsonStart == -1 || jsonEnd == -1 || jsonEnd <= jsonStart) {
+                // 如果沒有找到 json 部分，直接返回原始訊息
+                //System.out.println("(\"No JSON found in log message: \" + originalLogMessage) = "+ originalLogMessage);
+                return originalFormattedMessage;
+            }
+            String jsonPart = originalLogMessage.substring(jsonStart, jsonEnd + 1);
+            //System.out.println("jsonPart = " + jsonPart);
+
+            JsonNode rootNode = objectMapper.readTree(jsonPart);
             boolean modified = maskNode(rootNode, sensitiveKeys);
 
             if (modified) {
-                String maskedMessage = objectMapper.writeValueAsString(rootNode);
+                String maskedJson = objectMapper.writeValueAsString(rootNode);
+                // 將遮蔽後的 json 替換回原始訊息
+                String maskedMessage = originalLogMessage.substring(0, jsonStart) + maskedJson + originalLogMessage.substring(jsonEnd + 1);
                 LoggingEventWrapper decoratedEvent = new LoggingEventWrapper(event, maskedMessage);
                 return super.doLayout(decoratedEvent);
             } else {
@@ -133,7 +145,7 @@ class LoggingEventWrapper implements ILoggingEvent {
     @Override
     @Deprecated
     public java.util.Map<String, String> getMdc() { return original.getMdc(); }
-    
+
     @Override
     public java.util.List<org.slf4j.event.KeyValuePair> getKeyValuePairs() {
         return Collections.emptyList(); // Return an empty list as per subtask, with correct signature

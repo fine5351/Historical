@@ -1,24 +1,25 @@
 package com.example.config;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Getter
 public class SensitiveDataConfig {
 
-    private List<String> sensitiveKeys;
+    private final List<String> sensitiveKeys;
 
     public SensitiveDataConfig() {
         // Initialize the list of sensitive keys
         sensitiveKeys = new ArrayList<>(Arrays.asList(
                 "roc_id",
+                "rocId",
                 "account_number",
                 "credit_card_number"
                 // Add more sensitive keys as needed
         ));
     }
 
-    public List<String> getSensitiveKeys() {
-        return sensitiveKeys;
-    }
 }

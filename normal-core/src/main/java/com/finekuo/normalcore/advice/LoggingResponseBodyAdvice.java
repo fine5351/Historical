@@ -25,7 +25,7 @@ public class LoggingResponseBodyAdvice implements ResponseBodyAdvice<Object> {
                                   Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   ServerHttpRequest request, ServerHttpResponse response) {
         try {
-            log.debug("[LoggingResponseBodyAdvice] Response Body: {}", Jsons.toJson(body));
+            log.debug("[LoggingResponseBodyAdvice] Response Body: " + Jsons.toJson(body));
         } catch (Exception e) {
             log.warn("[LoggingResponseBodyAdvice] Failed to log response body", e);
         }

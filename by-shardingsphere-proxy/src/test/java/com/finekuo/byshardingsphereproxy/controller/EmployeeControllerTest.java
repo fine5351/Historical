@@ -12,19 +12,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional // Ensure each test runs in a transaction and rolls back
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ActiveProfiles("test")
 public class EmployeeControllerTest {
 
     @Autowired
@@ -163,7 +172,7 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.pageNumber", is(1)))
                 .andExpect(jsonPath("$.pageSize", is(2)))
                 .andExpect(jsonPath("$.totalRow", is(INITIAL_EMPLOYEE_COUNT)))
-                .andExpect(jsonPath("$.list", hasSize(2)));
+                .andExpect(jsonPath("$.records", hasSize(2)));
     }
 
     @Test
@@ -178,6 +187,6 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.pageNumber", is(2)))
                 .andExpect(jsonPath("$.pageSize", is(2)))
                 .andExpect(jsonPath("$.totalRow", is(INITIAL_EMPLOYEE_COUNT)))
-                .andExpect(jsonPath("$.list", hasSize(1)));
+                .andExpect(jsonPath("$.records", hasSize(1)));
     }
 }

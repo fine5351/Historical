@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: logging
+
+logging:
+  level:
+    root: info
+    "com.finekuo.normalcore.advice": debug

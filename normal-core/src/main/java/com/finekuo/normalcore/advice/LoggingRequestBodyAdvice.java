@@ -24,7 +24,7 @@ public class LoggingRequestBodyAdvice extends RequestBodyAdviceAdapter {
                                 MethodParameter parameter, Type targetType,
                                 Class<? extends HttpMessageConverter<?>> converterType) {
         try {
-            log.info("[LoggingRequestBodyAdvice] Request Body: {}", Jsons.toJson(body));
+            log.debug("[LoggingRequestBodyAdvice] Request Body: " + Jsons.toJson(body));
         } catch (Exception e) {
             log.warn("[LoggingRequestBodyAdvice] Failed to log request body", e);
         }
