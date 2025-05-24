@@ -8,6 +8,7 @@ public final class Gsons {
 
     private static final Gson GSON_INSTANCE = new GsonBuilder()
             .registerTypeAdapterFactory(new MaskedStringGsonTypeAdapterFactory())
+            .serializeNulls()
             .create();
 
     private Gsons() {

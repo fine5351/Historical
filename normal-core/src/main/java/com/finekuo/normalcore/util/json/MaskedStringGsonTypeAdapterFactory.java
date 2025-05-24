@@ -1,11 +1,7 @@
 package com.finekuo.normalcore.util.json;
 
 import com.finekuo.normalcore.annotation.MaskedString;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonNull;
-import com.google.gson.TypeAdapter;
-import com.google.gson.TypeAdapterFactory;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
@@ -53,7 +49,7 @@ public class MaskedStringGsonTypeAdapterFactory implements TypeAdapterFactory {
             // Get the default adapter for JsonObject to write the final result
             TypeAdapter<JsonObject> jsonObjectAdapter = gson.getAdapter(JsonObject.class);
             // Get the default adapter for the type T to convert it to JsonObject
-            TypeAdapter<T> delegateAdapter = gson.getDelegateAdapter(MaskedStringGsonTypeAdapterFactory.this, type);
+            TypeAdapter<T> delegateAdapter = gson.getDelegateAdapter(new MaskedStringGsonTypeAdapterFactory(), type);
             JsonObject jsonObject = delegateAdapter.toJsonTree(value).getAsJsonObject();
 
             Class<?> rawType = value.getClass();
@@ -82,7 +78,7 @@ public class MaskedStringGsonTypeAdapterFactory implements TypeAdapterFactory {
         @Override
         public T read(JsonReader in) throws IOException {
             // Delegate to Gson's default adapter for deserialization
-            return gson.getDelegateAdapter(MaskedStringGsonTypeAdapterFactory.this, type).read(in);
+            return gson.getDelegateAdapter(new MaskedStringGsonTypeAdapterFactory(), type).read(in);
         }
     }
 }
