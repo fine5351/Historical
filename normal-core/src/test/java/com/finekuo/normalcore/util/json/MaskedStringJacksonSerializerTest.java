@@ -1,15 +1,17 @@
 package com.finekuo.normalcore.util.json;
 
-import com.finekuo.normalcore.annotation.MaskedString;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.finekuo.normalcore.util.Jsons;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MaskedStringJacksonSerializerTest {
 
     // Helper class with @MaskedString annotation
     static class TestBean {
-        @MaskedString
+
+        @JsonSerialize(using = MaskedStringJacksonSerializer.class)
         public String myField;
 
         public TestBean(String myField) {

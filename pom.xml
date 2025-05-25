@@ -36,9 +36,20 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>3.4.5</version>
-                    <!--                    <configuration>-->
-                    <!--                        <mainClass>com.finekuo.byshardingspherejdbc.ByShardingSphereJDBCApplication</mainClass>-->
-                    <!--                    </configuration>-->
+                    <executions>
+                        <execution>
+                            <id>pre-integration-test</id>
+                            <goals>
+                                <goal>start</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>post-integration-test</id>
+                            <goals>
+                                <goal>stop</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -59,10 +70,15 @@
                 <plugin>
                     <groupId>org.springdoc</groupId>
                     <artifactId>springdoc-openapi-maven-plugin</artifactId>
-                    <version>1.4</version>
-                    <!--                    <configuration>-->
-                    <!--                        <apiDocsUrl>http://localhost:8081/v3/api-docs</apiDocsUrl>-->
-                    <!--                    </configuration>-->
+                    <version>1.5</version>
+                    <executions>
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>

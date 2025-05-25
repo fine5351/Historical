@@ -1,12 +1,14 @@
-package com.finekuo.normalcore;
+package com.finekuo.normalcore.util.json;
 
 import com.finekuo.normalcore.dto.example.UserDetails;
 import com.finekuo.normalcore.util.Gsons;
 import com.finekuo.normalcore.util.Jsons;
+import org.junit.jupiter.api.Test;
 
-public class DemoMain {
+public class DemoTest {
 
-    public static void main(String[] args) {
+    @Test
+    void test() {
         UserDetails userDetails = new UserDetails(
                 "testuser",
                 "P@$$wOrd",
@@ -22,4 +24,5 @@ public class DemoMain {
         String gsonJson = Gsons.toJson(userDetails);
         System.out.println(gsonJson);
     }
+
 }
