@@ -22,6 +22,7 @@
         <module>shardingsphere-encryptor</module>
         <module>mybatis-flex-core</module>
         <module>normal-core</module>
+        <module>kafka</module>
     </modules>
 
     <properties>

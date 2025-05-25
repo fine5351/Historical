@@ -1,21 +1,16 @@
 package com.finekuo.byshardingsphereproxy.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finekuo.mybatisflexcore.entity.Employee;
 import com.finekuo.mybatisflexcore.mapper.EmployeeMapper;
+import com.finekuo.normalcore.BaseControllerEnableTransactionalTest;
 import com.finekuo.normalcore.dto.request.CreateEmployeeRequest;
-import org.junit.jupiter.api.MethodOrderer;
+import com.finekuo.normalcore.util.Jsons;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -29,18 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@Transactional // Ensure each test runs in a transaction and rolls back
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@ActiveProfiles("test")
-public class EmployeeControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+@Slf4j
+public class EmployeeControllerEnableTransactionalTest extends BaseControllerEnableTransactionalTest {
 
     @Autowired
     private EmployeeMapper employeeMapper;
@@ -94,14 +79,14 @@ public class EmployeeControllerTest {
 
         mockMvc.perform(post("/api/employees")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(createRequest))
+                        .content(Jsons.toJson(createRequest))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()) // Assuming 200 OK based on controller
                 .andExpect(jsonPath("$.id", notNullValue()))
                 .andExpect(jsonPath("$.name", is("David Lee")))
                 .andDo(result -> { // Verify in DB
                     String responseString = result.getResponse().getContentAsString();
-                    Employee createdEmployee = objectMapper.readValue(responseString, Employee.class);
+                    Employee createdEmployee = Jsons.fromJson(responseString, Employee.class);
                     assertNotNull(createdEmployee.getId(), "Created employee ID should not be null");
                     Employee dbEmployee = employeeMapper.selectOneById(createdEmployee.getId());
                     assertNotNull(dbEmployee, "Employee should exist in DB after creation");
@@ -128,7 +113,7 @@ public class EmployeeControllerTest {
 
         mockMvc.perform(put("/api/employees/" + EXISTING_EMPLOYEE_ID_1)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updatedEmployee))
+                        .content(Jsons.toJson(updatedEmployee))
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(EXISTING_EMPLOYEE_ID_1.intValue())))
@@ -189,4 +174,5 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.totalRow", is(INITIAL_EMPLOYEE_COUNT)))
                 .andExpect(jsonPath("$.records", hasSize(1)));
     }
+
 }

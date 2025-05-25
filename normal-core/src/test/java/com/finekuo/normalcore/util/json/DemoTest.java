@@ -1,11 +1,14 @@
 package com.finekuo.normalcore.util.json;
 
+import com.finekuo.normalcore.BaseTest;
 import com.finekuo.normalcore.dto.example.UserDetails;
 import com.finekuo.normalcore.util.Gsons;
 import com.finekuo.normalcore.util.Jsons;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-public class DemoTest {
+@Slf4j
+public class DemoTest extends BaseTest {
 
     @Test
     void test() {

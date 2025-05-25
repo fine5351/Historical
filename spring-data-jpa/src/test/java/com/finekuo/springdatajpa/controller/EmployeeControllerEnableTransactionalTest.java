@@ -1,19 +1,16 @@
 package com.finekuo.springdatajpa.controller;
 
+import com.finekuo.normalcore.BaseControllerEnableTransactionalTest;
 import com.finekuo.normalcore.dto.request.CreateEmployeeRequest;
 import com.finekuo.normalcore.util.Jsons;
 import com.finekuo.springdatajpa.entity.Employee;
 import com.finekuo.springdatajpa.repository.EmployeeRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -28,14 +25,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@ActiveProfiles("test")
-@Transactional // Ensures test data isolation and rollback
-public class EmployeeControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
+@Slf4j
+public class EmployeeControllerEnableTransactionalTest extends BaseControllerEnableTransactionalTest {
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -186,4 +177,5 @@ public class EmployeeControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError()); // Expecting 404 due to service-level handling or default exception translation
     }
+
 }

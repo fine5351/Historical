@@ -23,6 +23,13 @@
             <version>1.0.0</version>
         </dependency>
         <dependency>
+            <groupId>com.finekuo</groupId>
+            <artifactId>normal-core</artifactId>
+            <version>1.0.0</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
@@ -46,6 +53,8 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>com.finekuo.springdatajpa.Application</mainClass>
+                    <profiles>test</profiles>
+                    <jvmArguments>-Dspring.profiles.active=test -Dserver.port=0</jvmArguments>
                 </configuration>
             </plugin>
             <plugin>

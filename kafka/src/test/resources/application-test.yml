@@ -1,12 +1,24 @@
 spring:
-  application:
-    name:
-      kafka
+  datasource:
+    url: jdbc:h2:mem:testdb-kafka;DB_CLOSE_DELAY=-1;MODE=MYSQL
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+  transaction:
+    default-timeout: 30
+    rollback-on-commit-failure: true
+
   kafka:
-    bootstrap-servers:
-      - localhost:9092
-      - localhost:9093
-      - localhost:9094
+    test:
+      embedded:
+        enabled: true
+        brokers: 1
+    bootstrap-servers: ${spring.embedded.kafka.brokers}
     consumer:
       group-id: demo-group
       auto-offset-reset: earliest
@@ -29,3 +41,7 @@ logging:
   level:
     "org.springframework.kafka": warn
     "org.apache.kafka": warn
+    "org.apache.zookeeper": warn
+    "kafka": warn
+    "state.change.logger": warn
+

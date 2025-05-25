@@ -1,0 +1,7 @@
+spring:
+  redis:
+    port: 6370
+    host: localhost
+logging:
+  level:
+    com.finekuo: DEBUG

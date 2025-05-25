@@ -1,6 +1,7 @@
 package com.finekuo.springdatajpa.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.finekuo.normalcore.BaseControllerEnableTransactionalTest;
 import com.finekuo.normalcore.constant.ResponseStatusCode;
 import com.finekuo.normalcore.constant.SkillLevel;
 import com.finekuo.normalcore.dto.response.BaseResponse;
@@ -17,17 +18,13 @@ import com.finekuo.springdatajpa.repository.AllowedSkillMappingRepository;
 import com.finekuo.springdatajpa.repository.SkillRepository;
 import com.finekuo.springdatajpa.repository.TeamRepository;
 import com.finekuo.springdatajpa.repository.VacancyRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -40,14 +37,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@ActiveProfiles("test")
-@Transactional
-public class SkillControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
+@Slf4j
+public class SkillControllerEnableTransactionalTest extends BaseControllerEnableTransactionalTest {
 
     @Autowired
     private SkillRepository skillRepository;
@@ -81,8 +72,8 @@ public class SkillControllerTest {
         skill3.setName("C++");
 
         List<Skill> savedSkills = StreamSupport.stream(
-            skillRepository.saveAll(Arrays.asList(skill1, skill2, skill3)).spliterator(), false)
-            .collect(Collectors.toList());
+                        skillRepository.saveAll(Arrays.asList(skill1, skill2, skill3)).spliterator(), false)
+                .collect(Collectors.toList());
 
         MvcResult result = mockMvc.perform(get("/skill/")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -230,4 +221,5 @@ public class SkillControllerTest {
         assertThat(skillRepository.findById(springBootMapping.getSkillId()).get().getName()).isEqualTo("Spring Boot");
         assertThat(springBootMapping.getSkillLevel()).isEqualTo(SkillLevel.ADVANCED);
     }
+
 }

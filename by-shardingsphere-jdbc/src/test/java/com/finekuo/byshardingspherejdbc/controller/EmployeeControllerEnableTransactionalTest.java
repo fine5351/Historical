@@ -3,17 +3,13 @@ package com.finekuo.byshardingspherejdbc.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finekuo.mybatisflexcore.entity.Employee;
 import com.finekuo.mybatisflexcore.mapper.EmployeeMapper;
-import org.junit.jupiter.api.MethodOrderer;
+import com.finekuo.normalcore.BaseControllerEnableTransactionalTest;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -27,12 +23,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@Transactional // Ensure each test runs in a transaction and rolls back
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class) // To order tests if needed, e.g. create before delete
-@ActiveProfiles("test")
-public class EmployeeControllerTest {
+@Slf4j
+public class EmployeeControllerEnableTransactionalTest extends BaseControllerEnableTransactionalTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -205,4 +197,5 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.data.totalRow", is(INITIAL_EMPLOYEE_COUNT)))
                 .andExpect(jsonPath("$.data.records", hasSize(1))); // Remaining record on page 2
     }
+
 }

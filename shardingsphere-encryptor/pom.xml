@@ -23,6 +23,13 @@
             <version>1.0.0</version>
         </dependency>
         <dependency>
+            <groupId>com.finekuo</groupId>
+            <artifactId>normal-core</artifactId>
+            <version>1.0.0</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.apache.shardingsphere</groupId>
             <artifactId>shardingsphere-jdbc</artifactId>
             <version>5.5.2</version>

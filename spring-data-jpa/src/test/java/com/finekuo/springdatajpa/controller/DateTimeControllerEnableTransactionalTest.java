@@ -1,18 +1,14 @@
 package com.finekuo.springdatajpa.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.finekuo.normalcore.BaseControllerEnableTransactionalTest;
 import com.finekuo.normalcore.dto.response.BaseResponse;
 import com.finekuo.normalcore.util.Jsons;
 import com.finekuo.springdatajpa.dto.request.LocalDateTimeRequest;
 import com.finekuo.springdatajpa.dto.response.TimeResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.time.LocalDate;
@@ -23,14 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@ActiveProfiles("test") // Added for E2E configuration
 @Slf4j
-public class DateTimeControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
+public class DateTimeControllerEnableTransactionalTest extends BaseControllerEnableTransactionalTest {
 
     @Test
     public void testPrintDateTime() throws Exception {
@@ -80,4 +70,5 @@ public class DateTimeControllerTest {
         int previousMinute = (currentMinute == 0) ? 59 : currentMinute - 1;
         assertThat(responseTime.getMinute()).isIn(currentMinute, previousMinute);
     }
+
 }

@@ -28,6 +28,13 @@
             <version>2.3.232</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.finekuo</groupId>
+            <artifactId>normal-core</artifactId>
+            <version>1.0.0</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>

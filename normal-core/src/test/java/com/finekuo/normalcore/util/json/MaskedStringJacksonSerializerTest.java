@@ -1,12 +1,15 @@
 package com.finekuo.normalcore.util.json;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.finekuo.normalcore.BaseTest;
 import com.finekuo.normalcore.util.Jsons;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class MaskedStringJacksonSerializerTest {
+@Slf4j
+public class MaskedStringJacksonSerializerTest extends BaseTest {
 
     // Helper class with @MaskedString annotation
     static class TestBean {

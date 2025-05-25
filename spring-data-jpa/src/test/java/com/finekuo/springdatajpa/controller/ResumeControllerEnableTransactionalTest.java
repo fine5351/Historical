@@ -1,6 +1,7 @@
 package com.finekuo.springdatajpa.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.finekuo.normalcore.BaseControllerEnableTransactionalTest;
 import com.finekuo.normalcore.constant.ResumeStatus;
 import com.finekuo.normalcore.dto.response.BaseResponse;
 import com.finekuo.normalcore.util.Jsons;
@@ -12,14 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Comparator;
@@ -33,15 +29,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@ActiveProfiles("test")
-@Transactional
 @Slf4j
-public class ResumeControllerTest {
-
-    @Autowired
-    private MockMvc mockMvc;
+public class ResumeControllerEnableTransactionalTest extends BaseControllerEnableTransactionalTest {
 
     @Autowired
     private ResumeRepository resumeRepository; // Injected for E2E
@@ -67,7 +56,7 @@ public class ResumeControllerTest {
 
         // Save entities to get IDs and audit dates populated
         List<Resume> savedResumes = StreamSupport.stream(resumeRepository.saveAll(Arrays.asList(resume1, resume2)).spliterator(), false)
-                                        .collect(Collectors.toList());
+                .collect(Collectors.toList());
 
 
         MvcResult result = mockMvc.perform(get("/resume/")
@@ -143,4 +132,5 @@ public class ResumeControllerTest {
         assertThat(persistedResume.getCreatedAt()).isNotNull(); // from BaseEntity
         assertThat(persistedResume.getUpdatedAt()).isNotNull(); // from BaseEntity
     }
+
 }

@@ -1,14 +1,16 @@
-package com.example.logging;
+package com.finekuo.normalcore.logging;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.classic.spi.LoggingEvent;
-import com.example.config.SensitiveDataConfig;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.finekuo.normalcore.BaseTest;
+import com.finekuo.normalcore.config.SensitiveDataConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,8 +18,8 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
-public class SensitiveDataMaskingLayoutTest {
+@Slf4j
+public class SensitiveDataMaskingLayoutTest extends BaseTest {
 
     private SensitiveDataMaskingLayout layout;
     private Logger logger;
@@ -229,4 +231,5 @@ public class SensitiveDataMaskingLayoutTest {
         String formattedMessage2 = layout.doLayout(event2);
         assertEquals(originalMessage2, formattedMessage2);
     }
+
 }

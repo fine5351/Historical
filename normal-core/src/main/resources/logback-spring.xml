@@ -6,7 +6,7 @@
 
     <appender name="consoleText" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="com.example.logging.SensitiveDataMaskingLayout">
+            <layout class="com.finekuo.normalcore.logging.SensitiveDataMaskingLayout">
                 <pattern>${logPattern}</pattern>
             </layout>
         </encoder>

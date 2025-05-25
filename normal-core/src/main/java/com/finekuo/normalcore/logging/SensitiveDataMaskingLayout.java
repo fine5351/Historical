@@ -1,13 +1,13 @@
-package com.example.logging;
+package com.finekuo.normalcore.logging;
 
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import com.example.config.SensitiveDataConfig;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.TextNode;
+import com.finekuo.normalcore.config.SensitiveDataConfig;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -140,9 +140,11 @@ public class SensitiveDataMaskingLayout extends PatternLayout {
         }
         return madeChanges;
     }
+
 }
 
 class LoggingEventWrapper implements ILoggingEvent {
+
     private final ILoggingEvent original;
     private final String messageOverride;
 
@@ -157,35 +159,73 @@ class LoggingEventWrapper implements ILoggingEvent {
     }
 
     @Override
-    public String getThreadName() { return original.getThreadName(); }
+    public String getThreadName() {
+        return original.getThreadName();
+    }
+
     @Override
-    public ch.qos.logback.classic.Level getLevel() { return original.getLevel(); }
+    public ch.qos.logback.classic.Level getLevel() {
+        return original.getLevel();
+    }
+
     @Override
-    public long getTimeStamp() { return original.getTimeStamp(); }
+    public long getTimeStamp() {
+        return original.getTimeStamp();
+    }
+
     @Override
-    public String getLoggerName() { return original.getLoggerName(); }
+    public String getLoggerName() {
+        return original.getLoggerName();
+    }
+
     @Override
-    public Object[] getArgumentArray() { return original.getArgumentArray(); }
+    public Object[] getArgumentArray() {
+        return original.getArgumentArray();
+    }
+
     @Override
-    public String getFormattedMessage() { return messageOverride; }
+    public String getFormattedMessage() {
+        return messageOverride;
+    }
+
     @Override
-    public ch.qos.logback.classic.spi.LoggerContextVO getLoggerContextVO() { return original.getLoggerContextVO(); }
+    public ch.qos.logback.classic.spi.LoggerContextVO getLoggerContextVO() {
+        return original.getLoggerContextVO();
+    }
+
     @Override
-    public ch.qos.logback.classic.spi.IThrowableProxy getThrowableProxy() { return original.getThrowableProxy(); }
+    public ch.qos.logback.classic.spi.IThrowableProxy getThrowableProxy() {
+        return original.getThrowableProxy();
+    }
+
     @Override
-    public StackTraceElement[] getCallerData() { return original.getCallerData(); }
+    public StackTraceElement[] getCallerData() {
+        return original.getCallerData();
+    }
+
     @Override
-    public boolean hasCallerData() { return original.hasCallerData(); }
+    public boolean hasCallerData() {
+        return original.hasCallerData();
+    }
+
     @Override
-    public org.slf4j.Marker getMarker() { return original.getMarker(); }
+    public org.slf4j.Marker getMarker() {
+        return original.getMarker();
+    }
+
     @Override
-    public java.util.Map<String, String> getMDCPropertyMap() { return original.getMDCPropertyMap(); }
+    public java.util.Map<String, String> getMDCPropertyMap() {
+        return original.getMDCPropertyMap();
+    }
+
     /**
      * @deprecated
      */
     @Override
     @Deprecated
-    public java.util.Map<String, String> getMdc() { return original.getMdc(); }
+    public java.util.Map<String, String> getMdc() {
+        return original.getMdc();
+    }
 
     @Override
     public java.util.List<org.slf4j.event.KeyValuePair> getKeyValuePairs() {
@@ -193,7 +233,9 @@ class LoggingEventWrapper implements ILoggingEvent {
     }
 
     @Override
-    public void prepareForDeferredProcessing() { original.prepareForDeferredProcessing(); }
+    public void prepareForDeferredProcessing() {
+        original.prepareForDeferredProcessing();
+    }
 
     @Override
     public long getSequenceNumber() {
@@ -209,4 +251,5 @@ class LoggingEventWrapper implements ILoggingEvent {
     public java.util.List<org.slf4j.Marker> getMarkerList() {
         return original.getMarkerList();
     }
+
 }
