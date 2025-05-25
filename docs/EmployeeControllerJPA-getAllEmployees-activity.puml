@@ -1,0 +1,9 @@
+@startuml
+start
+:Receive GET /employee request;
+:Call EmployeeService.findAll();
+:Receive List<Employee>;
+:Wrap list in ResponseEntity.ok();
+:Return HTTP 200 OK with ResponseEntity<List<Employee>>;
+stop
+@enduml

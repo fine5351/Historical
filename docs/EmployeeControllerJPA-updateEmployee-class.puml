@@ -1,0 +1,37 @@
+@startuml
+package com.finekuo.springdatajpa.controller {
+  class EmployeeController {
+    -employeeService: EmployeeService
+    +updateEmployee(id: Long, employee: Employee): ResponseEntity<Employee>
+  }
+}
+
+package com.finekuo.springdatajpa.service {
+  interface EmployeeService {
+    +update(employee: Employee): Employee
+  }
+}
+
+package com.finekuo.springdatajpa.entity {
+  class Employee {
+    +id: Long
+    +name: String
+    +address: String
+    +gender: Integer
+    +rocId: String
+    ' other fields
+  }
+}
+
+package org.springframework.http {
+  class ResponseEntity<T> {
+    +static ok(body: T): ResponseEntity<T>
+  }
+}
+
+com.finekuo.springdatajpa.controller.EmployeeController ..> com.finekuo.springdatajpa.service.EmployeeService : uses
+com.finekuo.springdatajpa.controller.EmployeeController ..> com.finekuo.springdatajpa.entity.Employee : uses as parameter and in ResponseEntity
+com.finekuo.springdatajpa.controller.EmployeeController ..> org.springframework.http.ResponseEntity : uses
+com.finekuo.springdatajpa.service.EmployeeService ..> com.finekuo.springdatajpa.entity.Employee : uses as parameter and returns
+org.springframework.http.ResponseEntity o-- com.finekuo.springdatajpa.entity.Employee : (T is Employee)
+@enduml

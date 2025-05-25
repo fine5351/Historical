@@ -1,0 +1,10 @@
+@startuml
+start
+:Receive POST /employee request with CreateEmployeeRequest data;
+:Call toEntity(request) to convert DTO to Employee entity;
+:Call EmployeeService.save(employee);
+:Receive saved Employee entity (with ID);
+:Wrap saved Employee in ResponseEntity.ok();
+:Return HTTP 200 OK with ResponseEntity<Employee>;
+stop
+@enduml

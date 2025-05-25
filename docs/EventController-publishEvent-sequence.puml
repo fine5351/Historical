@@ -1,0 +1,16 @@
+@startuml
+actor Client
+participant EventController
+participant EventPublisher
+participant "Kafka Topic" as Kafka
+
+Client -> EventController: POST /api/events/ (Payload: PublishEventRequest)
+activate EventController
+EventController -> EventPublisher: publish(request)
+activate EventPublisher
+EventPublisher -> Kafka: (Sends message)
+EventPublisher --> EventController: (void)
+deactivate EventPublisher
+EventController --> Client: (HTTP 200 OK or 202 Accepted)
+deactivate EventController
+@enduml

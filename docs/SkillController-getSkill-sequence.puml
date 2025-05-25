@@ -1,0 +1,19 @@
+@startuml
+actor Client
+participant SkillController
+participant SkillService
+participant SkillDTO
+
+Client -> SkillController: GET /skill/
+activate SkillController
+SkillController -> SkillService: getAllSkills()
+activate SkillService
+SkillService --> SkillController: List<SkillEntity> ' Assuming SkillService returns entities
+deactivate SkillService
+SkillController -> SkillDTO: new SkillDTO(id, name) ' (repeated for each skill)
+SkillController -> SkillController: sorted(list)
+SkillController -> SkillController: new GetSkillPayload(sortedList)
+SkillController -> SkillController: BaseResponse.success(payload)
+SkillController --> Client: BaseResponse<GetSkillPayload>
+deactivate SkillController
+@enduml

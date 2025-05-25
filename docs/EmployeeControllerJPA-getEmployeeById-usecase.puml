@@ -1,0 +1,8 @@
+@startuml
+left to right direction
+actor "API Client" as client
+rectangle "Employee Management (JPA)" {
+  usecase "Get Employee By ID" as UC_GetById
+}
+client --> UC_GetById
+@enduml

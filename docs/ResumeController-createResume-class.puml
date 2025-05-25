@@ -1,0 +1,54 @@
+@startuml
+package com.finekuo.springdatajpa.controller {
+  class ResumeController {
+    -resumeRepository: ResumeRepository
+    +createResume(file: MultipartFile): BaseResponse<Void>
+    -buildResume(file: MultipartFile): Resume
+  }
+}
+
+package com.finekuo.springdatajpa.repository {
+  interface ResumeRepository {
+    +save(entity: Resume): Resume
+  }
+}
+
+package com.finekuo.springdatajpa.entity {
+  class Resume {
+    -fileName: String
+    -status: ResumeStatus
+    +setFileName(name: String): void
+    +setStatus(status: ResumeStatus): void
+    ' other fields
+  }
+}
+
+package org.springframework.web.multipart {
+  interface MultipartFile {
+    +getName(): String
+    ' other methods
+  }
+}
+
+package com.finekuo.normalcore.constant {
+  enum ResumeStatus {
+    PENDING
+    ' other statuses
+  }
+}
+
+package com.finekuo.normalcore.dto.response {
+  class BaseResponse<T> {
+    +static success(): BaseResponse<Void>
+  }
+}
+class Void {} ' Represents void type for BaseResponse
+
+com.finekuo.springdatajpa.controller.ResumeController ..> com.finekuo.springdatajpa.repository.ResumeRepository : uses
+com.finekuo.springdatajpa.controller.ResumeController ..> org.springframework.web.multipart.MultipartFile : uses as parameter
+com.finekuo.springdatajpa.controller.ResumeController ..> com.finekuo.springdatajpa.entity.Resume : creates & uses
+com.finekuo.springdatajpa.controller.ResumeController ..> com.finekuo.normalcore.dto.response.BaseResponse : uses
+com.finekuo.springdatajpa.entity.Resume ..> com.finekuo.normalcore.constant.ResumeStatus : uses
+com.finekuo.springdatajpa.repository.ResumeRepository ..> com.finekuo.springdatajpa.entity.Resume : uses as parameter & returns
+com.finekuo.normalcore.dto.response.BaseResponse o-- Void : (T is Void)
+@enduml

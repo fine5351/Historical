@@ -1,0 +1,12 @@
+@startuml
+node "Application Server" {
+  artifact "jpa-application.jar" {
+    component "EmployeeController (JPA)" as EmployeeController
+    component EmployeeService
+  }
+}
+database "Database" {
+  ' Represents the underlying database accessed by JPA
+}
+"Application Server" --> "Database" : (JPA access)
+@enduml

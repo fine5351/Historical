@@ -1,0 +1,44 @@
+@startuml
+package com.finekuo.byshardingsphereproxy.controller {
+  class EmployeeController {
+    +getEmployeesWithPagination(pageNumber: int, pageSize: int): Page<Employee>
+  }
+}
+
+package com.finekuo.mybatisflexcore.mapper {
+  interface EmployeeMapper {
+    +paginate(pageNumber: int, pageSize: int, query: QueryWrapper): Page<Employee>
+  }
+}
+
+package com.finekuo.mybatisflexcore.entity {
+  class Employee {
+    +id: Long
+    +name: String
+    ' other fields
+  }
+}
+
+package com.mybatisflex.core.paginate {
+  class Page<T> {
+    +records: List<T>
+    +pageNumber: int
+    +pageSize: int
+    +totalRow: long
+    +totalPage: long
+  }
+}
+
+package com.mybatisflex.core.query {
+  class QueryWrapper {
+    ' Represents query criteria, e.g., from QueryMethods.select()
+  }
+}
+
+com.finekuo.byshardingsphereproxy.controller.EmployeeController ..> com.finekuo.mybatisflexcore.mapper.EmployeeMapper : uses
+com.finekuo.byshardingsphereproxy.controller.EmployeeController ..> com.mybatisflex.core.paginate.Page : returns
+com.finekuo.byshardingsphereproxy.controller.EmployeeController ..> com.finekuo.mybatisflexcore.entity.Employee : in Page
+com.finekuo.mybatisflexcore.mapper.EmployeeMapper ..> com.mybatisflex.core.paginate.Page : returns
+com.finekuo.mybatisflexcore.mapper.EmployeeMapper ..> com.mybatisflex.core.query.QueryWrapper : uses as parameter
+com.mybatisflex.core.paginate.Page o-- com.finekuo.mybatisflexcore.entity.Employee
+@enduml

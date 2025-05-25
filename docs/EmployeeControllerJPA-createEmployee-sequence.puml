@@ -1,0 +1,19 @@
+@startuml
+actor Client
+participant "EmployeeController (JPA)" as EmployeeController
+participant EmployeeService
+
+Client -> EmployeeController: POST /employee (Payload: CreateEmployeeRequest)
+activate EmployeeController
+EmployeeController -> EmployeeController: toEntity(request)
+activate EmployeeController
+EmployeeController --> EmployeeController: Employee
+deactivate EmployeeController
+EmployeeController -> EmployeeService: save(employee)
+activate EmployeeService
+EmployeeService --> EmployeeController: Employee (saved, with ID)
+deactivate EmployeeService
+EmployeeController -> EmployeeController: ResponseEntity.ok(savedEmployee)
+EmployeeController --> Client: ResponseEntity<Employee>
+deactivate EmployeeController
+@enduml

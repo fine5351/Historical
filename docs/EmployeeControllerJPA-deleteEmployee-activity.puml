@@ -1,0 +1,8 @@
+@startuml
+start
+:Receive DELETE /employee/{id} request;
+:Call EmployeeService.delete(id);
+:Build ResponseEntity.noContent();
+:Return HTTP 204 No Content;
+stop
+@enduml

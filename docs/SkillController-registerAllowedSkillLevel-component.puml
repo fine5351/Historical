@@ -1,0 +1,11 @@
+@startuml
+package "Skill Application (JPA)" {
+  [SkillController] <<component>> as WebTier
+  [SkillService] <<component>> as ServiceTier
+  [AllowedSkillMappingRepository] <<component>> as DataAccessTier ' Assuming service interacts with a repository
+  [MultipartFile] <<external>> as FileInput
+}
+WebTier ..> ServiceTier : uses
+ServiceTier ..> DataAccessTier : uses (truncate, register from file)
+WebTier ..> FileInput : receives
+@enduml

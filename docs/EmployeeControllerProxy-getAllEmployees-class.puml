@@ -1,0 +1,28 @@
+@startuml
+package com.finekuo.byshardingsphereproxy.controller {
+  class EmployeeController {
+    +getAllEmployees(): List<Employee>
+  }
+}
+
+package com.finekuo.mybatisflexcore.mapper {
+  interface EmployeeMapper {
+    +selectAll(): List<Employee>
+  }
+}
+
+package com.finekuo.mybatisflexcore.entity {
+  class Employee {
+    +id: Long
+    +name: String
+    +address: String
+    +gender: Integer
+    +rocId: String
+    ' other fields as per actual entity
+  }
+}
+
+com.finekuo.byshardingsphereproxy.controller.EmployeeController ..> com.finekuo.mybatisflexcore.mapper.EmployeeMapper : uses
+com.finekuo.byshardingsphereproxy.controller.EmployeeController ..> com.finekuo.mybatisflexcore.entity.Employee : returns (in List)
+com.finekuo.mybatisflexcore.mapper.EmployeeMapper ..> com.finekuo.mybatisflexcore.entity.Employee : returns (in List)
+@enduml

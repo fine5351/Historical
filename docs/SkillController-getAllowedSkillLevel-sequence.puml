@@ -1,0 +1,23 @@
+@startuml
+actor Client
+participant SkillController
+participant SkillService
+participant AllowedSkillLevelMappingDTO
+
+Client -> SkillController: GET /skill/allowedSkillLevel
+activate SkillController
+SkillController -> SkillService: getAllowedSkillMapping()
+activate SkillService
+SkillService --> SkillController: List<AllowedSkillLevelEntity> ' Assuming service returns entities
+deactivate SkillService
+loop for each entity
+  SkillController -> SkillService: convert(entity)
+  activate SkillService
+  SkillService --> SkillController: AllowedSkillLevelMappingDTO
+  deactivate SkillService
+end
+SkillController -> SkillController: new GetAllowedSkillLevelPayload(list<DTO>)
+SkillController -> SkillController: BaseResponse.success(payload)
+SkillController --> Client: BaseResponse<GetAllowedSkillLevelPayload>
+deactivate SkillController
+@enduml

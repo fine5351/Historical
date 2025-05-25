@@ -1,0 +1,10 @@
+@startuml
+[*] --> Idle
+Idle --> ProcessingRequest : POST /skill/allowedSkillLevel (file upload)
+ProcessingRequest --> TruncatingData : File received
+TruncatingData --> RegisteringData : Old data truncated
+RegisteringData --> SendingResponse : New data registered from file
+RegisteringData --> ErrorHandling : Exception during registration
+ErrorHandling --> Idle : Error response sent
+SendingResponse --> Idle : Success response sent
+@enduml

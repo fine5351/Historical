@@ -1,0 +1,14 @@
+@startuml
+actor Client
+participant "EmployeeController (Proxy)" as EmployeeController
+participant EmployeeMapper
+
+Client -> EmployeeController: PUT /api/employees/{id} (Payload: Employee)
+activate EmployeeController
+EmployeeController -> EmployeeMapper: update(employee) ' (after employee.setId(id))
+activate EmployeeMapper
+EmployeeMapper --> EmployeeController: (typically returns int/void)
+deactivate EmployeeMapper
+EmployeeController --> Client: Employee (with updated employee details)
+deactivate EmployeeController
+@enduml

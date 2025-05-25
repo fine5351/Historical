@@ -1,0 +1,15 @@
+@startuml
+package "Skill Application (JPA)" {
+  [SkillController] <<component>> as WebTier
+  [SkillService] <<component>> as ServiceTier
+  ' Assume SkillService might interact with a repository for AllowedSkillLevelEntity
+  [AllowedSkillLevelRepository] <<component>> as DataAccessTier
+  [AllowedSkillLevelMappingDTO] <<component>> as DTO_Component
+  [GetAllowedSkillLevelPayload] <<component>> as Payload_DTO_Component
+}
+WebTier ..> ServiceTier : uses
+ServiceTier ..> DataAccessTier : uses (for getAllowedSkillMapping)
+WebTier ..> DTO_Component : uses (via ServiceTier.convert)
+WebTier ..> Payload_DTO_Component : uses (constructs)
+ServiceTier ..> DTO_Component : uses (returns from convert)
+@enduml

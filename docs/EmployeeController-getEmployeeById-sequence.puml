@@ -1,0 +1,14 @@
+@startuml
+actor Client
+participant EmployeeController
+participant EmployeeMapper
+
+Client -> EmployeeController: GET /api/employees/{id}
+activate EmployeeController
+EmployeeController -> EmployeeMapper: selectOneById(id)
+activate EmployeeMapper
+EmployeeMapper --> EmployeeController: Employee
+deactivate EmployeeMapper
+EmployeeController --> Client: BaseResponse<Employee>
+deactivate EmployeeController
+@enduml

@@ -1,0 +1,12 @@
+@startuml
+start
+:Receive GET /skill/allowedSkillLevel request;
+:Call SkillService.getAllowedSkillMapping();
+:Receive List<AllowedSkillLevelEntity>;
+:For each entity, call SkillService.convert(entity) to get AllowedSkillLevelMappingDTO;
+:Collect into List<AllowedSkillLevelMappingDTO>;
+:Create new GetAllowedSkillLevelPayload(list);
+:Wrap GetAllowedSkillLevelPayload with BaseResponse.success();
+:Return HTTP 200 OK with BaseResponse<GetAllowedSkillLevelPayload>;
+stop
+@enduml

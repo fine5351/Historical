@@ -1,0 +1,11 @@
+@startuml
+package "Application" {
+  [EventController] <<component>> as Controller
+  [EventPublisher] <<component>> as PublisherService
+}
+Controller ..> PublisherService : uses
+
+interface "Kafka System" as Kafka
+
+PublisherService ..> Kafka : sends event to
+@enduml

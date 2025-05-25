@@ -1,0 +1,26 @@
+@startuml
+package com.finekuo.kafka.controller {
+  class EventController {
+    -eventPublisher: EventPublisher
+    +publishEvent(request: PublishEventRequest): void
+  }
+}
+
+package com.finekuo.kafka.publisher {
+  interface EventPublisher {
+    +publish(request: PublishEventRequest): void
+  }
+}
+
+package com.finekuo.kafka.dto.request {
+  class PublishEventRequest {
+    ' Assuming some fields like:
+    ' +eventType: String
+    ' +payload: String
+  }
+}
+
+com.finekuo.kafka.controller.EventController ..> com.finekuo.kafka.publisher.EventPublisher : uses
+com.finekuo.kafka.controller.EventController ..> com.finekuo.kafka.dto.request.PublishEventRequest : uses as parameter
+com.finekuo.kafka.publisher.EventPublisher ..> com.finekuo.kafka.dto.request.PublishEventRequest : uses as parameter
+@enduml

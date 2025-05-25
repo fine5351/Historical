@@ -1,0 +1,6 @@
+@startuml
+[*] --> Idle
+Idle --> ProcessingRequest : GET /resume/
+ProcessingRequest --> SendingResponse : Resume data retrieved and processed
+SendingResponse --> Idle : Response sent
+@enduml

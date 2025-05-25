@@ -1,0 +1,25 @@
+@startuml
+package com.finekuo.springdatajpa.controller {
+  class EmployeeController {
+    -employeeService: EmployeeService
+    +deleteEmployee(id: Long): ResponseEntity<Void>
+  }
+}
+
+package com.finekuo.springdatajpa.service {
+  interface EmployeeService {
+    +delete(id: Long): void
+  }
+}
+
+package org.springframework.http {
+  class ResponseEntity<T> {
+    +static noContent(): ResponseEntity<Void>
+  }
+}
+class Void {} ' Represents a void type for ResponseEntity
+
+com.finekuo.springdatajpa.controller.EmployeeController ..> com.finekuo.springdatajpa.service.EmployeeService : uses
+com.finekuo.springdatajpa.controller.EmployeeController ..> org.springframework.http.ResponseEntity : uses
+org.springframework.http.ResponseEntity o-- Void : (T is Void)
+@enduml

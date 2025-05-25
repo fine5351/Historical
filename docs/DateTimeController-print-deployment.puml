@@ -1,0 +1,12 @@
+@startuml
+node "Application Server" {
+  artifact "spring-data-jpa-application.jar" {
+    component DateTimeController
+  }
+}
+
+note right of "Application Server"
+  The application containing DateTimeController
+  is deployed here.
+end note
+@enduml

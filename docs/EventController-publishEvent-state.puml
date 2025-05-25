@@ -1,0 +1,5 @@
+@startuml
+[*] --> Idle
+Idle --> Publishing : POST /api/events/
+Publishing --> Idle : Event published (or error handled)
+@enduml

@@ -1,0 +1,6 @@
+@startuml
+[*] --> Idle
+Idle --> ProcessingRequest : DELETE /employee/{id}
+ProcessingRequest --> SendingResponse : Employee deletion processed by service
+SendingResponse --> Idle : Response (HTTP 204 No Content) sent
+@enduml

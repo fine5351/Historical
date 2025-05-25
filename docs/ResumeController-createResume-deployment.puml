@@ -1,0 +1,18 @@
+@startuml
+node "Application Server" {
+  artifact "jpa-application.jar" {
+    component ResumeController
+    component ResumeRepository
+  }
+}
+database "Database" {
+  ' Represents the underlying database accessed by JPA
+}
+"Application Server" --> "Database" : (JPA access)
+
+' Optional: Client with file system for upload
+node "Client Machine" {
+  artifact "ClientApp/Browser"
+}
+"Client Machine" --> "Application Server" : (uploads file)
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+robust "Client" as Client
+robust "ResumeController" as Controller
+robust "ResumeRepository" as Repository
+
+@0
+Client is Idle
+Controller is Idle
+Repository is Idle
+
+@10
+Client is Requesting ' (uploads file)
+Controller is ReceivingRequest
+
+@20
+Controller is Processing ' buildResume(file)
+Controller is CallingRepository ' resumeRepository.save(entity)
+Repository is ProcessingRequest
+
+@40
+Repository is RespondingToController ' (Saved Resume)
+Controller is ReceivingFromRepository
+
+@50
+Controller is ProcessingResponse ' BaseResponse.success()
+Controller is RespondingToClient ' BaseResponse<Void>
+
+@60
+Client is Idle
+Controller is Idle
+Repository is Idle
+@enduml

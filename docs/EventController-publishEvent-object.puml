@@ -1,0 +1,7 @@
+@startuml
+object "controller:EventController" as controller
+object "publisher:EventPublisher" as publisher
+
+note left of controller : From com.finekuo.kafka.controller
+controller --> publisher : eventPublisher
+@enduml

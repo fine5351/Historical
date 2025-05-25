@@ -1,0 +1,7 @@
+@startuml
+package "Application" {
+  [EmployeeController] <<component>> as Web
+  [EmployeeMapper] <<component>> as DataAccessOrService
+}
+Web ..> DataAccessOrService
+@enduml

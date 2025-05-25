@@ -1,0 +1,19 @@
+@startuml
+actor Client
+participant ResumeController
+participant ResumeRepository
+
+Client -> ResumeController: POST /resume/ (MultipartFile "file")
+activate ResumeController
+ResumeController -> ResumeController: buildResume(file)
+activate ResumeController
+ResumeController --> ResumeController: Resume entity
+deactivate ResumeController
+ResumeController -> ResumeRepository: save(entity)
+activate ResumeRepository
+ResumeRepository --> ResumeController: (Saved Resume entity)
+deactivate ResumeRepository
+ResumeController -> ResumeController: BaseResponse.success()
+ResumeController --> Client: BaseResponse<Void>
+deactivate ResumeController
+@enduml

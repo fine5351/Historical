@@ -1,0 +1,34 @@
+@startuml
+robust "Client" as Client
+robust "SkillController" as Controller
+robust "SkillService" as Service
+
+@0
+Client is Idle
+Controller is Idle
+Service is Idle
+
+@10
+Client is Requesting
+Controller is ReceivingRequest
+
+@20
+Controller is CallingService ' skillService.getAllSkills()
+Service is ProcessingRequest
+
+@40
+Service is RespondingToController ' List<SkillEntity>
+Controller is ReceivingFromService
+
+@50
+Controller is ProcessingResponse ' (map to DTOs, sort, new GetSkillPayload, BaseResponse.success)
+
+@70
+Controller is RespondingToClient ' BaseResponse<GetSkillPayload>
+Client is ReceivingResponse
+
+@80
+Client is Idle
+Controller is Idle
+Service is Idle
+@enduml

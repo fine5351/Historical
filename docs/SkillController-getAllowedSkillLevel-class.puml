@@ -1,0 +1,51 @@
+@startuml
+package com.finekuo.springdatajpa.controller {
+  class SkillController {
+    -skillService: SkillService
+    +getAllowedSkillLevel(): BaseResponse<GetAllowedSkillLevelPayload>
+  }
+}
+
+package com.finekuo.springdatajpa.service {
+  interface SkillService {
+    +getAllowedSkillMapping(): List<AllowedSkillLevelEntity> ' Assuming an entity type
+    +convert(entity: AllowedSkillLevelEntity): AllowedSkillLevelMappingDTO
+  }
+}
+
+package com.finekuo.springdatajpa.entity {
+  class AllowedSkillLevelEntity { ' Placeholder for the entity returned by getAllowedSkillMapping
+    ' fields
+  }
+}
+
+package com.finekuo.springdatajpa.dto {
+  class AllowedSkillLevelMappingDTO {
+    ' fields of the DTO
+  }
+}
+
+package com.finekuo.springdatajpa.dto.response {
+  class GetAllowedSkillLevelPayload {
+    +allowedSkillLevels: List<AllowedSkillLevelMappingDTO>
+    ' Constructor GetAllowedSkillLevelPayload(list)
+  }
+}
+
+package com.finekuo.normalcore.dto.response {
+  class BaseResponse<T> {
+    +static success(data: T): BaseResponse<T>
+  }
+}
+
+com.finekuo.springdatajpa.controller.SkillController ..> com.finekuo.springdatajpa.service.SkillService : uses
+com.finekuo.springdatajpa.controller.SkillController ..> com.finekuo.springdatajpa.dto.AllowedSkillLevelMappingDTO : uses
+com.finekuo.springdatajpa.controller.SkillController ..> com.finekuo.springdatajpa.dto.response.GetAllowedSkillLevelPayload : creates & uses
+com.finekuo.springdatajpa.controller.SkillController ..> com.finekuo.normalcore.dto.response.BaseResponse : uses
+
+com.finekuo.springdatajpa.service.SkillService ..> com.finekuo.springdatajpa.entity.AllowedSkillLevelEntity : uses (returns List, parameter for convert)
+com.finekuo.springdatajpa.service.SkillService ..> com.finekuo.springdatajpa.dto.AllowedSkillLevelMappingDTO : returns from convert
+
+com.finekuo.springdatajpa.dto.response.GetAllowedSkillLevelPayload o-- com.finekuo.springdatajpa.dto.AllowedSkillLevelMappingDTO : contains List
+com.finekuo.normalcore.dto.response.BaseResponse o-- com.finekuo.springdatajpa.dto.response.GetAllowedSkillLevelPayload : (T is GetAllowedSkillLevelPayload)
+@enduml

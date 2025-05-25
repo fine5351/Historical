@@ -1,0 +1,7 @@
+@startuml
+start
+:Receive DELETE /api/employees/{id} request;
+:Call EmployeeMapper.deleteById(id);
+:Return HTTP 200 OK or 204 No Content;
+stop
+@enduml

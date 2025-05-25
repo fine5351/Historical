@@ -1,0 +1,61 @@
+@startuml
+package com.finekuo.springdatajpa.controller {
+  class DateTimeController {
+    -DEFAULT_ZONE_ID: ZoneId
+    +print(request: LocalDateTimeRequest): BaseResponse<TimeResponse>
+  }
+}
+
+package com.finekuo.springdatajpa.dto.request {
+  class LocalDateTimeRequest {
+    ' Assuming it has fields, though not used by print()
+    ' +timestamp: LocalDateTime
+    ' +timezone: String
+  }
+}
+
+package com.finekuo.springdatajpa.dto.response {
+  class TimeResponse {
+    +currentTime: Date
+    +currentDate: LocalDate
+    +currentDateTime: LocalDateTime
+    +currentZonedDateTime: ZonedDateTime
+    +currentInstant: Instant
+    +currentOffsetDateTime: OffsetDateTime
+    ' Constructor with these 6 params
+  }
+}
+
+package com.finekuo.normalcore.dto.response {
+  class BaseResponse<T> {
+    +code: String
+    +message: String
+    +data: T
+    +static success(data: T): BaseResponse<T>
+  }
+}
+
+package java.time {
+  class ZoneId {}
+  class LocalDate {}
+  class LocalDateTime {}
+  class ZonedDateTime {}
+  class Instant {}
+  class OffsetDateTime {}
+}
+package java.util {
+  class Date {}
+}
+
+com.finekuo.springdatajpa.controller.DateTimeController ..> com.finekuo.springdatajpa.dto.request.LocalDateTimeRequest : uses as parameter
+com.finekuo.springdatajpa.controller.DateTimeController ..> com.finekuo.springdatajpa.dto.response.TimeResponse : creates and uses
+com.finekuo.springdatajpa.controller.DateTimeController ..> com.finekuo.normalcore.dto.response.BaseResponse : uses
+com.finekuo.normalcore.dto.response.BaseResponse o-- com.finekuo.springdatajpa.dto.response.TimeResponse : (T is TimeResponse)
+com.finekuo.springdatajpa.controller.DateTimeController ..> java.time.ZoneId : uses (static final)
+com.finekuo.springdatajpa.dto.response.TimeResponse ..> java.util.Date
+com.finekuo.springdatajpa.dto.response.TimeResponse ..> java.time.LocalDate
+com.finekuo.springdatajpa.dto.response.TimeResponse ..> java.time.LocalDateTime
+com.finekuo.springdatajpa.dto.response.TimeResponse ..> java.time.ZonedDateTime
+com.finekuo.springdatajpa.dto.response.TimeResponse ..> java.time.Instant
+com.finekuo.springdatajpa.dto.response.TimeResponse ..> java.time.OffsetDateTime
+@enduml

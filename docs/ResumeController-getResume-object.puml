@@ -1,0 +1,7 @@
+@startuml
+object "controller:ResumeController" as controller
+object "repository:ResumeRepository" as repository
+
+note left of controller : From com.finekuo.springdatajpa.controller
+controller --> repository : resumeRepository
+@enduml

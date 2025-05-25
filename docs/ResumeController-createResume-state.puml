@@ -1,0 +1,7 @@
+@startuml
+[*] --> Idle
+Idle --> ProcessingRequest : POST /resume/ (file upload)
+ProcessingRequest --> SavingEntity : File processed, entity built
+SavingEntity --> SendingResponse : Entity saved to repository
+SendingResponse --> Idle : Response (HTTP 200 OK) sent
+@enduml

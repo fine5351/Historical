@@ -1,0 +1,7 @@
+@startuml
+node "ShardingSphere Proxy Server" {
+  artifact "proxy-application.jar" {
+    component "EmployeeController (Proxy)" as EmployeeController
+  }
+}
+@enduml

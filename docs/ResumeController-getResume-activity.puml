@@ -1,0 +1,12 @@
+@startuml
+start
+:Receive GET /resume/ request;
+:Call ResumeRepository.findAll();
+:Receive Iterable<Resume>;
+:Stream and map each Resume entity to ResumeDTO using ResumeDTO.fromEntity();
+:Collect into List<ResumeDTO>;
+:Create new GetResumePayload(list);
+:Wrap GetResumePayload with BaseResponse.success();
+:Return HTTP 200 OK with BaseResponse<GetResumePayload>;
+stop
+@enduml

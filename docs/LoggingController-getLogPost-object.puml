@@ -1,0 +1,6 @@
+@startuml
+object "controller:LoggingController" as controller
+
+note left of controller : From com.finekuo.logging.controller
+' No separate service/mapper object shown as logic is internal
+@enduml

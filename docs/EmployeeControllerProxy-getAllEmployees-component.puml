@@ -1,0 +1,7 @@
+@startuml
+package "ShardingSphere Proxy Application" {
+  [EmployeeController] <<component>> as WebTier
+  [EmployeeMapper] <<component>> as DataAccessTier
+}
+WebTier ..> DataAccessTier : uses to select all employees
+@enduml

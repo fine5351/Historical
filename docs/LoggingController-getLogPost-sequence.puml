@@ -1,0 +1,19 @@
+@startuml
+actor Client
+participant LoggingController
+
+Client -> LoggingController: POST /logging/log (Payload: GetLogRequest)
+activate LoggingController
+LoggingController -> LoggingController: new GetLogResponse()
+LoggingController -> LoggingController: setInteger(request.getInteger())
+LoggingController -> LoggingController: setString(request.getString())
+' Assuming rocId from request might be used if available, or hardcoded if not.
+' For now, following the code that it sets a hardcoded "rocIdValue" for GetLogResponse.rocId
+LoggingController -> LoggingController: setRocId("rocIdValue") ' Or request.getRocId() if that was intended for this field
+LoggingController -> LoggingController: setRoc_id("roc_id_value")
+LoggingController -> LoggingController: setAccount_number("account_number_value")
+LoggingController -> LoggingController: setCredit_card_number("credit_card_number_value")
+LoggingController -> LoggingController: BaseResponse.success(response)
+LoggingController --> Client: BaseResponse<GetLogResponse>
+deactivate LoggingController
+@enduml

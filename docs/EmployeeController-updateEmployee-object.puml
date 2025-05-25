@@ -1,0 +1,6 @@
+@startuml
+object "controller:EmployeeController" as controller
+object "mapper:EmployeeMapper" as mapper
+
+controller --> mapper : employeeMapper
+@enduml

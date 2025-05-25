@@ -1,0 +1,8 @@
+@startuml
+left to right direction
+actor "API Client" as client
+rectangle "Skill Management System" {
+  usecase "Get All Skills" as UC_GetAllSkills
+}
+client --> UC_GetAllSkills
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+actor Client
+participant "EmployeeController (Proxy)" as EmployeeController
+participant EmployeeMapper
+
+Client -> EmployeeController: GET /api/employees/page?pageNumber=X&pageSize=Y
+activate EmployeeController
+EmployeeController -> EmployeeMapper: paginate(pageNumber, pageSize, query)
+activate EmployeeMapper
+EmployeeMapper --> EmployeeController: Page<Employee>
+deactivate EmployeeMapper
+EmployeeController --> Client: Page<Employee>
+deactivate EmployeeController
+@enduml

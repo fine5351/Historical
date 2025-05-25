@@ -1,0 +1,10 @@
+@startuml
+start
+:Receive GET /logging/log request with 'integer' and 'string' parameters;
+:Create new GetLogResponse object;
+:Set 'integer' and 'string' in response from request parameters;
+:Set hardcoded values for rocId, roc_id, account_number, credit_card_number in response;
+:Wrap GetLogResponse with BaseResponse.success();
+:Return HTTP 200 OK with BaseResponse<GetLogResponse>;
+stop
+@enduml

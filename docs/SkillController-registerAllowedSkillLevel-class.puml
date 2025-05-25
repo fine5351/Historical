@@ -1,0 +1,43 @@
+@startuml
+package com.finekuo.springdatajpa.controller {
+  class SkillController {
+    -skillService: SkillService
+    +registerAllowedSkillLevel(file: MultipartFile): BaseResponse<Void>
+  }
+}
+
+package com.finekuo.springdatajpa.service {
+  interface SkillService {
+    +truncateAllowedSkillMapping(): void
+    +registerAllowedSkillMapping(file: MultipartFile): void
+  }
+}
+
+package org.springframework.web.multipart {
+  interface MultipartFile {
+    ' methods like getName(), getInputStream(), etc.
+  }
+}
+
+package com.finekuo.normalcore.dto.response {
+  class BaseResponse<T> {
+    +static success(): BaseResponse<Void>
+    +static fail(code: ResponseStatusCode, message: String): BaseResponse<Void>
+  }
+}
+class Void {} ' Represents void type for BaseResponse
+
+package com.finekuo.normalcore.constant {
+  enum ResponseStatusCode {
+    FAILURE
+    ' other codes
+  }
+}
+
+com.finekuo.springdatajpa.controller.SkillController ..> com.finekuo.springdatajpa.service.SkillService : uses
+com.finekuo.springdatajpa.controller.SkillController ..> org.springframework.web.multipart.MultipartFile : uses as parameter
+com.finekuo.springdatajpa.controller.SkillController ..> com.finekuo.normalcore.dto.response.BaseResponse : uses
+com.finekuo.springdatajpa.service.SkillService ..> org.springframework.web.multipart.MultipartFile : uses as parameter
+com.finekuo.normalcore.dto.response.BaseResponse o-- Void : (T is Void)
+com.finekuo.normalcore.dto.response.BaseResponse ..> com.finekuo.normalcore.constant.ResponseStatusCode : uses in fail
+@enduml

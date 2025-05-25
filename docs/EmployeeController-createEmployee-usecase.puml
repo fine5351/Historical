@@ -1,0 +1,8 @@
+@startuml
+left to right direction
+actor "API Client" as client
+rectangle "Employee Management" {
+  usecase "Create Employee" as UC_Create
+}
+client --> UC_Create
+@enduml

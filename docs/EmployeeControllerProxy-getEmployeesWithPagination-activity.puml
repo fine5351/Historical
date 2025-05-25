@@ -1,0 +1,8 @@
+@startuml
+start
+:Receive GET /api/employees/page request with pageNumber & pageSize;
+:Call EmployeeMapper.paginate(pageNumber, pageSize, select());
+:Receive Page<Employee>;
+:Return HTTP 200 OK with Page<Employee>;
+stop
+@enduml

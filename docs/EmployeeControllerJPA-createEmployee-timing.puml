@@ -1,0 +1,32 @@
+@startuml
+robust "Client" as Client
+robust "EmployeeController (JPA)" as Controller
+robust "EmployeeService" as Service
+
+@0
+Client is Idle
+Controller is Idle
+Service is Idle
+
+@10
+Client is Requesting
+Controller is ReceivingRequest ' (CreateEmployeeRequest)
+
+@20
+Controller is Processing ' toEntity(request)
+Controller is CallingService ' employeeService.save(employee)
+Service is ProcessingRequest
+
+@40
+Service is RespondingToController ' Employee (saved)
+Controller is ReceivingFromService
+
+@50
+Controller is RespondingToClient ' ResponseEntity<Employee>
+Client is ReceivingResponse
+
+@60
+Client is Idle
+Controller is Idle
+Service is Idle
+@enduml

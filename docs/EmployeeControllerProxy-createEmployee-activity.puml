@@ -1,0 +1,9 @@
+@startuml
+start
+:Receive POST /api/employees request with CreateEmployeeRequest data;
+:Call toEntity(request) to convert DTO to Employee entity;
+:Call EmployeeMapper.insert(employee);
+:Receive (potentially updated) Employee entity;
+:Return HTTP 200 OK (or 201 Created) with Employee data;
+stop
+@enduml

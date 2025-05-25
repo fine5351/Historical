@@ -1,0 +1,31 @@
+@startuml
+robust "Client" as Client
+robust "EmployeeController (Proxy)" as Controller
+robust "EmployeeMapper" as Mapper
+
+@0
+Client is Idle
+Controller is Idle
+Mapper is Idle
+
+@10
+Client is Requesting
+Controller is ReceivingRequest
+
+@20
+Controller is CallingMapper ' employeeMapper.selectAll()
+Mapper is ProcessingRequest
+
+@40
+Mapper is RespondingToController ' List<Employee>
+Controller is ReceivingFromMapper
+
+@50
+Controller is RespondingToClient ' List<Employee>
+Client is ReceivingResponse
+
+@60
+Client is Idle
+Controller is Idle
+Mapper is Idle
+@enduml

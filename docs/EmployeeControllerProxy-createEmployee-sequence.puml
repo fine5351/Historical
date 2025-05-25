@@ -1,0 +1,18 @@
+@startuml
+actor Client
+participant "EmployeeController (Proxy)" as EmployeeController
+participant EmployeeMapper
+
+Client -> EmployeeController: POST /api/employees (Payload: CreateEmployeeRequest)
+activate EmployeeController
+EmployeeController -> EmployeeController: toEntity(request)
+activate EmployeeController
+EmployeeController --> EmployeeController: Employee
+deactivate EmployeeController
+EmployeeController -> EmployeeMapper: insert(employee)
+activate EmployeeMapper
+EmployeeMapper --> EmployeeController: (typically returns int/void, mutated employee has ID)
+deactivate EmployeeMapper
+EmployeeController --> Client: Employee (with created employee details)
+deactivate EmployeeController
+@enduml

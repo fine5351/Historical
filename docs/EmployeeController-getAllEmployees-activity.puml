@@ -1,0 +1,9 @@
+@startuml
+start
+:Receive GET /api/employees request;
+:Call EmployeeMapper.selectAll();
+:Receive List<Employee>;
+:Construct BaseResponse<List<Employee>>;
+:Return HTTP 200 OK with employee list in BaseResponse;
+stop
+@enduml

@@ -1,0 +1,32 @@
+@startuml
+robust "Client" as Client
+robust "EmployeeController (Proxy)" as Controller
+robust "EmployeeMapper" as Mapper
+
+@0
+Client is Idle
+Controller is Idle
+Mapper is Idle
+
+@10
+Client is Requesting
+Controller is ReceivingRequest ' (Employee data and ID)
+
+@20
+Controller is Processing ' Setting ID on employee object
+Controller is CallingMapper ' employeeMapper.update(employee)
+Mapper is ProcessingRequest
+
+@40
+Mapper is RespondingToController ' (Confirmation)
+Controller is ReceivingFromMapper
+
+@50
+Controller is RespondingToClient ' Employee (updated)
+Client is ReceivingResponse
+
+@60
+Client is Idle
+Controller is Idle
+Mapper is Idle
+@enduml

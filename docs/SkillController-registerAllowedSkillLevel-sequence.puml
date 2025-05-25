@@ -1,0 +1,24 @@
+@startuml
+actor Client
+participant SkillController
+participant SkillService
+
+Client -> SkillController: POST /skill/allowedSkillLevel (MultipartFile "file")
+activate SkillController
+SkillController -> SkillService: truncateAllowedSkillMapping()
+activate SkillService
+SkillService --> SkillController: (void)
+deactivate SkillService
+SkillController -> SkillService: registerAllowedSkillMapping(file)
+activate SkillService
+SkillService --> SkillController: (void) ' or throws Exception
+deactivate SkillService
+alt success
+  SkillController -> SkillController: BaseResponse.success()
+  SkillController --> Client: BaseResponse<Void> (HTTP 200 OK)
+else exception occurred
+  SkillController -> SkillController: BaseResponse.fail(...)
+  SkillController --> Client: BaseResponse<Void> (e.g., HTTP 500)
+end
+deactivate SkillController
+@enduml

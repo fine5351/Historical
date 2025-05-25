@@ -1,0 +1,16 @@
+@startuml
+actor Client
+participant "EmployeeController (JPA)" as EmployeeController
+participant EmployeeService
+
+Client -> EmployeeController: PUT /employee/{id} (Payload: Employee)
+activate EmployeeController
+EmployeeController -> EmployeeController: employee.setId(id)
+EmployeeController -> EmployeeService: update(employee)
+activate EmployeeService
+EmployeeService --> EmployeeController: Employee (updated)
+deactivate EmployeeService
+EmployeeController -> EmployeeController: ResponseEntity.ok(updatedEmployee)
+EmployeeController --> Client: ResponseEntity<Employee>
+deactivate EmployeeController
+@enduml

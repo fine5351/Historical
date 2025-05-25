@@ -1,0 +1,6 @@
+@startuml
+[*] --> Idle
+Idle --> ProcessingRequest : GET /api/employees
+ProcessingRequest --> SendingResponse : Employee data retrieved
+SendingResponse --> Idle : Response sent
+@enduml

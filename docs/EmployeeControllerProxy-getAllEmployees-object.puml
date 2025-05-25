@@ -1,0 +1,7 @@
+@startuml
+object "controller:EmployeeController" as controller
+object "mapper:EmployeeMapper" as mapper
+
+note left of controller : From com.finekuo.byshardingsphereproxy.controller
+controller --> mapper : employeeMapper
+@enduml

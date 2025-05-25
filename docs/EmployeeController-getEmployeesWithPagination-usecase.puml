@@ -1,0 +1,8 @@
+@startuml
+left to right direction
+actor "API Client" as client
+rectangle "Employee Management" {
+  usecase "Get Employees With Pagination" as UC_GetPaginated
+}
+client --> UC_GetPaginated
+@enduml

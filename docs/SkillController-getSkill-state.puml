@@ -1,0 +1,6 @@
+@startuml
+[*] --> Idle
+Idle --> ProcessingRequest : GET /skill/
+ProcessingRequest --> SendingResponse : Skill data retrieved and processed
+SendingResponse --> Idle : Response sent
+@enduml

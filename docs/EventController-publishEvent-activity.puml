@@ -1,0 +1,13 @@
+@startuml
+start
+:Receive POST /api/events/ request with PublishEventRequest;
+:Validate PublishEventRequest;
+if (Validation Fails) then (red)
+  :Return HTTP 400 Bad Request;
+  stop
+else (green)
+  :Call EventPublisher.publish(request);
+  :Return HTTP 200 OK (or 202 Accepted);
+  stop
+endif
+@enduml
