@@ -8,10 +8,10 @@ Controller is Idle
 
 @10
 Client is Requesting
-Controller is ReceivingRequest ' (LocalDateTimeRequest)
+Controller is ReceivingRequest
 
 @20
-Controller is ProcessingRequest ' (new TimeResponse(...), BaseResponse.success(...))
+Controller is ProcessingRequest
 ' No external service calls
 
 @40
