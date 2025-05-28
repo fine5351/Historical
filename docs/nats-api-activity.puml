@@ -1,0 +1,74 @@
+@startuml nats-api-activity
+!theme vibrant
+
+title NATS API Publishing and Consumption Activity
+
+partition "API Endpoint (NatsController)" {
+    start
+    :Receive HTTP POST /api/nats/publish request;
+    :Validate request data (subject, message);
+    if (Request data valid?) then (yes)
+        :Call NatsProducerService.publish(subject, message);
+        if (Publishing successful? (no exception from service)) then (yes)
+            :Prepare HTTP 200 OK response\n("Event published successfully...");
+        else (no, exception from service)
+            :Prepare HTTP 500 Internal Server Error response\n("Error publishing event: " + error);
+        endif
+    else (no, invalid data)
+        :Prepare HTTP 400 Bad Request response\n(e.g., "Subject is required.");
+    endif
+    :Send HTTP Response;
+    stop
+}
+
+partition "Producer Service (NatsProducerService + AOP)" {
+    start
+    note left #SpringGreen: AOP LoggingAspect: Before publish
+    :Log "NATS PRODUCER: Publishing message to subject '{}'. Payload: '{}'";
+    :Attempt to publish message to NATS Server;
+    if (Exception occurred during publish?) then (yes)
+        note left #SpringGreen: AOP LoggingAspect: On exception
+        :Log "NATS PRODUCER: Exception publishing to subject '{}'. Error: {}";
+        :Throw exception (to Controller);
+        stop
+    else (no)
+        note left #SpringGreen: AOP LoggingAspect: After successful publish
+        :Log "NATS PRODUCER: Successfully published to subject '{}'";
+        :Return success indication (void);
+        stop
+    endif
+}
+
+partition "Consumer Service (NatsConsumerService + AOP)" {
+    start
+    note right: Application Startup / @PostConstruct
+    :Initialize NATS Connection (via NatsConfig);
+    :Create Dispatcher for message handling;
+    :Subscribe to NATS Subject (e.g., "com.finekuo.nats.example.topic")\nwith Queue Group (e.g., "finekuo-nats-app-group");
+    :Log "Subscribed to NATS subject '{}' with queue group '{}'";
+    
+    while (Application is running) is (true)
+        :Wait for incoming NATS message on subscribed subject;
+        floating note: This is handled by the NATS client library\nand the Dispatcher.
+        :Receive NATS Message (delivered by Dispatcher to handleMessage);
+        
+        note left #SpringGreen: AOP LoggingAspect: Before handleMessage
+        :Log "NATS CONSUMER: Received message on subject '{}'. SID: '{}'. Payload: '{}'";
+        
+        :Process Message (logic within handleMessage method)\n - Convert data (UTF-8)\n - Perform business logic (if any);
+        if (Exception during message processing?) then (yes)
+            note left #SpringGreen: AOP LoggingAspect: On exception
+            :Log "NATS CONSUMER: Exception processing message from subject '{}'. SID: '{}'. Error: {}";
+            // The loop continues for the next message
+        else (no, processing successful)
+            note left #SpringGreen: AOP LoggingAspect: After successful processing
+            :Log "NATS CONSUMER: Successfully processed message from subject '{}'. SID: '{}'";
+        endif
+    endwhile
+    // For a service, this typically runs indefinitely.
+    // A stop activity might be triggered by application shutdown.
+    :Application shutdown signal received;
+    :Close NATS connection (handled by NatsConfig destroyMethod);
+    stop
+}
+@enduml

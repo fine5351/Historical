@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.finekuo</groupId>
+        <artifactId>Historical</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <artifactId>nats</artifactId>
+    <name>NATS Module</name>
+    <description>Module for NATS producer/consumer examples with Spring Boot</description>
+
+    <properties>
+        <!-- Align Java version with parent -->
+        <java.version>21</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <nats.version>2.17.0</nats.version>
+        <slf4j.version>2.0.7</slf4j.version> <!-- Consider if parent manages this -->
+        <logback.version>1.4.7</logback.version> <!-- Consider if parent manages this -->
+    </properties>
+
+    <dependencies>
+        <!-- Spring Boot (versions managed by spring-boot-starter-parent) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <!-- NATS Client -->
+        <dependency>
+            <groupId>io.nats</groupId>
+            <artifactId>jnats</artifactId>
+            <version>${nats.version}</version>
+        </dependency>
+
+        <!-- Normal Core -->
+        <dependency>
+            <groupId>com.finekuo</groupId> <!-- Adjusted groupId -->
+            <artifactId>normal-core</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <!-- version>${slf4j.version}</version --> <!-- Check if managed by Spring Boot parent -->
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <!-- version>${logback.version}</version --> <!-- Check if managed by Spring Boot parent -->
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <!-- version>${logback.version}</version --> <!-- Check if managed by Spring Boot parent -->
+        </dependency>
+
+        <!-- Spring Boot Test (version managed by spring-boot-starter-parent) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Lombok for automatic boilerplate code generation (getters, setters, etc.) -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional> <!-- Version managed by Spring Boot parent -->
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- Version and executions might be inherited from parent's pluginManagement -->
+            </plugin>
+        </plugins>
+    </build>
+</project>

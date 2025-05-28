@@ -23,6 +23,7 @@
         <module>mybatis-flex-core</module>
         <module>normal-core</module>
         <module>kafka</module>
+        <module>nats</module>
     </modules>
 
     <properties>
