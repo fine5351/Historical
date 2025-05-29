@@ -3,7 +3,7 @@ package com.finekuo.nats.consumer;
 import io.nats.client.Connection;
 import io.nats.client.Dispatcher;
 import io.nats.client.Message;
-import jakarta.annotation.PostConstruct; // Using jakarta for Spring Boot 3+
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -70,8 +70,8 @@ public class NatsConsumerService {
             // myBusinessService.processNatsData(receivedData);
 
         } catch (Exception e) {
-            log.error("Error processing NATS message from subject '{}': {}", 
-                         msg.getSubject(), e.getMessage(), e); // Using 'log', matched example
+            log.error("Error processing NATS message from subject '{}': {}",
+                    msg.getSubject(), e.getMessage(), e); // Using 'log', matched example
             // Consider:
             // 1. Acknowledging message negatively if applicable (NATS core doesn't have nacks, JetStream does)
             // 2. For critical messages, consider using NATS JetStream for features like acknowledgements, retries, and dead-letter queues (DLQs).
