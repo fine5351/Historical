@@ -1,9 +1,10 @@
 package com.finekuo.springdatajpa.dto;
 
-import java.time.LocalDateTime; // Added import
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -28,4 +29,5 @@ public class ResumeDTO {
                 resume.getUpdatedAt()
         );
     }
+
 }

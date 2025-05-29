@@ -1,13 +1,11 @@
 package com.finekuo.nats.aop;
 
 import io.nats.client.Message;
-import lombok.extern.slf4j.Slf4j; // ADDED
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-// import org.slf4j.Logger; // REMOVED
-// import org.slf4j.LoggerFactory; // REMOVED
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -23,11 +21,13 @@ public class NatsLoggingAspect {
 
     // Pointcut for NatsProducerService public publish methods
     @Pointcut("execution(public * com.finekuo.nats.producer.NatsProducerService.publish(String, ..))")
-    public void natsProducerPublishExecution() {}
+    public void natsProducerPublishExecution() {
+    }
 
     // Pointcut for NatsConsumerService's handleMessage method.
     @Pointcut("execution(* com.finekuo.nats.consumer.NatsConsumerService.handleMessage(io.nats.client.Message))")
-    public void natsConsumerHandleMessageExecution() {}
+    public void natsConsumerHandleMessageExecution() {
+    }
 
     @Around("natsProducerPublishExecution()")
     public Object logProducer(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -36,7 +36,7 @@ public class NatsLoggingAspect {
         String payloadSummary = getPayloadSummary(payloadArg);
 
         // Matched example log
-        log.info("NATS PRODUCER: Publishing to subject '{}'. Payload summary: '{}'", subject, payloadSummary); 
+        log.info("NATS PRODUCER: Publishing to subject '{}'. Payload summary: '{}'", subject, payloadSummary);
         try {
             Object result = joinPoint.proceed();
             // Matched example log
@@ -101,4 +101,5 @@ public class NatsLoggingAspect {
         String objectPreview = payload.toString();
         return objectPreview.length() > MAX_PAYLOAD_LOG_LENGTH ? objectPreview.substring(0, MAX_PAYLOAD_LOG_LENGTH) + "..." : objectPreview;
     }
+
 }

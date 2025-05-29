@@ -1,9 +1,7 @@
 package com.finekuo.nats.config;
 
 import io.nats.client.*;
-// import org.slf4j.Logger; // REMOVED
-// import org.slf4j.LoggerFactory; // REMOVED
-import lombok.extern.slf4j.Slf4j; // ADDED
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +27,7 @@ public class NatsConfig {
                     .reconnectWait(Duration.ofSeconds(1))    // Example: reconnect wait
                     .maxReconnects(-1)                       // Example: infinite reconnects
                     .errorListener(new ErrorListener() {
+
                         @Override
                         public void errorOccurred(Connection conn, String error) {
                             log.error("NATS Error: {}", error); // Using 'log'
@@ -54,17 +53,18 @@ public class NatsConfig {
                         // My previous RESUBSCRIBED and default cases will be removed to match example strictly here.
                     })
                     .build();
-            
+
             // log.info("Attempting to connect to NATS server: {}", natsServerUrl); // Removed this extra log line
             Connection nc = Nats.connect(options);
             log.info("Successfully connected to NATS server: {}", natsServerUrl); // Using 'log', Matched example
             return nc;
         } catch (IOException | InterruptedException e) {
             log.error("Failed to connect to NATS server: {}. Error: {}", natsServerUrl, e.getMessage(), e); // Using 'log'
-            // Depending on application requirements, you might rethrow, or return null 
+            // Depending on application requirements, you might rethrow, or return null
             // and let health checks handle it, or even exit.
             // For now, rethrowing as a runtime exception to prevent application startup if NATS is critical.
             throw new RuntimeException("Failed to connect to NATS server", e); // Matched example
         }
     }
+
 }
