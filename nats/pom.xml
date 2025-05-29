@@ -24,6 +24,21 @@
         <logback.version>1.4.7</logback.version> <!-- Consider if parent manages this -->
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.4.11</version>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>1.4.11</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <!-- Spring Boot (versions managed by spring-boot-starter-parent) -->
         <dependency>
@@ -58,12 +73,12 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <!-- version>${logback.version}</version --> <!-- Check if managed by Spring Boot parent -->
+            <version>1.4.11</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-core</artifactId>
-            <!-- version>${logback.version}</version --> <!-- Check if managed by Spring Boot parent -->
+            <version>1.4.11</version>
         </dependency>
 
         <!-- Spring Boot Test (version managed by spring-boot-starter-parent) -->
