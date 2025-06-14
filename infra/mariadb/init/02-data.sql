@@ -44,3 +44,22 @@ INSERT INTO vacancy (title, created_by, updated_by, created_at, updated_at)
 SELECT 'Java Senior Developer', 'system', 'system', NOW(), NOW() FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM vacancy WHERE title = 'Java Senior Developer');
 INSERT INTO vacancy (title, created_by, updated_by, created_at, updated_at)
 SELECT 'Java Team leader', 'system', 'system', NOW(), NOW() FROM DUAL WHERE NOT EXISTS (SELECT 1 FROM vacancy WHERE title = 'Java Team leader');
+
+INSERT INTO employee (name, address, gender, roc_id, created_at, updated_at, created_by, updated_by)
+VALUES ('王小明', '台北市信義區松仁路100號', 'male', 'A123456789', NOW(), NOW(), 'system', 'system');
+
+INSERT INTO entity_column_mask (account, method, api_uri, mask_settings)
+VALUES ('employee',
+        'get',
+        '/employee/{id}',
+        '{"name":true}',
+        NOW(),
+        NOW(),
+        'system',
+        'system');
+
+INSERT INTO entity_column_mask (account, method, api_uri, mask_settings)
+VALUES ('employee',
+        'get',
+        '/employee/mask/{id}',
+        '{ "parentNode":{ "childEmployeeDTO":{ "rocId":true } }, "employeeDTO":{ "name":true } } ');

@@ -1,8 +1,13 @@
 package com.finekuo.springdatajpa.controller;
 
 import com.finekuo.normalcore.dto.request.CreateEmployeeRequest;
+import com.finekuo.normalcore.util.Gsons;
+import com.finekuo.springdatajpa.dto.response.GetMaskEmployeeResponse;
 import com.finekuo.springdatajpa.entity.Employee;
 import com.finekuo.springdatajpa.service.EmployeeService;
+import com.finekuo.springdatajpa.service.EntityColumnMaskService;
+import com.google.gson.JsonObject;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +22,7 @@ import java.util.List;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
+    private final EntityColumnMaskService entityColumnMaskService;
 
     @GetMapping
     public ResponseEntity<List<Employee>> getAllEmployees() {
@@ -24,8 +30,20 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployeeById(@PathVariable Long id) {
-        return ResponseEntity.ok(employeeService.findById(id));
+    public ResponseEntity<Employee> getEmployeeById(
+            @PathVariable Long id,
+            @RequestHeader(value = "account", required = false) String account,
+            HttpServletRequest httpServletRequest
+    ) {
+        String method = httpServletRequest.getMethod();
+        Employee employee = employeeService.findById(id);
+        String uri = httpServletRequest.getRequestURI();
+        log.info("Request URI: {}", uri);
+        log.info("Account: {}", account);
+        JsonObject jsonObject = Gsons.toJsonTree(employee).getAsJsonObject();
+        JsonObject masked = entityColumnMaskService.mask(account, method, uri, jsonObject);
+        Employee maskedEmployee = Gsons.fromJson(masked, Employee.class);
+        return ResponseEntity.ok(maskedEmployee);
     }
 
     @PostMapping
@@ -53,5 +71,23 @@ public class EmployeeController {
         employeeService.delete(id);
         return ResponseEntity.noContent().build();
     }
-}
 
+    @GetMapping("/mask/{id}")
+    public ResponseEntity<GetMaskEmployeeResponse> getMaskEmployeeById(
+            @PathVariable Long id,
+            @RequestHeader(value = "account", required = false) String account,
+            HttpServletRequest httpServletRequest
+    ) {
+        String method = httpServletRequest.getMethod();
+        String uri = httpServletRequest.getRequestURI();
+        log.info("Request URI: {}", uri);
+        log.info("Account: {}", account);
+        Employee employee = employeeService.findById(id);
+        GetMaskEmployeeResponse response = new GetMaskEmployeeResponse(employee);
+        JsonObject jsonObject = Gsons.toJsonTree(response).getAsJsonObject();
+        JsonObject masked = entityColumnMaskService.mask(account, method, uri, jsonObject);
+        response = Gsons.fromJson(masked, GetMaskEmployeeResponse.class);
+        return ResponseEntity.ok(response);
+    }
+
+}

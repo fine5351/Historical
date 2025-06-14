@@ -1,10 +1,12 @@
 ###
 GET http://localhost:8080/employee
 userName: test-user
+account: employee
 
 ### Get employee by ID
-GET http://localhost:8080/employee/1
+GET http://localhost:8080/employee/2
 userName: test-user
+account: employee
 
 ### Create a new employee
 POST http://localhost:8080/employee
@@ -17,3 +19,8 @@ userName: test-user
   "gender": "{{$random.alphabetic(1)}}",
   "rocId": "{{$random.alphanumeric(10)}}"
 }
+
+### Get employee by ID
+GET http://localhost:8080/employee/mask/2
+userName: test-user
+account: employee
