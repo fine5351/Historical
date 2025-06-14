@@ -1,5 +1,6 @@
 package com.finekuo.springdatajpa.service;
 
+import com.finekuo.normalcore.exception.Assertions;
 import com.finekuo.springdatajpa.entity.Employee;
 import com.finekuo.springdatajpa.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +30,8 @@ public class EmployeeService {
     }
 
     public Employee update(Employee employee) {
-        if (!employeeRepository.existsById(employee.getId())) {
-            throw new RuntimeException("Employee not found with id: " + employee.getId());
-        }
+        Assertions.isTrue(employeeRepository.existsById(employee.getId()))
+                .elseThrowBusiness("dataNotFound", "Employee not found with id: " + employee.getId());
         return employeeRepository.save(employee);
     }
 
@@ -41,4 +41,5 @@ public class EmployeeService {
         }
         employeeRepository.deleteById(id);
     }
+
 }
