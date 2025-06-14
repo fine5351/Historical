@@ -7,7 +7,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Data
-public class EntityColumnMask extends BaseEntity {
+public class EntityColumnMaskStructure extends BaseEntity {
 
     private String account;
     private String method;

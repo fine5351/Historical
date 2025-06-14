@@ -21,6 +21,11 @@ userName: test-user
 }
 
 ### Get employee by ID
-GET http://localhost:8080/employee/mask/2
+GET http://localhost:8080/employee/mask/3
+userName: test-user
+account: employee
+
+### Get employee by ID
+GET http://localhost:8080/employee/mask/flattened/3
 userName: test-user
 account: employee

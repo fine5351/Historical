@@ -1,7 +1,7 @@
 package com.finekuo.springdatajpa.service;
 
 import com.finekuo.normalcore.util.Gsons;
-import com.finekuo.springdatajpa.repository.EntityColumnMaskRepository;
+import com.finekuo.springdatajpa.repository.EntityColumnMaskStructureRepository;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 @Slf4j
-public class EntityColumnMaskService {
+public class EntityColumnMaskStructureService {
 
-    private final EntityColumnMaskRepository entityColumnMaskRepository;
+    private final EntityColumnMaskStructureRepository entityColumnMaskStructureRepository;
 
     public JsonObject mask(String account, String method, String apiUrl, JsonObject jsonObject) {
         // 將 apiUrl 轉換為 pattern
         String patternUrl = convertToPattern(apiUrl);
-        var entityColumnMask = entityColumnMaskRepository.findByAccountAndMethodAndApiUri(account, method, patternUrl);
+        var entityColumnMask = entityColumnMaskStructureRepository.findByAccountAndMethodAndApiUri(account, method, patternUrl);
         if (entityColumnMask == null) {
             return jsonObject; // No mask settings found, return original JSON
         }

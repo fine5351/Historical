@@ -48,7 +48,7 @@ SELECT 'Java Team leader', 'system', 'system', NOW(), NOW() FROM DUAL WHERE NOT 
 INSERT INTO employee (name, address, gender, roc_id, created_at, updated_at, created_by, updated_by)
 VALUES ('王小明', '台北市信義區松仁路100號', 'male', 'A123456789', NOW(), NOW(), 'system', 'system');
 
-INSERT INTO entity_column_mask (account, method, api_uri, mask_settings)
+INSERT INTO entity_column_mask_structure (account, method, api_uri, mask_settings, created_at, updated_at, created_by, updated_by)
 VALUES ('employee',
         'get',
         '/employee/{id}',
@@ -57,9 +57,25 @@ VALUES ('employee',
         NOW(),
         'system',
         'system');
+);
 
-INSERT INTO entity_column_mask (account, method, api_uri, mask_settings)
+INSERT INTO entity_column_mask_structure (account, method, api_uri, mask_settings, created_at, updated_at, created_by, updated_by)
 VALUES ('employee',
         'get',
         '/employee/mask/{id}',
-        '{ "parentNode":{ "childEmployeeDTO":{ "rocId":true } }, "employeeDTO":{ "name":true } } ');
+        '{ "parentNode":{ "childEmployeeDTO":{ "rocId":true } }, "employeeDTO":{ "name":true } } ',
+        NOW(),
+        NOW(),
+        'system',
+        'system');
+
+INSERT INTO entity_column_mask_flattened (account, method, api_uri, mask_settings, created_at, updated_at, created_by, updated_by)
+VALUES ('employee',
+        'get',
+        '/employee/flattened/{id}',
+        '[\"name\", \"rocId\"]',
+        NOW(),
+        NOW(),
+        'system',
+        'system');
+);

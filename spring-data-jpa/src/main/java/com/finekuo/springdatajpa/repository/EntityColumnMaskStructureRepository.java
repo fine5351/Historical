@@ -1,11 +1,11 @@
 package com.finekuo.springdatajpa.repository;
 
-import com.finekuo.springdatajpa.entity.EntityColumnMask;
+import com.finekuo.springdatajpa.entity.EntityColumnMaskStructure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EntityColumnMaskRepository extends CrudRepository<EntityColumnMask, String> {
+public interface EntityColumnMaskStructureRepository extends CrudRepository<EntityColumnMaskStructure, String> {
 
     /**
      * Find the EntityColumnMask by account and apiUrl.
@@ -14,6 +14,6 @@ public interface EntityColumnMaskRepository extends CrudRepository<EntityColumnM
      * @param apiUri  the API URI
      * @return the EntityColumnMask if found, otherwise null
      */
-    EntityColumnMask findByAccountAndMethodAndApiUri(String account, String method, String apiUri);
+    EntityColumnMaskStructure findByAccountAndMethodAndApiUri(String account, String method, String apiUri);
 
 }

@@ -89,7 +89,22 @@ CREATE TABLE IF NOT EXISTS employee
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE entity_column_mask
+CREATE TABLE entity_column_mask_structure
+(
+  id            BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  method        VARCHAR(255) NOT NULL,
+  account       VARCHAR(1024),
+  api_uri       VARCHAR(1024),
+  mask_settings JSON,
+  created_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at    DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  created_by    NVARCHAR(50) NOT NULL,
+  updated_by    NVARCHAR(50) NOT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+
+CREATE TABLE entity_column_mask_flattened
 (
   id            BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY,
   method        VARCHAR(255) NOT NULL,
