@@ -9,16 +9,16 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 @Slf4j
 @Component
-public class RequestIdInjector implements HandlerInterceptor {
+public class MDCInjector implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String requestId = request.getHeader("X-Request-ID");
-        if (requestId == null) {
-            requestId = java.util.UUID.randomUUID().toString();
-            response.setHeader("X-Request-ID", requestId);
+        java.util.Enumeration<String> headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            String headerValue = request.getHeader(headerName);
+            MDC.put(headerName, headerValue);
         }
-        MDC.put("requestId", requestId);
         return true;
     }
 

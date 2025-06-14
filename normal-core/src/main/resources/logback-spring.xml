@@ -2,7 +2,7 @@
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <springProperty scope="context" name="serviceName" source="spring.application.name"/>
     <variable scope="context" name="logPattern"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%level][%X{correlationId}][%thread][%logger{20}][%L]: %msg%n%ex{full}"/>
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%level][%X{x-request-id}][%thread][%logger{20}][%L]: %msg%n%ex{full}"/>
 
     <appender name="consoleText" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
