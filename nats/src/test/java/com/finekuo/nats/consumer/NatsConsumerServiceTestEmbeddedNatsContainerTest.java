@@ -22,6 +22,9 @@ class NatsConsumerServiceTestEmbeddedNatsContainerTest extends BaseEmbeddedNatsC
 
     @BeforeAll
     static void setupConnection() throws Exception {
+        // 如果Docker不可用，跳过连接
+        org.junit.jupiter.api.Assumptions.assumeTrue(dockerAvailable,
+                "跳过测试，Docker不可用");
         connection = Nats.connect(natsUrl);
     }
 
@@ -37,6 +40,10 @@ class NatsConsumerServiceTestEmbeddedNatsContainerTest extends BaseEmbeddedNatsC
 
     @Test
     void testConsumerReceivesMessage() throws Exception {
+        // 如果Docker不可用，跳过测试
+        org.junit.jupiter.api.Assumptions.assumeTrue(dockerAvailable,
+                "跳过测试，Docker不可用");
+
         // 由於 consumerService 在建構時已訂閱，這裡直接發送訊息
         String testMsg = "nats-consumer-test";
         ArrayBlockingQueue<String> queue = new ArrayBlockingQueue<>(1);

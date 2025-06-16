@@ -19,7 +19,7 @@ public abstract class BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
+    protected Long id;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate

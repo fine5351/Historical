@@ -119,9 +119,3 @@ SELECT 3,
        NOW()
 FROM DUAL
 WHERE NOT EXISTS (SELECT 1 FROM employee WHERE id = 3);
-
-INSERT INTO entity_column_mask (account, method, api_uri, mask_settings)
-VALUES ('employee',
-        'get',
-        '/employee/{id}',
-        '{"Employee":{"name":true}}');

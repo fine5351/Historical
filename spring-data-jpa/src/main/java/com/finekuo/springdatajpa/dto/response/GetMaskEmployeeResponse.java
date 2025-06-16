@@ -6,52 +6,32 @@ import lombok.Data;
 @Data
 public class GetMaskEmployeeResponse {
 
-    private ParentNode parentNode;
-    private EmployeeDTO employeeDTO;
+    private Long id;
+    private String name;
+    private String address;
+    private String gender;
+    private String rocId;
+    private NestedData nestedData;
 
     public GetMaskEmployeeResponse(Employee employee) {
-        this.parentNode = new ParentNode();
-        this.parentNode.setId(employee.getId());
-        this.parentNode.setName(employee.getName());
-        this.parentNode.setChildEmployeeDTO(new ParentNode.ChildEmployeeDTO(employee));
-        this.employeeDTO = new EmployeeDTO(employee);
+        this.id = employee.getId();
+        this.name = employee.getName();
+        this.address = employee.getAddress();
+        this.gender = employee.getGender();
+        this.rocId = employee.getRocId();
+        this.nestedData = new NestedData(employee);
     }
 
     @Data
-    public static class ParentNode {
-
+    public static class NestedData {
         private Long id;
         private String name;
-        private ChildEmployeeDTO childEmployeeDTO;
+        private String rocId;
 
-        @Data
-        public static class ChildEmployeeDTO {
-
-            private Long id;
-            private String name;
-            private String rocId;
-
-            public ChildEmployeeDTO(Employee employee) {
-                this.id = employee.getId();
-                this.name = employee.getName();
-                this.rocId = employee.getRocId();
-            }
-
-        }
-
-    }
-
-    @Data
-    public static class EmployeeDTO {
-
-        private Long id;
-        private String name;
-
-        public EmployeeDTO(Employee employee) {
+        public NestedData(Employee employee) {
             this.id = employee.getId();
             this.name = employee.getName();
+            this.rocId = employee.getRocId();
         }
-
     }
-
 }

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -27,9 +26,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class EmployeeControllerEnableTransactionalTest extends BaseControllerEnableTransactionalTest {
 
     @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
     private ObjectMapper objectMapper;
 
     @Autowired
@@ -40,7 +36,6 @@ public class EmployeeControllerEnableTransactionalTest extends BaseControllerEna
     private static final Long EXISTING_EMPLOYEE_ID_1 = 1L;
     private static final Long EXISTING_EMPLOYEE_ID_2 = 2L;
     private static final Long NON_EXISTING_EMPLOYEE_ID = 999L;
-
 
     @Test
     @Order(1)

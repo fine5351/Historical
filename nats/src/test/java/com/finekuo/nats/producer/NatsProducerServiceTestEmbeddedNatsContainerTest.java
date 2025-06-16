@@ -22,6 +22,9 @@ class NatsProducerServiceTestEmbeddedNatsContainerTest extends BaseEmbeddedNatsC
 
     @BeforeAll
     static void setupConnection() throws Exception {
+        // 如果Docker不可用，跳过连接
+        org.junit.jupiter.api.Assumptions.assumeTrue(dockerAvailable,
+                "跳过测试，Docker不可用");
         connection = Nats.connect(natsUrl);
     }
 
@@ -37,6 +40,9 @@ class NatsProducerServiceTestEmbeddedNatsContainerTest extends BaseEmbeddedNatsC
 
     @Test
     void testPublishStringMessage() throws Exception {
+        // 如果Docker不可用，跳过测试
+        org.junit.jupiter.api.Assumptions.assumeTrue(dockerAvailable,
+                "跳过测试，Docker不可用");
         String subject = "test.subject.string";
         String message = "hello-nats";
         ArrayBlockingQueue<String> queue = new ArrayBlockingQueue<>(1);
@@ -52,6 +58,9 @@ class NatsProducerServiceTestEmbeddedNatsContainerTest extends BaseEmbeddedNatsC
 
     @Test
     void testPublishByteArrayMessage() throws Exception {
+        // 如果Docker不可用，跳过测试
+        org.junit.jupiter.api.Assumptions.assumeTrue(dockerAvailable,
+                "跳过测试，Docker不可用");
         String subject = "test.subject.bytes";
         byte[] data = {1, 2, 3, 4};
         ArrayBlockingQueue<byte[]> queue = new ArrayBlockingQueue<>(1);

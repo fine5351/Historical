@@ -4,7 +4,13 @@ import com.finekuo.normalcore.BaseControllerEnableTransactionalTest;
 import com.finekuo.normalcore.dto.request.CreateEmployeeRequest;
 import com.finekuo.normalcore.util.Jsons;
 import com.finekuo.springdatajpa.entity.Employee;
+import com.finekuo.springdatajpa.entity.EntityColumnMaskFlattened;
+import com.finekuo.springdatajpa.entity.EntityColumnMaskStructure;
 import com.finekuo.springdatajpa.repository.EmployeeRepository;
+import com.finekuo.springdatajpa.repository.EntityColumnMaskFlattenedRepository;
+import com.finekuo.springdatajpa.repository.EntityColumnMaskStructureRepository;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,6 +19,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,9 +38,17 @@ public class EmployeeControllerEnableTransactionalTest extends BaseControllerEna
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    @Autowired
+    private EntityColumnMaskStructureRepository structureRepository;
+
+    @Autowired
+    private EntityColumnMaskFlattenedRepository flattenedRepository;
+
     @BeforeEach
     public void setUp() {
         employeeRepository.deleteAll(); // Clear data before each test
+        structureRepository.deleteAll(); // 清除掩码设置
+        flattenedRepository.deleteAll(); // 清除扁平化掩码设置
     }
 
     @Test
@@ -176,6 +191,154 @@ public class EmployeeControllerEnableTransactionalTest extends BaseControllerEna
         mockMvc.perform(delete("/employee/88888") // Non-existent ID
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError()); // Expecting 404 due to service-level handling or default exception translation
+    }
+
+    @Test
+    public void getMaskEmployeeById_withStructureMask_shouldMaskSpecifiedFields() throws Exception {
+        // 1. 准备测试数据
+        Employee employee = new Employee();
+        employee.setName("Test User");
+        employee.setAddress("Secret Address");
+        employee.setGender("Male");
+        employee.setRocId("S123456789");
+        Employee savedEmployee = employeeRepository.save(employee);
+
+        // 2. 创建结构化掩码配置 - 掩码 address 和嵌套的 rocId
+        EntityColumnMaskStructure maskStructure = new EntityColumnMaskStructure();
+        maskStructure.setAccount("testAccount");
+        maskStructure.setMethod("GET");
+        maskStructure.setApiUri("/employee/mask/{id}");
+
+        // 创建结构化掩码配置 JSON - 指定要掩码的字段
+        JsonObject maskSettings = new JsonObject();
+        maskSettings.addProperty("address", true); // 掩码顶级字段 address
+
+        // 为嵌套字段添加掩码配置
+        JsonObject nestedSettings = new JsonObject();
+        nestedSettings.addProperty("rocId", true); // 掩码嵌套字段中的 rocId
+        maskSettings.add("nestedData", nestedSettings);
+
+        maskStructure.setMaskSettings(new Gson().toJson(maskSettings));
+        structureRepository.save(maskStructure);
+
+        // 3. 执行测试请求
+        mockMvc.perform(get("/employee/mask/" + savedEmployee.getId())
+                        .header("account", "testAccount") // 设置 account 头，这个会由 ResponseBodyAdvice 处理
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is("Test User")))
+                .andExpect(jsonPath("$.address").doesNotExist()) // address 应被掩码
+                .andExpect(jsonPath("$.gender", is("Male")))
+                .andExpect(jsonPath("$.rocId", is("S123456789"))) // 顶级 rocId 不受影响
+                .andExpect(jsonPath("$.nestedData.id", is(savedEmployee.getId().intValue())))
+                .andExpect(jsonPath("$.nestedData.name", is("Test User")))
+                .andExpect(jsonPath("$.nestedData.rocId").doesNotExist()); // 嵌套对象的 rocId 应被掩码
+    }
+
+    @Test
+    public void getMaskEmployeeById_withFlattenedMask_shouldMaskAllMatchingFields() throws Exception {
+        // 1. 准备测试数据
+        Employee employee = new Employee();
+        employee.setName("Another User");
+        employee.setAddress("Another Address");
+        employee.setGender("Female");
+        employee.setRocId("F123456789");
+        Employee savedEmployee = employeeRepository.save(employee);
+
+        // 2. 创建扁平化掩码配置 - 掩码所有 rocId 和 gender 字段，无论在哪一层
+        EntityColumnMaskFlattened maskFlattened = new EntityColumnMaskFlattened();
+        maskFlattened.setAccount("flatAccount");
+        maskFlattened.setMethod("GET");
+        maskFlattened.setApiUri("/employee/mask/{id}");
+
+        // 创建扁平化掩码配置 - 使用字段名列表
+        List<String> maskFields = Arrays.asList("rocId", "gender");
+        maskFlattened.setMaskSettings(new Gson().toJson(maskFields));
+
+        flattenedRepository.save(maskFlattened);
+
+        // 3. 执行测试请求
+        mockMvc.perform(get("/employee/mask/" + savedEmployee.getId())
+                        .header("account", "flatAccount") // 设置扁平化掩码使用的account
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is("Another User")))
+                .andExpect(jsonPath("$.address", is("Another Address")))
+                .andExpect(jsonPath("$.gender").doesNotExist()) // gender 应被掩码
+                .andExpect(jsonPath("$.rocId").doesNotExist()) // 顶级 rocId 应被掩码
+                .andExpect(jsonPath("$.nestedData.id", is(savedEmployee.getId().intValue())))
+                .andExpect(jsonPath("$.nestedData.name", is("Another User")))
+                .andExpect(jsonPath("$.nestedData.rocId").doesNotExist()); // 嵌套对象的 rocId 也应被掩码
+    }
+
+    @Test
+    public void getMaskEmployeeById_withNoMaskConfig_shouldReturnAllFields() throws Exception {
+        // 准备测试数据
+        Employee employee = new Employee();
+        employee.setName("No Mask User");
+        employee.setAddress("Complete Address");
+        employee.setGender("Male");
+        employee.setRocId("N123456789");
+        Employee savedEmployee = employeeRepository.save(employee);
+
+        // 不添加掩码配置，请求应返回所有字段
+        mockMvc.perform(get("/employee/mask/" + savedEmployee.getId())
+                        // 不设置 account 头，或使用一个不存在配置的账户
+                        .header("account", "nonExistentAccount")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is("No Mask User")))
+                .andExpect(jsonPath("$.address", is("Complete Address")))
+                .andExpect(jsonPath("$.gender", is("Male")))
+                .andExpect(jsonPath("$.rocId", is("N123456789")))
+                .andExpect(jsonPath("$.nestedData.id", is(savedEmployee.getId().intValue())))
+                .andExpect(jsonPath("$.nestedData.name", is("No Mask User")))
+                .andExpect(jsonPath("$.nestedData.rocId", is("N123456789")));
+    }
+
+    @Test
+    public void getMaskEmployeeById_withBothMaskConfigs_shouldPrioritizeStructure() throws Exception {
+        // 准备测试数据
+        Employee employee = new Employee();
+        employee.setName("Priority User");
+        employee.setAddress("Priority Address");
+        employee.setGender("Male");
+        employee.setRocId("P123456789");
+        Employee savedEmployee = employeeRepository.save(employee);
+
+        // 创建结构化掩码配置 - 只掩码 address
+        EntityColumnMaskStructure maskStructure = new EntityColumnMaskStructure();
+        maskStructure.setAccount("bothAccount");
+        maskStructure.setMethod("GET");
+        maskStructure.setApiUri("/employee/mask/{id}");
+
+        JsonObject maskSettings = new JsonObject();
+        maskSettings.addProperty("address", true); // 只掩码 address
+        maskStructure.setMaskSettings(new Gson().toJson(maskSettings));
+        structureRepository.save(maskStructure);
+
+        // 创建扁平化掩码配置 - 掩码 gender 和 rocId
+        EntityColumnMaskFlattened maskFlattened = new EntityColumnMaskFlattened();
+        maskFlattened.setAccount("bothAccount"); // 使用相同的账户
+        maskFlattened.setMethod("GET");
+        maskFlattened.setApiUri("/employee/mask/{id}");
+
+        List<String> maskFields = Arrays.asList("gender", "rocId");
+        maskFlattened.setMaskSettings(new Gson().toJson(maskFields));
+        flattenedRepository.save(maskFlattened);
+
+        // 执行测试请求 - 应该优先使用结构化掩码
+        mockMvc.perform(get("/employee/mask/" + savedEmployee.getId())
+                        .header("account", "bothAccount")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is("Priority User")))
+                .andExpect(jsonPath("$.address").doesNotExist()) // address 应被掩码（结构化）
+                .andExpect(jsonPath("$.gender", is("Male"))) // gender 不应被掩码（扁平化没生效）
+                .andExpect(jsonPath("$.rocId", is("P123456789"))) // rocId 不应被掩码（扁平化没生效）
+                .andExpect(jsonPath("$.nestedData.id", is(savedEmployee.getId().intValue())))
+                .andExpect(jsonPath("$.nestedData.name", is("Priority User")))
+                .andExpect(jsonPath("$.nestedData.rocId", is("P123456789"))); // 嵌套 rocId 不应被掩码
     }
 
 }

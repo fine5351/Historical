@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <!-- 应用根日志级别 -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <!-- 应用包的日志级别 -->
+    <logger name="com.finekuo.nats" level="DEBUG"/>
+
+    <!-- 第三方库的日志级别 -->
+    <logger name="io.nats.client" level="INFO"/>
+    <logger name="org.testcontainers" level="INFO"/>
+</configuration>
