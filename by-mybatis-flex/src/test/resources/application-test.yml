@@ -1,0 +1,24 @@
+# H2 Datasource Configuration for Tests
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb-mybatis-flex;DB_CLOSE_DELAY=-1;MODE=MYSQL
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  sql:
+    # Database Initialization
+    init:
+      mode: always
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+  # MyBatis Flex Configuration
+  mybatis-flex:
+    configuration:
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# Logging
+logging:
+  level:
+    org.springframework.jdbc.datasource.init: DEBUG
+    com.finekuo: DEBUG
+    com.mybatisflex: DEBUG

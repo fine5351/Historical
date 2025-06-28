@@ -31,6 +31,11 @@
             <artifactId>mysql-connector-j</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>com.finekuo</groupId>
             <artifactId>mybatis-flex-core</artifactId>
             <version>1.0.0</version>
