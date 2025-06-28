@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EntityColumnMaskStructureRepository extends CrudRepository<EntityColumnMaskStructure, String> {
+public interface EntityColumnMaskStructureRepository extends CrudRepository<EntityColumnMaskStructure, Long> {
 
     /**
      * Find the EntityColumnMask by account and apiUrl.

@@ -51,4 +51,5 @@ public class SkillController {
         skillMapper.deleteById(id);
         return BaseResponse.success();
     }
+    
 }

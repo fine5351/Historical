@@ -30,22 +30,33 @@
 ## maven 模組介紹
 
 - by-mybatis-flex
-    - 紀錄 spring 搭配 mybatis-flex 使用方法
+  - 紀錄 spring 搭配 mybatis-flex 使用方法
 - by-shardingsphere-jdbc
-    - 紀錄 spring 搭配 shardingsphere jdbc 版使用方法
+  - 紀錄 spring 搭配 shardingsphere jdbc 版使用方法
 - by-shardingsphere-proxy
-    - 紀錄 spring 搭配 shardingsphere proxy 版使用方法
+  - 紀錄 spring 搭配 shardingsphere proxy 版使用方法
 - kafka
-    - 紀錄 spring 搭配 kafka 使用方法
+  - 紀錄 spring 搭配 kafka 使用方法
 - logging
-    - 紀錄 spring 如何輸出各種 log, dto 如何隱藏欄位
+  - 紀錄 spring 如何輸出各種 log, dto 如何隱藏欄位
 - mybatis-flex-core
-    - mybatis-flex 相關的設定會放在這
-    - 放置 entity
-    - 放置 mapper
+  - mybatis-flex 相關的設定會放在這
+  - 放置 entity
+  - 放置 mapper
 - normal-core
-    - 一般 SpringBoot 相關 lib 會從這邊引入, 其他模組的基本引用
+  - 一般 SpringBoot 相關 lib 會從這邊引入, 其他模組的基本引用
 - nats
-    - 紀錄 spring 搭配 nats 使用方法
+  - 紀錄 spring 搭配 nats 使用方法
 - spring-data-jpa
-    - 紀錄 spring 搭配 spring-data-jpa 使用方法
+  - 紀錄 spring 搭配 spring-data-jpa 使用方法
+
+## 重要資料夾介紹
+
+- docs
+  - 放置各種 plantUML, 隨著專案開發, 會逐漸增多
+  - 可能會指定參考這邊的檔案進行開發
+  - 可能會指定產生檔案放置在這
+
+- infra
+  - local 測試用的各種 infrastructure 設定
+  - 都是 docker-compose 設定
