@@ -24,6 +24,7 @@
         <module>normal-core</module>
         <module>kafka</module>
         <module>nats</module>
+        <module>by-mybatis-flex</module>
     </modules>
 
     <properties>
