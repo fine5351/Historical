@@ -1,6 +1,0 @@
-@startuml
-object "controller:DateTimeController" as controller
-
-note left of controller : From com.finekuo.springdatajpa.controller
-' No separate service/mapper object shown as logic is internal
-@enduml

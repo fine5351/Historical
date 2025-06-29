@@ -1,8 +1,0 @@
-@startuml
-left to right direction
-actor "API Client" as client
-rectangle "Event Publishing System" {
-  usecase "Publish Event to Kafka" as UC_PublishEvent
-}
-client --> UC_PublishEvent
-@enduml

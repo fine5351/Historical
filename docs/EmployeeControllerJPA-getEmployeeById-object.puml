@@ -1,7 +1,0 @@
-@startuml
-object "controller:EmployeeController" as controller
-object "service:EmployeeService" as service
-
-note left of controller : From com.finekuo.springdatajpa.controller
-controller --> service : employeeService
-@enduml

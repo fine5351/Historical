@@ -1,8 +1,0 @@
-@startuml
-left to right direction
-actor "API Client" as client
-rectangle "Logging System" {
-  usecase "Retrieve Log Information (GET)" as UC_GetLog
-}
-client --> UC_GetLog
-@enduml

@@ -1,6 +1,0 @@
-@startuml
-[*] --> Idle
-Idle --> ProcessingRequest : GET /api/employees/page
-ProcessingRequest --> SendingResponse : Paginated data retrieved
-SendingResponse --> Idle : Response sent
-@enduml

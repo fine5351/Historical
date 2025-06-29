@@ -1,9 +1,0 @@
-@startuml
-start
-:Receive PUT /api/employees/{id} request with Employee data;
-:Set employee ID from path variable;
-:Call EmployeeMapper.update(employee);
-:Receive (potentially updated) Employee entity;
-:Return HTTP 200 OK with Employee data;
-stop
-@enduml

@@ -1,9 +1,0 @@
-@startuml
-package "JPA Application" {
-  [EmployeeController] <<component>> as WebTier
-  [EmployeeService] <<component>> as ServiceTier
-  [EmployeeRepository] <<component>> as DataAccessTier ' Assuming EmployeeService uses a repository
-}
-WebTier ..> ServiceTier : uses
-ServiceTier ..> DataAccessTier : uses
-@enduml

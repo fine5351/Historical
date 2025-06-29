@@ -1,8 +1,0 @@
-@startuml
-left to right direction
-actor "API Client" as client
-rectangle "Resume Management System" {
-  usecase "Create Resume from File" as UC_CreateResume
-}
-client --> UC_CreateResume
-@enduml

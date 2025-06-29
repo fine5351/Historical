@@ -1,6 +1,0 @@
-@startuml
-package "Application" {
-  [LoggingController] <<component>> as WebTier
-  ' No separate Service/DataAccess component as logic is internal
-}
-@enduml

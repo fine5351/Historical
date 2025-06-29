@@ -1,9 +1,0 @@
-@startuml
-start
-:Receive GET /employee/{id} request;
-:Call EmployeeService.findById(id);
-:Receive Employee object;
-:Wrap Employee in ResponseEntity.ok();
-:Return HTTP 200 OK with ResponseEntity<Employee>;
-stop
-@enduml

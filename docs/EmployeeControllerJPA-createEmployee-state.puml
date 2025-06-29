@@ -1,6 +1,0 @@
-@startuml
-[*] --> Idle
-Idle --> ProcessingRequest : POST /employee
-ProcessingRequest --> SendingResponse : Employee created
-SendingResponse --> Idle : Response sent
-@enduml

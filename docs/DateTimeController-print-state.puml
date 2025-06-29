@@ -1,6 +1,0 @@
-@startuml
-[*] --> Idle
-Idle --> ProcessingRequest : POST /datetime/print
-ProcessingRequest --> SendingResponse : DateTime information processed
-SendingResponse --> Idle : Response sent
-@enduml

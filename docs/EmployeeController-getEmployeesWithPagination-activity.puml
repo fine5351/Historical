@@ -1,9 +1,0 @@
-@startuml
-start
-:Receive GET /api/employees/page request with pageNumber & pageSize;
-:Call EmployeeMapper.paginate(pageNumber, pageSize, select());
-:Receive Page<Employee>;
-:Construct BaseResponse<Page<Employee>>;
-:Return HTTP 200 OK with paginated employee list in BaseResponse;
-stop
-@enduml

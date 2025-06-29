@@ -1,9 +1,0 @@
-@startuml
-start
-:Receive POST /datetime/print request with LocalDateTimeRequest data;
-' Note: request data is currently not used in TimeResponse construction
-:Create new TimeResponse object using current Date(), LocalDate.now(), LocalDateTime.now(), etc., with DEFAULT_ZONE_ID;
-:Wrap TimeResponse with BaseResponse.success();
-:Return HTTP 200 OK with BaseResponse<TimeResponse>;
-stop
-@enduml

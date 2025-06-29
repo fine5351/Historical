@@ -1,8 +1,0 @@
-@startuml
-start
-:Receive GET /api/employees request;
-:Call EmployeeMapper.selectAll();
-:Receive List<Employee>;
-:Return HTTP 200 OK with List<Employee>;
-stop
-@enduml

@@ -1,6 +1,0 @@
-@startuml
-[*] --> Idle
-Idle --> ProcessingRequest : GET /skill/allowedSkillLevel
-ProcessingRequest --> SendingResponse : Allowed skill level data retrieved and processed
-SendingResponse --> Idle : Response sent
-@enduml

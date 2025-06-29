@@ -1,9 +1,0 @@
-@startuml
-package "Resume Application (JPA)" {
-  [ResumeController] <<component>> as WebTier
-  [ResumeRepository] <<component>> as DataAccessTier
-  [MultipartFile] <<external>> as FileInput ' Represents the input file
-}
-WebTier ..> DataAccessTier : uses to save resume
-WebTier ..> FileInput : receives
-@enduml

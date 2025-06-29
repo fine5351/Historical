@@ -1,8 +1,0 @@
-@startuml
-left to right direction
-actor "API Client" as client
-rectangle "Employee Management (via ShardingSphere Proxy)" {
-  usecase "Create Employee" as UC_Create
-}
-client --> UC_Create
-@enduml

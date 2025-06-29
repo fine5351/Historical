@@ -1,7 +1,0 @@
-@startuml
-package "Application" {
-  [EmployeeController] <<component>> as Web
-  [EmployeeMapper] <<component>> as DataAccessOrService  ' Mapper often spans Service/Data Access
-}
-Web ..> DataAccessOrService : uses to paginate employees
-@enduml

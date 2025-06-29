@@ -1,8 +1,0 @@
-@startuml
-left to right direction
-actor "API Client" as client
-rectangle "Logging System" {
-  usecase "Submit/Query Log Information (POST)" as UC_PostLog
-}
-client --> UC_PostLog
-@enduml

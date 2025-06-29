@@ -1,7 +1,0 @@
-@startuml
-node "Application Server" {
-  artifact "application.jar" {
-    component EmployeeController
-  }
-}
-@enduml

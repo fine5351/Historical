@@ -1,8 +1,0 @@
-@startuml
-start
-:Receive GET /api/employees/{id} request;
-:Call EmployeeMapper.selectOneById(id);
-:Receive Employee object or null;
-:Return HTTP 200 OK with Employee data (or 404 if null);
-stop
-@enduml

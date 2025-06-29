@@ -1,9 +1,0 @@
-@startuml
-start
-:Receive POST /api/employees request with Employee data;
-:Call EmployeeMapper.insert(employee);
-:Receive confirmation/updated Employee (with ID);
-:Construct BaseResponse<Employee>;
-:Return HTTP 200 OK (or 201 Created) with created employee data in BaseResponse;
-stop
-@enduml

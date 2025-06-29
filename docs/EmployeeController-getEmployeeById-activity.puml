@@ -1,9 +1,0 @@
-@startuml
-start
-:Receive GET /api/employees/{id} request;
-:Call EmployeeMapper.selectOneById(id);
-:Receive Employee object or null;
-:Construct BaseResponse<Employee>;
-:Return HTTP 200 OK with employee data (or error if not found) in BaseResponse;
-stop
-@enduml

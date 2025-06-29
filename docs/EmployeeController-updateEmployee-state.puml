@@ -1,5 +1,0 @@
-@startuml
-[*] --> Idle
-Idle --> Processing : PUT /api/employees/{id}
-Processing --> Idle : Response Sent
-@enduml
