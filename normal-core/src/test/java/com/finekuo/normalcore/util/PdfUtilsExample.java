@@ -18,18 +18,18 @@ public class PdfUtilsExample {
         try {
             // Example 1: Simple HTML to PDF
             example1SimpleConversion();
-            
+
             // Example 2: HTML with Chinese characters
             example2ChineseCharacters();
-            
+
             // Example 3: HTML with images
             example3WithImages();
-            
+
             // Example 4: Complex HTML with styling
             example4ComplexHtml();
-            
+
             log.info("All examples completed successfully!");
-            
+
         } catch (Exception e) {
             log.error("Error in examples", e);
         }
@@ -40,17 +40,20 @@ public class PdfUtilsExample {
      */
     private static void example1SimpleConversion() throws Exception {
         log.info("=== Example 1: Simple HTML Conversion ===");
-        
-        String html = "<html><body>" +
+
+        String html = "<!DOCTYPE html>" +
+                "<html><head><meta charset=\"UTF-8\"/>" +
+                "<style>body { font-family: 'NotoSerifCJK', Arial, sans-serif; }</style>" +
+                "</head><body>" +
                 "<h1>Hello World</h1>" +
                 "<p>This is a simple PDF generated from HTML.</p>" +
                 "</body></html>";
-        
+
         byte[] pdfBytes = PdfUtils.htmlToPdf(html);
-        
-        Path outputPath = Paths.get("/tmp/example1_simple.pdf");
+
+        Path outputPath = Paths.get("D:\\Download\\tmp\\example1_simple.pdf");
         Files.write(outputPath, pdfBytes);
-        
+
         log.info("Generated PDF: {} (size: {} bytes)", outputPath, pdfBytes.length);
     }
 
@@ -59,13 +62,14 @@ public class PdfUtilsExample {
      */
     private static void example2ChineseCharacters() throws Exception {
         log.info("=== Example 2: Chinese Characters ===");
-        
+
         String html = "<!DOCTYPE html>" +
                 "<html>" +
                 "<head>" +
                 "<meta charset=\"UTF-8\"/>" +
                 "<style>" +
-                "body { font-family: 'STSong-Light', 'STSongStd-Light', 'MSung-Light', serif; margin: 30px; }" +
+                // Prefer embedded Noto serif CJK if available, then system Chinese fonts
+                "body { font-family: 'NotoSerifCJK', 'STSong-Light', 'STSongStd-Light', 'MSung-Light', 'Microsoft JhengHei', sans-serif; margin: 30px; }" +
                 "h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }" +
                 "p { line-height: 1.6; }" +
                 "</style>" +
@@ -83,12 +87,12 @@ public class PdfUtilsExample {
                 "</ul>" +
                 "</body>" +
                 "</html>";
-        
-        Path outputPath = Paths.get("/tmp/example2_chinese.pdf");
+
+        Path outputPath = Paths.get("D:\\Download\\tmp\\example2_chinese.pdf");
         try (FileOutputStream fos = new FileOutputStream(outputPath.toFile())) {
             PdfUtils.htmlToPdf(html, fos);
         }
-        
+
         log.info("Generated PDF: {}", outputPath);
     }
 
@@ -97,15 +101,15 @@ public class PdfUtilsExample {
      */
     private static void example3WithImages() throws Exception {
         log.info("=== Example 3: With Images ===");
-        
+
         // Small base64 encoded red dot image
         String base64Image = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAFBQIAX8jx0gAAAABJRU5ErkJggg==";
-        
+
         String html = "<!DOCTYPE html>" +
                 "<html>" +
                 "<head><meta charset=\"UTF-8\"/>" +
                 "<style>" +
-                "body { margin: 30px; font-family: Arial, sans-serif; }" +
+                "body { margin: 30px; font-family: 'NotoSerifCJK', Arial, sans-serif; }" +
                 "img { border: 2px solid #ddd; padding: 5px; }" +
                 "</style>" +
                 "</head>" +
@@ -117,11 +121,11 @@ public class PdfUtilsExample {
                 "<p>Images can be embedded using data URLs (base64 encoding).</p>" +
                 "</body>" +
                 "</html>";
-        
+
         byte[] pdfBytes = PdfUtils.htmlToPdf(html);
-        Path outputPath = Paths.get("/tmp/example3_images.pdf");
+        Path outputPath = Paths.get("D:\\Download\\tmp\\example3_images.pdf");
         Files.write(outputPath, pdfBytes);
-        
+
         log.info("Generated PDF: {} (size: {} bytes)", outputPath, pdfBytes.length);
     }
 
@@ -130,14 +134,14 @@ public class PdfUtilsExample {
      */
     private static void example4ComplexHtml() throws Exception {
         log.info("=== Example 4: Complex HTML ===");
-        
+
         String html = "<!DOCTYPE html>" +
                 "<html>" +
                 "<head>" +
                 "<meta charset=\"UTF-8\"/>" +
                 "<style>" +
                 "body { " +
-                "  font-family: 'STSong-Light', 'STSongStd-Light', 'MSung-Light', serif; " +
+                "  font-family: 'NotoSerifCJK', 'STSong-Light', 'STSongStd-Light', 'MSung-Light', serif; " +
                 "  margin: 40px; " +
                 "  background-color: #f9f9f9; " +
                 "}" +
@@ -211,11 +215,12 @@ public class PdfUtilsExample {
                 "</div>" +
                 "</body>" +
                 "</html>";
-        
+
         byte[] pdfBytes = PdfUtils.htmlToPdf(html);
-        Path outputPath = Paths.get("/tmp/example4_complex.pdf");
+        Path outputPath = Paths.get("D:\\Download\\tmp\\example4_complex.pdf");
         Files.write(outputPath, pdfBytes);
-        
+
         log.info("Generated PDF: {} (size: {} bytes)", outputPath, pdfBytes.length);
     }
+
 }
